@@ -1,0 +1,233 @@
+<!doctype html>
+<html class="no-js" lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sistema de Gestion</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+  <!-- Site content -->
+  <h1>Sistema de Gestion (Ap 1 - Ap 2)</h1>
+  <h2>Manejo de Influencers</h2>
+
+  <!--  Add influencer button-->
+  <h3>Alta de Influencer</h3>
+  <button>Agregar Influencer</button>
+
+  <!--  Add influencer fields-->
+  <h3>Datos del Influencer a agregar</h3>
+  <h3>Influencer</h3>
+  <label for="nombreInfluencer">Nombre
+    <input type="text"
+           id="nombreInfluencer"
+           name="nombreInfluencer">
+  </label>
+  <label for="mailInfluencer">Mail
+    <input type="text"
+           id="mailInfluencer"
+           name="mailInfluencer">
+  </label>
+  <label for="comisionInfluencer">% Comision
+    <input type="text"
+           id="comisionInfluencer"
+           name="comisionInfluencer">
+  </label>
+<button>Cancelar</button><button>Agregar</button>
+
+  <!--  Influencer table-->
+  <h3>Table de Influencers</h3>
+  <table>
+    <thead>
+    <tr>
+      <th><button>Nombre ⇅</button></th>
+      <th>Email</th>
+      <th>% Comision</th>
+      <th>Total a cobrar</th>
+      <th>Etiquetas</th>
+      <th>Detalle</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <!--  test person-->
+      <td>Ana Perez</td>
+      <td>ana.perez@email.com</td>
+      <td>20%</td>
+      <td>$ 600</td>
+      <td>🔥 🟢</td>
+      <td><button>Ventas</button></td>
+    </tr>
+    <tr>
+      <!--  test person 2-->
+      <td>Juan Gomez</td>
+      <td>juan.gomez@email.com</td>
+      <td>10%</td>
+      <td>$ 30</td>
+      <td></td>
+      <td><button>Ventas</button></td>
+    </tr>
+    <tr>
+      <!--  test person 3-->
+      <td>Lucia Martinez</td>
+      <td>lucia.martinez@email.com</td>
+      <td>95%</td>
+      <td>$ 0</td>
+      <td>🧊</td>
+      <td><button>Ventas</button></td>
+    </tr>
+    </tbody>
+  </table>
+  <p>Informacion: 🔥 Top comision (cobra mas $) 🧊 Cero ventas 🟢 Venta mas cara (mayor monto en una sola venta)</p>
+
+  <!--  Manage articles section-->
+<h2>Manejo de Articulos</h2>
+<h3>Alta de Articulo</h3>
+<button>Agregar articulo</button>
+
+<h3>Datos del articulo a agregar</h3>
+  <label for="codigoArticulo">Codigo
+    <input type="text"
+           id="codigoArticulo"
+           name="codigoArticulo">
+  </label>
+  <label for="descripcionArticulo">Descripcion
+    <input type="text"
+           id="descripcionArticulo"
+           name="descripcionArticulo">
+  </label>
+  <label for="precioArticulo">Precio
+    <input type="number"
+           id="precioArticulo"
+           name="precioArticulo">
+  </label>
+<button>Cancelar</button><button>Agregar</button>
+
+<!--  table for articles-->
+<h3>Tabla de articulos</h3>
+<table>
+  <thead>
+  <tr>
+    <th><button>Codigo ⇅</button></th>
+    <th>Descripcion</th>
+    <th>Precio</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <!--  test article 1-->
+    <td>A001 ⭐</td>
+    <td>Remera algodon basica</td>
+    <td>$ 1000</td>
+  </tr>
+  <tr>
+    <!--  test article 2-->
+    <td>A002</td>
+    <td>Zapatillas deportivas</td>
+    <td>$ 300</td>
+  </tr>
+  <tr>
+    <!--  test article 3-->
+    <td>A003</td>
+    <td>Gorra ajustable</td>
+    <td>$ 500</td>
+  </tr>
+  </tbody>
+</table>
+<p>Informacion: ⭐ Articulo mas vendido (mayor cantidad de unidades vendidas)</p>
+
+<!--  Ventas section -->
+<h2>Ventas</h2>
+<h3>Alta de ventas</h3>
+<button>Agregar venta</button>
+
+<h3>Datos de la venta a agregar</h3>
+<h3>Venta</h3>
+  <label for="numeroVentaDropdown">Nro 3 Articulo
+    <select name="numeroVentaDropdown" id="numeroVentaDropdown" >
+      <option value="1" selected >A001</option>
+      <option value="2">A002</option>
+      <option value="3">A003</option>
+    </select>
+  </label>
+  <label for="nombreInfluencerDropdown">Influencer
+    <select name="nombreInfluencerDropdown" id="nombreInfluencerDropdown" >
+      <option value="1" selected >Ana Perez</option>
+      <option value="2">Juan Gomez</option>
+      <option value="3">Lucia Martinez</option>
+    </select>
+  </label>
+  <label for="cantidadVenta">Cantidad
+    <input type="number"
+           id="cantidadVenta"
+           name="cantidadVenta">
+  </label>
+  <label for="medioVentaDropdown">Medio
+    <select name="medioVentaDropdown" id="medioVentaDropdown" >
+      <option value="1" selected >1-Instagram</option>
+      <option value="2">2-Youtube</option>
+      <option value="3">3-X</option>
+      <option value="4">4-TikTok</option>
+      <option value="5">5-Facebook</option>
+      <option value="6">6-Otras</option>
+    </select>
+  </label>
+<button>Cancelar</button><button>Agregar</button>
+<!--Table of sales ordered by venta number  -->
+<table>
+  <thead>
+  <tr>
+    <th>Nro Venta</th>
+    <th>Codigo de Articulo</th>
+    <th>Nombre de Influencer</th>
+    <th>Cantidad</th>
+    <th>Medio</th>
+    <th>Accion</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>1</td>
+    <td>A001</td>
+    <td>Ana Perez</td>
+    <td>3</td>
+    <td>1-Instagram</td>
+    <td><button>❌</button></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>A002</td>
+    <td>Juan Gomez</td>
+    <td>1</td>
+    <td>2-Youtube</td>
+    <td><button>❌</button></td>
+  </tr>
+  </tbody>
+</table>
+
+<!--Bubble graph-->
+<h3>Grafico de burbujas</h3>
+
+</body>
+
+</html>
+
+
+<footer>Autor 1, Num Estudiante. Autor 2, Num estudiante. </footer>
