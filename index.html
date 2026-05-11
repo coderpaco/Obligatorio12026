@@ -8,11 +8,11 @@
   <link rel="stylesheet" href="css/style.css">
   <meta name="description" content="">
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-  <meta property="og:image:alt" content="">
+  <meta property="og:title" content="Sistema de Gestion">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content=""> <!-- This doesn't need to be used since the site isnt hosted-->
+  <meta property="og:image" content=""> <!-- This doesn't need to be used since the site isnt hosted-->
+  <meta property="og:image:alt" content=""> <!-- This doesn't need to be used since the site isnt hosted-->
 
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
@@ -30,7 +30,7 @@
 
   <!--  Add influencer button-->
   <h3>Alta de Influencer</h3>
-  <button>Agregar Influencer</button>
+  <button id="buttonAgregarInfluencer1">Agregar Influencer</button>
 
   <!--  Add influencer fields-->
   <h3>Datos del Influencer a agregar</h3>
@@ -50,11 +50,11 @@
            id="comisionInfluencer"
            name="comisionInfluencer">
   </label>
-<button>Cancelar</button><button>Agregar</button>
+<button id="buttonCancelarInfluencer">Cancelar</button><button id="buttonAgregarInfluencer2">Agregar</button>
 
   <!--  Influencer table-->
   <h3>Table de Influencers</h3>
-  <table>
+  <table id="tableInfluencers">
     <thead>
     <tr>
       <th><button>Nombre ⇅</button></th>
@@ -100,7 +100,7 @@
   <!--  Manage articles section-->
 <h2>Manejo de Articulos</h2>
 <h3>Alta de Articulo</h3>
-<button>Agregar articulo</button>
+<button id="buttonAgregarArticulo1">Agregar articulo</button>
 
 <h3>Datos del articulo a agregar</h3>
   <label for="codigoArticulo">Codigo
@@ -118,14 +118,14 @@
            id="precioArticulo"
            name="precioArticulo">
   </label>
-<button>Cancelar</button><button>Agregar</button>
+<button id="buttonCancelarArticulo">Cancelar</button><button id="buttonAgregarArticulo2">Agregar</button>
 
 <!--  table for articles-->
 <h3>Tabla de articulos</h3>
-<table>
+<table id="tableArticulos">
   <thead>
   <tr>
-    <th><button>Codigo ⇅</button></th>
+    <th><button id="buttonArticulosCodigoOrderSwitch">Codigo ⇅</button></th>
     <th>Descripcion</th>
     <th>Precio</th>
   </tr>
@@ -156,7 +156,7 @@
 <!--  Ventas section -->
 <h2>Ventas</h2>
 <h3>Alta de ventas</h3>
-<button>Agregar venta</button>
+<button id="buttonAgregarVenta1">Agregar venta</button>
 
 <h3>Datos de la venta a agregar</h3>
 <h3>Venta</h3>
@@ -189,7 +189,7 @@
       <option value="6">6-Otras</option>
     </select>
   </label>
-<button>Cancelar</button><button>Agregar</button>
+<button id="buttonVentasCancelar">Cancelar</button><button id="buttonAgregarVenta2">Agregar</button>
 <!--Table of sales ordered by venta number  -->
 <table>
   <thead>
@@ -209,7 +209,7 @@
     <td>Ana Perez</td>
     <td>3</td>
     <td>1-Instagram</td>
-    <td><button>❌</button></td>
+    <td><button class="deleteXButton">❌</button></td>
   </tr>
   <tr>
     <td>2</td>
@@ -217,7 +217,7 @@
     <td>Juan Gomez</td>
     <td>1</td>
     <td>2-Youtube</td>
-    <td><button>❌</button></td>
+    <td><button class="deleteXButton">❌</button></td>
   </tr>
   </tbody>
 </table>
@@ -230,4 +230,4 @@
 </html>
 
 
-<footer>Autor 1, Num Estudiante. Autor 2, Num estudiante. </footer>
+<footer id="footer">Autor 1, Num Estudiante. Autor 2, Num estudiante. </footer>
