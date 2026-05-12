@@ -20,12 +20,13 @@
 
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#fafafa">
+  <script src="js/app.js"></script>
 </head>
 
 <body>
 
   <!-- Site content -->
-  <h1>Sistema de Gestion (Ap 1 - Ap 2)</h1>
+  <h1>Sistema de Gestion (Dostourian - Ap 2)</h1>
   <h2>Manejo de Influencers</h2>
 
   <!--  Add influencer button-->
@@ -35,6 +36,7 @@
   <!--  Add influencer fields-->
   <h3>Datos del Influencer a agregar</h3>
   <h3>Influencer</h3>
+  <form id="formInfluencer">
   <label for="nombreInfluencer">Nombre
     <input type="text"
            id="nombreInfluencer"
@@ -46,11 +48,12 @@
            name="mailInfluencer">
   </label>
   <label for="comisionInfluencer">% Comision
-    <input type="text"
+    <input type="number"
            id="comisionInfluencer"
            name="comisionInfluencer">
   </label>
 <button id="buttonCancelarInfluencer">Cancelar</button><button id="buttonAgregarInfluencer2">Agregar</button>
+  </form>
 
   <!--  Influencer table-->
   <h3>Table de Influencers</h3>
@@ -103,6 +106,7 @@
 <button id="buttonAgregarArticulo1">Agregar articulo</button>
 
 <h3>Datos del articulo a agregar</h3>
+  <form id="formArticulo">
   <label for="codigoArticulo">Codigo
     <input type="text"
            id="codigoArticulo"
@@ -119,6 +123,7 @@
            name="precioArticulo">
   </label>
 <button id="buttonCancelarArticulo">Cancelar</button><button id="buttonAgregarArticulo2">Agregar</button>
+  </form>
 
 <!--  table for articles-->
 <h3>Tabla de articulos</h3>
@@ -159,19 +164,20 @@
 <button id="buttonAgregarVenta1">Agregar venta</button>
 
 <h3>Datos de la venta a agregar</h3>
+  <form id="formVentas">
 <h3>Venta</h3>
   <label for="numeroVentaDropdown">Nro 3 Articulo
     <select name="numeroVentaDropdown" id="numeroVentaDropdown" >
-      <option value="1" selected >A001</option>
-      <option value="2">A002</option>
-      <option value="3">A003</option>
+      <option value="A001" selected >A001</option>
+      <option value="A002">A002</option>
+      <option value="A003">A003</option>
     </select>
   </label>
   <label for="nombreInfluencerDropdown">Influencer
     <select name="nombreInfluencerDropdown" id="nombreInfluencerDropdown" >
-      <option value="1" selected >Ana Perez</option>
-      <option value="2">Juan Gomez</option>
-      <option value="3">Lucia Martinez</option>
+      <option value="Ana Perez" selected >Ana Perez</option>
+      <option value="Juan Gomez">Juan Gomez</option>
+      <option value="Lucia Martinez">Lucia Martinez</option>
     </select>
   </label>
   <label for="cantidadVenta">Cantidad
@@ -181,17 +187,19 @@
   </label>
   <label for="medioVentaDropdown">Medio
     <select name="medioVentaDropdown" id="medioVentaDropdown" >
-      <option value="1" selected >1-Instagram</option>
-      <option value="2">2-Youtube</option>
-      <option value="3">3-X</option>
-      <option value="4">4-TikTok</option>
-      <option value="5">5-Facebook</option>
-      <option value="6">6-Otras</option>
+      <option value="1-Instagram" selected >1-Instagram</option>
+      <option value="2-Youtube">2-Youtube</option>
+      <option value="3-X">3-X</option>
+      <option value="4-TikTok">4-TikTok</option>
+      <option value="5-Facebook">5-Facebook</option>
+      <option value="6-Otras">6-Otras</option>
     </select>
   </label>
-<button id="buttonVentasCancelar">Cancelar</button><button id="buttonAgregarVenta2">Agregar</button>
-<!--Table of sales ordered by venta number  -->
-<table>
+<button id="buttonCancelarVenta">Cancelar</button><button id="buttonAgregarVenta2">Agregar</button>
+  </form>
+
+    <!--Table of sales ordered by venta number  -->
+<table id="tableVentas">
   <thead>
   <tr>
     <th>Nro Venta</th>
@@ -230,4 +238,4 @@
 </html>
 
 
-<footer id="footer">Autor 1, Num Estudiante. Autor 2, Num estudiante. </footer>
+<footer id="footer">Davit Dostourian Erbe, 281664. Autor 2, Num estudiante. LINK 1 LINK 2</footer>
