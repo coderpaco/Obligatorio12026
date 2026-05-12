@@ -1,3 +1,9 @@
+/*
+   ==========================================================================
+   Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
+   ==========================================================================
+*/
+
 window.addEventListener('load', inicio);
 function inicio(){
   //Influencer
