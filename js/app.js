@@ -2,6 +2,12 @@
    ==========================================================================
    Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
    ==========================================================================
+    TODO:
+     - is using form.reset() the best way to reset form? or set values to ""
+     - add values to tables/dropdowns
+     - make sure the value of each sale (salenumber) increments by one when added, and decreases/changes
+       when a sale is deleted. (sale 1. next sale 2. sale 3. sale 2 deleted, sale 3 becomes sale2?
+       OR do the sales stay the same number?
 */
 
 window.addEventListener('load', inicio);
@@ -30,7 +36,7 @@ function agregarInfluencer1(){
 
 }
 function cancelarInfluencer(){
-  //const texto = document.getElementById("frase").value;
+  document.getElementById('formInfluencer').reset();
   alert("Canceled.");
 }
 function agregarInfluencer2(){
@@ -54,7 +60,7 @@ function agregarArticulo1(){
   alert("Add Articulo.");
 }
 function cancelarArticulo(){
-  //const texto = document.getElementById("frase").value;
+  document.getElementById('formArticulo').reset();
   alert("Canceled.");
 }
 function agregarArticulo2(){
@@ -73,7 +79,7 @@ function agregarVenta1(){
   alert("Add Venta.");
 }
 function cancelarVenta(){
-  //const texto = document.getElementById("frase").value;
+  document.getElementById('formVentas').reset();
   alert("Canceled.");
 }
 function agregarVenta2(){
