@@ -105,6 +105,23 @@ function agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medi
   celda.innerHTML= texto;
 }
 
+window.onload = function() { //found on stack overflow, through google AI: https://stackoverflow.com/questions/72869394/append-a-whole-footer-into-an-html-page-thanks-to-js
+  // Create footer element
+  const footerElement = document.createElement('footer');
+
+  // Use innerHTML to quickly add a link
+  footerElement.innerHTML = `
+        <p>Davit Dostourian Erbe, 281664. Autor 2, Num estudiante. |
+           <a href=https://ort.edu.uy target="_blank" rel="noopener noreferrer">Estudiante 1</a>
+           <a href=https://ort.edu.uy target="_blank" rel="noopener noreferrer">Estudiante 2</a>
+        </p>
+    `;
+
+  // Add to the end of the document body
+  document.body.appendChild(footerElement);
+};
+
+
 /*
 add to a list. using its id "lista" in this case (prolly not used rn)
   function mostrarEnPantalla(textoMostrar){
