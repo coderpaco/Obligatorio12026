@@ -36,13 +36,16 @@ function cancelarInfluencer(){
 function agregarInfluencer2(){
   const nombre = document.getElementById("nombreInfluencer").value;
   const email = document.getElementById("mailInfluencer").value;
-  const comision = parseInt(document.getElementById("comisionInfluencer").value);
-  try {
-    alert("Addded influencer " + nombre + " with email " + email + " and " + comision + "% comision");
-    document.getElementById('formInfluencer').reset();
-  }catch (exception){
-    alert("check form data");
+  const commission = parseInt(document.getElementById("comisionInfluencer").value);
+  if(nombre!="" && email!=""){
+    try {
+      alert("Addded influencer " + nombre + " with email " + email + " and " + commission + "% commission");
+      document.getElementById('formInfluencer').reset();
+    }catch (exception){
+      alert("check form data");
+    }
   }
+
 }
 
 //Articulos

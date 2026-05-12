@@ -32,7 +32,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
 <body>
 
   <!-- Site content -->
-  <h1>Sistema de Gestion (Dostourian - Ap 2)</h1>
+  <h1>Sistema de Gestión (Dostourian - Ap 2)</h1>
 
   <!--  Influencer Section-->
   <h2>Manejo de Influencers</h2>
@@ -43,20 +43,24 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
   <h3>Datos del Influencer a agregar</h3>
   <h3>Influencer</h3>
   <form id="formInfluencer">
-  <label for="nombreInfluencer">Nombre
-    <input type="text"
-           id="nombreInfluencer"
-           name="nombreInfluencer">
+  <label for="nombreInfluencer" >Nombre
+    <input id="nombreInfluencer"
+           name="nombreInfluencer"
+           required
+           type="text">
   </label>
   <label for="mailInfluencer">Mail
-    <input type="text"
-           id="mailInfluencer"
-           name="mailInfluencer">
+    <input id="mailInfluencer"
+           name="mailInfluencer"
+           required
+           type="text">
   </label>
-  <label for="comisionInfluencer">% Comision
-    <input type="number"
-           id="comisionInfluencer"
-           name="comisionInfluencer">
+  <label for="comisionInfluencer">% Comisión
+    <input id="comisionInfluencer"
+           name="comisionInfluencer"
+           required
+           type="number"
+           value="0"> <!-- this must have a default value of 0 to avoid NAN exceptions by default-->
   </label>
 <button id="buttonCancelarInfluencer">Cancelar</button><button id="buttonAgregarInfluencer2">Agregar</button>
   </form>
@@ -68,7 +72,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     <tr>
       <th><button>Nombre ⇅</button></th>
       <th>Email</th>
-      <th>% Comision</th>
+      <th>% Comisión</th>
       <th>Total a cobrar</th>
       <th>Etiquetas</th>
       <th>Detalle</th>
@@ -77,7 +81,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     <tbody>
     <tr>
       <!--  test person-->
-      <td>Ana Perez</td>
+      <td>Ana Peréz</td>
       <td>ana.perez@email.com</td>
       <td>20%</td>
       <td>$ 600</td>
@@ -86,7 +90,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     </tr>
     <tr>
       <!--  test person 2-->
-      <td>Juan Gomez</td>
+      <td>Juan Gómez</td>
       <td>juan.gomez@email.com</td>
       <td>10%</td>
       <td>$ 30</td>
@@ -95,7 +99,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     </tr>
     <tr>
       <!--  test person 3-->
-      <td>Lucia Martinez</td>
+      <td>Lucía Martínez</td>
       <td>lucia.martinez@email.com</td>
       <td>95%</td>
       <td>$ 0</td>
@@ -104,22 +108,23 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     </tr>
     </tbody>
   </table>
-  <p>Informacion: 🔥 Top comision (cobra mas $) 🧊 Cero ventas 🟢 Venta mas cara (mayor monto en una sola venta)</p>
+  <p>Información: 🔥 Top comisión (cobra más $) 🧊 Cero ventas 🟢 Venta más cara (mayor monto en una sola venta)</p>
 
   <!--  Manage articles section-->
-<h2>Manejo de Articulos</h2>
-<h3>Alta de Articulo</h3>
-<button id="buttonAgregarArticulo1">Agregar articulo</button>
+<h2>Manejo de Artículos</h2>
+<h3>Alta de Artículo</h3>
+<button id="buttonAgregarArticulo1">Agregar artículo</button>
 
   <!--  Add article form-->
-<h3>Datos del articulo a agregar</h3>
+<h3>Datos del artículo a agregar</h3>
+  <h3>Artículo</h3>
   <form id="formArticulo">
-  <label for="codigoArticulo">Codigo
+  <label for="codigoArticulo">Código
     <input type="text"
            id="codigoArticulo"
            name="codigoArticulo">
   </label>
-  <label for="descripcionArticulo">Descripcion
+  <label for="descripcionArticulo">Descripción
     <input type="text"
            id="descripcionArticulo"
            name="descripcionArticulo">
@@ -133,12 +138,12 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
   </form>
 
 <!--  table for articles-->
-<h3>Tabla de articulos</h3>
+<h3>Tabla de artículos</h3>
 <table id="tableArticulos">
   <thead>
   <tr>
-    <th><button id="buttonArticulosCodigoOrderSwitch">Codigo ⇅</button></th>
-    <th>Descripcion</th>
+    <th><button id="buttonArticulosCodigoOrderSwitch">Código ⇅</button></th>
+    <th>Descripción</th>
     <th>Precio</th>
   </tr>
   </thead>
@@ -146,7 +151,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
   <tr>
     <!--  test article 1-->
     <td>A001 ⭐</td>
-    <td>Remera algodon basica</td>
+    <td>Remera algodón básica</td>
     <td>$ 1000</td>
   </tr>
   <tr>
@@ -163,7 +168,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
   </tr>
   </tbody>
 </table>
-<p>Informacion: ⭐ Articulo mas vendido (mayor cantidad de unidades vendidas)</p>
+<p>Informacion: ⭐ Artículo más vendido (mayor cantidad de unidades vendidas)</p>
 
 <!--  Ventas section -->
 <h2>Ventas</h2>
@@ -174,7 +179,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
 <h3>Datos de la venta a agregar</h3>
   <form id="formVentas">
 <h3>Venta</h3>
-  <label for="numeroVentaDropdown">Nro 3 Articulo
+  <label for="numeroVentaDropdown">Nro 3 Artículo
     <select name="numeroVentaDropdown" id="numeroVentaDropdown" >
       <option value="A001" selected >A001</option>
       <option value="A002">A002</option>
@@ -207,15 +212,21 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
   </form>
 
     <!--Table of sales(ventas) ordered by venta number  -->
-<table id="tableVentas">
+<h3>Tabla de ventas (ordenada por número de venta)</h3>
+  <table id="tableVentas">
+  <!--
+  Here we need to be able to keep track of the number (nro venta), and increment it by 1 each time we add a new venta
+  row here. Additionally, we need to increment the venta number on the button too, so when it's clicked it only removes
+  that one venta by its ventaID. (ventaRemoveButton1, ventaRemoveButton...n, deleteXButton)
+  -->
   <thead>
   <tr>
     <th>Nro Venta</th>
-    <th>Codigo de Articulo</th>
+    <th>Código de Artículo</th>
     <th>Nombre de Influencer</th>
     <th>Cantidad</th>
     <th>Medio</th>
-    <th>Accion</th>
+    <th>Acción</th>
   </tr>
   </thead>
   <tbody>
@@ -225,7 +236,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     <td>Ana Perez</td>
     <td>3</td>
     <td>1-Instagram</td>
-    <td><button class="deleteXButton">❌</button></td>
+    <td><button onclick="this.parentElement.parentElement.remove()">❌</button></td>
   </tr>
   <tr>
     <td>2</td>
@@ -233,13 +244,13 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     <td>Juan Gomez</td>
     <td>1</td>
     <td>2-Youtube</td>
-    <td><button class="deleteXButton">❌</button></td>
+    <td><button onclick="this.parentElement.parentElement.remove()">❌</button></td>
   </tr>
   </tbody>
 </table>
 
 <!--Bubble graph-->
-<h3>Grafico de burbujas</h3>
+<h3>Gráfico de burbujas</h3>
 
 </body>
 
