@@ -33,42 +33,45 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
 </head>
 
 <body>
-
   <!-- Site content -->
   <h1>Sistema de Gestión (Dostourian - Ap 2)</h1>
 
   <!--  Influencer Section-->
+  <section>
   <h2>Manejo de Influencers</h2>
-  <h3>Alta de Influencer</h3>
-  <button id="buttonAgregarInfluencer1">Agregar Influencer</button>
-
+  <article>
+    <h3>Alta de Influencer</h3>
+    <button id="buttonAgregarInfluencer1">Agregar Influencer</button>
+  </article>
   <!--  Add influencer form-->
-  <h3>Datos del Influencer a agregar</h3>
-  <h3>Influencer</h3>
-  <form id="formInfluencer">
-  <label for="nombreInfluencer" >Nombre
-    <input id="nombreInfluencer"
-           name="nombreInfluencer"
-           required
-           type="text">
-  </label>
-  <label for="mailInfluencer">Mail
-    <input id="mailInfluencer"
-           name="mailInfluencer"
-           required
-           type="text">
-  </label>
-  <label for="comisionInfluencer">% Comisión
-    <input id="comisionInfluencer"
-           name="comisionInfluencer"
-           required
-           type="number"
-           value="0"> <!-- this must have a default value of 0 to avoid NAN exceptions by default-->
-  </label>
-<button id="buttonCancelarInfluencer">Cancelar</button><button id="buttonAgregarInfluencer2">Agregar</button>
-  </form>
-
+  <article>
+    <h3>Datos del Influencer a agregar</h3>
+    <h3>Influencer</h3>
+    <form id="formInfluencer">
+    <label for="nombreInfluencer" >Nombre
+      <input id="nombreInfluencer"
+             name="nombreInfluencer"
+             required
+             type="text">
+    </label>
+    <label for="mailInfluencer">Mail
+      <input id="mailInfluencer"
+             name="mailInfluencer"
+             required
+             type="text">
+    </label>
+    <label for="comisionInfluencer">% Comisión
+      <input id="comisionInfluencer"
+             name="comisionInfluencer"
+             required
+             type="number"
+             value="0"> <!-- this must have a default value of 0 to avoid NAN exceptions by default-->
+    </label>
+  <button id="buttonCancelarInfluencer">Cancelar</button><button id="buttonAgregarInfluencer2">Agregar</button>
+    </form>
+  </article>
   <!--  Influencer table-->
+  <article>
   <h3>Tabla de Influencers</h3>
   <table id="tableInfluencers">
     <thead>
@@ -112,149 +115,162 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     </tbody>
   </table>
   <p>Información: 🔥 Top comisión (cobra más $) 🧊 Cero ventas 🟢 Venta más cara (mayor monto en una sola venta)</p>
-
+  </article>
+  </section>
   <!--  Manage articles section-->
-<h2>Manejo de Artículos</h2>
-<h3>Alta de Artículo</h3>
-<button id="buttonAgregarArticulo1">Agregar artículo</button>
-
+  <section>
+  <h2>Manejo de Artículos</h2>
+  <article>
+    <h3>Alta de Artículo</h3>
+    <button id="buttonAgregarArticulo1">Agregar artículo</button>
+  </article>
   <!--  Add article form-->
-<h3>Datos del artículo a agregar</h3>
-  <h3>Artículo</h3>
-  <form id="formArticulo">
-  <label for="codigoArticulo">Código
-    <input type="text"
-           id="codigoArticulo"
-           name="codigoArticulo">
-  </label>
-  <label for="descripcionArticulo">Descripción
-    <input type="text"
-           id="descripcionArticulo"
-           name="descripcionArticulo">
-  </label>
-  <label for="precioArticulo">Precio
-    <input type="number"
-           id="precioArticulo"
-           name="precioArticulo">
-  </label>
-<button id="buttonCancelarArticulo">Cancelar</button><button id="buttonAgregarArticulo2">Agregar</button>
-  </form>
-
-<!--  table for articles-->
-<h3>Tabla de artículos</h3>
-<table id="tableArticulos">
-  <thead>
-  <tr>
-    <th><button id="buttonArticulosCodigoOrderSwitch">Código ⇅</button></th>
-    <th>Descripción</th>
-    <th>Precio</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <!--  test article 1-->
-    <td>A001 ⭐</td>
-    <td>Remera algodón básica</td>
-    <td>$ 1000</td>
-  </tr>
-  <tr>
-    <!--  test article 2-->
-    <td>A002</td>
-    <td>Zapatillas deportivas</td>
-    <td>$ 300</td>
-  </tr>
-  <tr>
-    <!--  test article 3-->
-    <td>A003</td>
-    <td>Gorra ajustable</td>
-    <td>$ 500</td>
-  </tr>
-  </tbody>
-</table>
-<p>Información: ⭐ Artículo más vendido (mayor cantidad de unidades vendidas)</p>
+  <article>
+  <h3>Datos del artículo a agregar</h3>
+    <h3>Artículo</h3>
+    <form id="formArticulo">
+    <label for="codigoArticulo">Código
+      <input type="text"
+             id="codigoArticulo"
+             name="codigoArticulo">
+    </label>
+    <label for="descripcionArticulo">Descripción
+      <input type="text"
+             id="descripcionArticulo"
+             name="descripcionArticulo">
+    </label>
+    <label for="precioArticulo">Precio
+      <input type="number"
+             id="precioArticulo"
+             name="precioArticulo">
+    </label>
+  <button id="buttonCancelarArticulo">Cancelar</button><button id="buttonAgregarArticulo2">Agregar</button>
+    </form>
+  </article>
+  <!--  table for articles-->
+  <article>
+  <h3>Tabla de artículos</h3>
+  <table id="tableArticulos">
+    <thead>
+    <tr>
+      <th><button id="buttonArticulosCodigoOrderSwitch">Código ⇅</button></th>
+      <th>Descripción</th>
+      <th>Precio</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <!--  test article 1-->
+      <td>A001 ⭐</td>
+      <td>Remera algodón básica</td>
+      <td>$ 1000</td>
+    </tr>
+    <tr>
+      <!--  test article 2-->
+      <td>A002</td>
+      <td>Zapatillas deportivas</td>
+      <td>$ 300</td>
+    </tr>
+    <tr>
+      <!--  test article 3-->
+      <td>A003</td>
+      <td>Gorra ajustable</td>
+      <td>$ 500</td>
+    </tr>
+    </tbody>
+  </table>
+  <p>Información: ⭐ Artículo más vendido (mayor cantidad de unidades vendidas)</p>
+    </article>
+  </section>
 
 <!--  Ventas section -->
-<h2>Ventas</h2>
-<h3>Alta de ventas</h3>
-<button id="buttonAgregarVenta1">Agregar venta</button>
-
-  <!--  Add venta form-->
-<h3>Datos de la venta a agregar</h3>
-  <form id="formVentas">
-<h3>Venta</h3>
-  <label for="numeroVentaDropdown">Nro 3 Artículo
-    <select name="numeroVentaDropdown" id="numeroVentaDropdown" >
-      <option value="A001" selected >A001</option>
-      <option value="A002">A002</option>
-      <option value="A003">A003</option>
-    </select>
-  </label>
-  <label for="nombreInfluencerDropdown">Influencer
-    <select name="nombreInfluencerDropdown" id="nombreInfluencerDropdown" >
-      <option value="Ana Perez" selected >Ana Perez</option>
-      <option value="Juan Gomez">Juan Gomez</option>
-      <option value="Lucia Martinez">Lucia Martinez</option>
-    </select>
-  </label>
-  <label for="cantidadVenta">Cantidad
-    <input type="number"
-           id="cantidadVenta"
-           name="cantidadVenta">
-  </label>
-  <label for="medioVentaDropdown">Medio
-    <select name="medioVentaDropdown" id="medioVentaDropdown" >
-      <option value="1-Instagram" selected >1-Instagram</option>
-      <option value="2-Youtube">2-Youtube</option>
-      <option value="3-X">3-X</option>
-      <option value="4-TikTok">4-TikTok</option>
-      <option value="5-Facebook">5-Facebook</option>
-      <option value="6-Otras">6-Otras</option>
-    </select>
-  </label>
-<button id="buttonCancelarVenta">Cancelar</button><button id="buttonAgregarVenta2">Agregar</button>
-  </form>
-
+  <section>
+    <h2>Ventas</h2>
+    <article>
+      <h3>Alta de ventas</h3>
+      <button id="buttonAgregarVenta1">Agregar venta</button>
+    </article>
+    <!--  Add venta form-->
+    <article>
+      <h3>Datos de la venta a agregar</h3>
+      <form id="formVentas">
+        <h3>Venta</h3>
+        <label for="numeroVentaDropdown">Nro 3 Artículo
+          <select name="numeroVentaDropdown" id="numeroVentaDropdown" >
+            <option value="A001" selected >A001</option>
+            <option value="A002">A002</option>
+            <option value="A003">A003</option>
+          </select>
+        </label>
+        <label for="nombreInfluencerDropdown">Influencer
+          <select name="nombreInfluencerDropdown" id="nombreInfluencerDropdown" >
+            <option value="Ana Perez" selected >Ana Perez</option>
+            <option value="Juan Gomez">Juan Gomez</option>
+            <option value="Lucia Martinez">Lucia Martinez</option>
+          </select>
+        </label>
+        <label for="cantidadVenta">Cantidad
+          <input type="number"
+                 id="cantidadVenta"
+                 name="cantidadVenta">
+        </label>
+        <label for="medioVentaDropdown">Medio
+          <select name="medioVentaDropdown" id="medioVentaDropdown" >
+            <option value="1-Instagram" selected >1-Instagram</option>
+            <option value="2-Youtube">2-Youtube</option>
+            <option value="3-X">3-X</option>
+            <option value="4-TikTok">4-TikTok</option>
+            <option value="5-Facebook">5-Facebook</option>
+            <option value="6-Otras">6-Otras</option>
+          </select>
+        </label>
+        <button id="buttonCancelarVenta">Cancelar</button><button id="buttonAgregarVenta2">Agregar</button>
+      </form>
+    </article>
     <!--Table of sales(ventas) ordered by venta number  -->
-<h3>Tabla de ventas (ordenada por número de venta)</h3>
-  <table id="tableVentas">
-  <!--
-  Here we need to be able to keep track of the number (nro venta), and increment it by 1 each time we add a new venta
-  row here. Additionally, we need to increment the venta number on the button too, so when it's clicked it only removes
-  that one venta by its ventaID. (ventaRemoveButton1, ventaRemoveButton...n, deleteXButton)
-  -->
-  <thead>
-  <tr>
-    <th>Nro Venta</th>
-    <th>Código de Artículo</th>
-    <th>Nombre de Influencer</th>
-    <th>Cantidad</th>
-    <th>Medio</th>
-    <th>Acción</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>1</td>
-    <td>A001</td>
-    <td>Ana Perez</td>
-    <td>3</td>
-    <td>1-Instagram</td>
-    <td><button onclick="this.parentElement.parentElement.remove()">❌</button></td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>A002</td>
-    <td>Juan Gomez</td>
-    <td>1</td>
-    <td>2-Youtube</td>
-    <td><button onclick="this.parentElement.parentElement.remove()">❌</button></td>
-  </tr>
-  </tbody>
-</table>
-
+    <article>
+      <h3>Tabla de ventas (ordenada por número de venta)</h3>
+        <table id="tableVentas">
+        <!--
+        Here we need to be able to keep track of the number (nro venta), and increment it by 1 each time we add a new venta
+        row here. Additionally, we need to increment the venta number on the button too, so when it's clicked it only removes
+        that one venta by its ventaID. (ventaRemoveButton1, ventaRemoveButton...n, deleteXButton)
+        -->
+        <thead>
+          <tr>
+            <th>Nro Venta</th>
+            <th>Código de Artículo</th>
+            <th>Nombre de Influencer</th>
+            <th>Cantidad</th>
+            <th>Medio</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>A001</td>
+            <td>Ana Perez</td>
+            <td>3</td>
+            <td>1-Instagram</td>
+            <td><button onclick="this.parentElement.parentElement.remove()">❌</button></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>A002</td>
+            <td>Juan Gomez</td>
+            <td>1</td>
+            <td>2-Youtube</td>
+            <td><button onclick="this.parentElement.parentElement.remove()">❌</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
 <!--Bubble graph-->
-<h3>Gráfico de burbujas</h3>
-
+    <article>
+      <h3>Gráfico de burbujas</h3>
+    </article>
+  </section>
 </body>
 
 </html>
