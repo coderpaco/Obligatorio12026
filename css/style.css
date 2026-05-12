@@ -16,7 +16,7 @@
           - fix text inside buttons
           - fix padding inside articles (all sides
           - fix padding inside sections (all sides)
-          - add padding inside cells of table
+          - add padding inside cells of table.
 
 
 */
@@ -56,7 +56,7 @@ button{
   color:white;
   background-color: darkcyan;
   border-radius: 5px;
-  border-width:0px;
+  border-width:0;
 }
 
 table, th, td {
