@@ -16,7 +16,7 @@
 - order articles table decreasing/increasing by article codigo
 
 1. Parse input data
-2. Validate data
+2. Validate data (use a seperate function to do this probably, function verifyData(name,email)etc
 3. If ok: save data, add to tables, reload elements
 4. if not ok, prompt reinput
 
@@ -44,11 +44,12 @@ function inicio(){
 
 //Influencer
 function agregarInfluencer1(){
-  alert("Add influencer button.");
+  alert("open Add influencer popup.");
 
 }
 function cancelarInfluencer(){
   document.getElementById('formInfluencer').reset();
+  //this should probably also close the popup
   alert("Canceled.");
 }
 function agregarInfluencer2(){
@@ -57,10 +58,11 @@ function agregarInfluencer2(){
   const commission = parseInt(document.getElementById("comisionInfluencer").value);
   if(nombre!=="" && email!=="" && !Number.isNaN(commission)){
     try {
+      agregarFilaEnTablaInfluencers(nombre, email, commission, 0, "")
       alert("Addded influencer " + nombre + " with email " + email + " and " + commission + "% commission");
       document.getElementById('formInfluencer').reset();
     }catch (exception){
-      alert("exception: invalid form data, try again");
+      alert(exception);
     }
   } else{
     alert("invalid name, email, or comission. try again.");
@@ -70,10 +72,12 @@ function agregarInfluencer2(){
 //Articulos
 function agregarArticulo1(){
   //const texto = document.getElementById("frase").value;
-  alert("Add Articulo.");
+  alert("Open add Articulo popup.");
 }
 function cancelarArticulo(){
   document.getElementById('formArticulo').reset();
+  //this should probably also close the popup
+
   alert("Canceled.");
 }
 function agregarArticulo2(){
@@ -82,10 +86,11 @@ function agregarArticulo2(){
   const precio = parseInt(document.getElementById("precioArticulo").value);
   if(codigo!=="" && descripcion!=="" && !Number.isNaN(precio)){
     try {
+      agregarFilaEnTablaArticulos(codigo, descripcion, precio);
       alert("Addded articulo with code " + codigo + " and description " + descripcion + " and precio $" + precio);
       document.getElementById('formArticulo').reset();
     }catch (exception){
-      alert("exception: invalid form data, try again");
+      alert(exception);
     }
   } else{
     alert("invalid code, description, or number.");
@@ -95,13 +100,16 @@ function agregarArticulo2(){
 //Ventas
 function agregarVenta1(){
   //const texto = document.getElementById("frase").value;
-  alert("Add Venta.");
+  alert("open add Venta popup.");
 }
 function cancelarVenta(){
   document.getElementById('formVentas').reset();
+  //this should probably also close the popup
+
   alert("Canceled.");
 }
 function agregarVenta2(){
+  let nroVenta = 1;
   const articulo = document.getElementById("numeroVentaDropdown").value;
   const influencer = document.getElementById("nombreInfluencerDropdown").value;
   const cantidad = parseInt(document.getElementById("cantidadVenta").value);
@@ -109,35 +117,52 @@ function agregarVenta2(){
 
   if(!Number.isNaN(cantidad)){
     try {
+      agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medio);
       alert("Addded venta with code " + articulo + " and influencer " + influencer + " and cantidad " + cantidad + " and medio " + medio);
       document.getElementById('formVentas').reset();
+      nroVenta++; //start w first venta, then add one.
     }catch (exception){
-      alert("exception: invalid form data, try again");
+      alert(exception);
     }
   } else {
     alert("not a number, check form data and try again");
   }
 }
 
-function agregarFilaEnTablaInfluencers(nombre, email, comision, total, etiquetas, detalle){
+function agregarFilaEnTablaInfluencers(nombre, email, comision, total, etiquetas){
   let tablaPantalla = document.getElementById("tableInfluencers");
   let fila = tablaPantalla.insertRow();
-  let celda = fila.insertCell();
-  celda.innerHTML= texto;
+  let datos = [nombre, email, comision+"%", "$ "+total, etiquetas]; //join $ to the total dollar amt
+
+  for(let i=0;i<datos.length;i++){
+    let celda = fila.insertCell();
+    celda.innerHTML= datos[i];
+  }
+  //add a final cell after with Ventas button
 }
 
 function agregarFilaEnTablaArticulos(codigo, descripcion, precio){
   let tablaPantalla = document.getElementById("tableArticulos");
   let fila = tablaPantalla.insertRow();
-  let celda = fila.insertCell();
-  celda.innerHTML= texto;
+  let datos = [codigo, descripcion, "$ "+precio];
+
+  for(let i=0;i<datos.length;i++){
+    let celda = fila.insertCell();
+    celda.innerHTML= datos[i];
+  }
+
 }
 
-function agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medio, accion){
+function agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medio){
   let tablaPantalla = document.getElementById("tableVentas");
   let fila = tablaPantalla.insertRow();
-  let celda = fila.insertCell();
-  celda.innerHTML= texto;
+  let datos = [nroVenta, articulo, influencer, cantidad, medio];
+
+  for(let i=0;i<datos.length;i++){
+    let celda = fila.insertCell();
+    celda.innerHTML= datos[i];
+  }
+  //add a final cell after with the delete button
 }
 
 window.onload = function() { //found on stack overflow, through google AI: https://stackoverflow.com/questions/72869394/append-a-whole-footer-into-an-html-page-thanks-to-js

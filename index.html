@@ -16,8 +16,8 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
   <title>Sistema de Gestion</title>
   <link rel="stylesheet" href="css/style.css">
 
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="img/favicon.ico" sizes="any">
+  <link rel="icon" href="img/icon.svg" type="image/svg+xml">
 
   <script src="js/app.js"></script>
 </head>
@@ -38,25 +38,25 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     <h3>Datos del Influencer a agregar</h3>
     <h3>Influencer</h3>
     <form id="formInfluencer">
-    <label for="nombreInfluencer" >Nombre
-      <input id="nombreInfluencer"
-             name="nombreInfluencer"
-             required
-             type="text">
-    </label>
-    <label for="mailInfluencer">Mail
-      <input id="mailInfluencer"
-             name="mailInfluencer"
-             required
-             type="text">
-    </label>
-    <label for="comisionInfluencer">% Comisión
-      <input id="comisionInfluencer"
-             name="comisionInfluencer"
-             required
-             type="number">
-    </label>
-  <button id="buttonCancelarInfluencer">Cancelar</button><button id="buttonAgregarInfluencer2">Agregar</button>
+      <label for="nombreInfluencer" >Nombre
+        <input id="nombreInfluencer"
+               name="nombreInfluencer"
+               required
+               type="text">
+      </label>
+      <label for="mailInfluencer">Mail
+        <input id="mailInfluencer"
+               name="mailInfluencer"
+               required
+               type="text">
+      </label>
+      <label for="comisionInfluencer">% Comisión
+        <input id="comisionInfluencer"
+               name="comisionInfluencer"
+               required
+               type="number">
+      </label>
+      <button type="button" id="buttonCancelarInfluencer">Cancelar</button><button type="button" id="buttonAgregarInfluencer2">Agregar</button>
     </form>
   </article>
   <!--  Influencer table-->
@@ -121,25 +121,25 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
   <h3>Datos del artículo a agregar</h3>
     <h3>Artículo</h3>
     <form id="formArticulo">
-    <label for="codigoArticulo">Código
-      <input id="codigoArticulo"
-             name="codigoArticulo"
-             required
-             type="text">
-    </label>
-    <label for="descripcionArticulo">Descripción
-      <input id="descripcionArticulo"
-             name="descripcionArticulo"
-             required
-             type="text">
-    </label>
-    <label for="precioArticulo">Precio
-      <input id="precioArticulo"
-             name="precioArticulo"
-             required
-             type="number">
-    </label>
-  <button id="buttonCancelarArticulo">Cancelar</button><button id="buttonAgregarArticulo2">Agregar</button>
+      <label for="codigoArticulo">Código
+        <input id="codigoArticulo"
+               name="codigoArticulo"
+               required
+               type="text">
+      </label>
+      <label for="descripcionArticulo">Descripción
+        <input id="descripcionArticulo"
+               name="descripcionArticulo"
+               required
+               type="text">
+      </label>
+      <label for="precioArticulo">Precio
+        <input id="precioArticulo"
+               name="precioArticulo"
+               required
+               type="number">
+      </label>
+      <button type="button" id="buttonCancelarArticulo">Cancelar</button><button type="button" id="buttonAgregarArticulo2">Agregar</button>
     </form>
   </article>
   <!--  table for articles-->
@@ -221,14 +221,14 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
             <option value="6-Otras">6-Otras</option>
           </select>
         </label>
-        <button id="buttonCancelarVenta">Cancelar</button><button id="buttonAgregarVenta2">Agregar</button>
+        <button type="button" id="buttonCancelarVenta">Cancelar</button><button type="button" id="buttonAgregarVenta2">Agregar</button>
       </form>
     </article>
     <!--Table of sales(ventas) ordered by venta number  -->
     <article>
       <h3>Tabla de ventas (ordenada por número de venta)</h3>
         <table id="tableVentas">
-        <!--
+        <!-- the below is done in app.jsm incrementing by one. this doesnt change the numbers if theres a deleted item though in the table.
         Here we need to be able to keep track of the number (nro venta), and increment it by 1 each time we add a new venta
         row here. Additionally, we need to increment the venta number on the button too, so when it's clicked it only removes
         that one venta by its ventaID. (ventaRemoveButton1, ventaRemoveButton...n, deleteXButton)
