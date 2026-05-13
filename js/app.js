@@ -132,7 +132,7 @@ function agregarVenta2(){
 function agregarFilaEnTablaInfluencers(nombre, email, comision, total, etiquetas){
   let tablaPantalla = document.getElementById("tableInfluencers");
   let fila = tablaPantalla.insertRow();
-  let datos = [nombre, email, comision+"%", "$ "+total, etiquetas]; //join $ to the total dollar amt
+  let datos = [nombre, email, comision+"%", "$ "+total, etiquetas, ""]; //join $ to the total dollar amt
 
   for(let i=0;i<datos.length;i++){
     let celda = fila.insertCell();
@@ -156,7 +156,7 @@ function agregarFilaEnTablaArticulos(codigo, descripcion, precio){
 function agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medio){
   let tablaPantalla = document.getElementById("tableVentas");
   let fila = tablaPantalla.insertRow();
-  let datos = [nroVenta, articulo, influencer, cantidad, medio];
+  let datos = [nroVenta, articulo, influencer, cantidad, medio, ""];
 
   for(let i=0;i<datos.length;i++){
     let celda = fila.insertCell();
@@ -164,7 +164,7 @@ function agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medi
   }
   //add a final cell after with the delete button
 }
-
+/* //this was removed and moved to html, no need to run on load anymore.
 window.onload = function() { //found on stack overflow, through google AI: https://stackoverflow.com/questions/72869394/append-a-whole-footer-into-an-html-page-thanks-to-js
   // Create footer element
   const footerElement = document.createElement('footer');
@@ -181,7 +181,7 @@ window.onload = function() { //found on stack overflow, through google AI: https
   document.body.appendChild(footerElement);
 };
 
-
+*/
 /*
 add to a list. using its id "lista" in this case (prolly not used rn)
   function mostrarEnPantalla(textoMostrar){
