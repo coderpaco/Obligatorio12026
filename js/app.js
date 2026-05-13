@@ -9,6 +9,18 @@
        when a sale is deleted. (sale 1. next sale 2. sale 3. sale 2 deleted, sale 3 becomes sale2?
        OR do the sales stay the same number?
 */
+/*
+- Make sure to check that articulo codigo is unique
+- each sale corresponds to only one articulo
+- can only be registered if there are articles and influencers (while there arent, hide/disable button and fields)
+- order articles table decreasing/increasing by article codigo
+
+1. Parse input data
+2. Validate data
+3. If ok: save data, add to tables, reload elements
+4. if not ok, prompt reinput
+
+ */
 
 window.addEventListener('load', inicio);
 function inicio(){
@@ -43,15 +55,16 @@ function agregarInfluencer2(){
   const nombre = document.getElementById("nombreInfluencer").value;
   const email = document.getElementById("mailInfluencer").value;
   const commission = parseInt(document.getElementById("comisionInfluencer").value);
-  if(nombre!="" && email!=""){
+  if(nombre!=="" && email!=="" && !Number.isNaN(commission)){
     try {
       alert("Addded influencer " + nombre + " with email " + email + " and " + commission + "% commission");
       document.getElementById('formInfluencer').reset();
     }catch (exception){
-      alert("check form data");
+      alert("exception: invalid form data, try again");
     }
+  } else{
+    alert("invalid name, email, or comission. try again.");
   }
-
 }
 
 //Articulos
@@ -67,10 +80,16 @@ function agregarArticulo2(){
   const codigo = document.getElementById("codigoArticulo").value;
   const descripcion = document.getElementById("descripcionArticulo").value;
   const precio = parseInt(document.getElementById("precioArticulo").value);
-
-  alert("Addded articulo with code " + codigo + " and description " + descripcion + " and precio $" + precio);
-
-  document.getElementById('formArticulo').reset();
+  if(codigo!=="" && descripcion!=="" && !Number.isNaN(precio)){
+    try {
+      alert("Addded articulo with code " + codigo + " and description " + descripcion + " and precio $" + precio);
+      document.getElementById('formArticulo').reset();
+    }catch (exception){
+      alert("exception: invalid form data, try again");
+    }
+  } else{
+    alert("invalid code, description, or number.");
+  }
 }
 
 //Ventas
@@ -88,9 +107,16 @@ function agregarVenta2(){
   const cantidad = parseInt(document.getElementById("cantidadVenta").value);
   const medio = document.getElementById("medioVentaDropdown").value;
 
-  alert("Addded venta with code " + articulo + " and influencer " + influencer + " and cantidad " + cantidad + " and medio " + medio);
-
-  document.getElementById('formVentas').reset();
+  if(!Number.isNaN(cantidad)){
+    try {
+      alert("Addded venta with code " + articulo + " and influencer " + influencer + " and cantidad " + cantidad + " and medio " + medio);
+      document.getElementById('formVentas').reset();
+    }catch (exception){
+      alert("exception: invalid form data, try again");
+    }
+  } else {
+    alert("not a number, check form data and try again");
+  }
 }
 
 function agregarFilaEnTablaInfluencers(nombre, email, comision, total, etiquetas, detalle){

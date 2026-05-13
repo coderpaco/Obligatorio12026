@@ -54,8 +54,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
       <input id="comisionInfluencer"
              name="comisionInfluencer"
              required
-             type="number"
-             value="0"> <!-- this must have a default value of 0 to avoid NAN exceptions by default-->
+             type="number">
     </label>
   <button id="buttonCancelarInfluencer">Cancelar</button><button id="buttonAgregarInfluencer2">Agregar</button>
     </form>
@@ -123,19 +122,22 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     <h3>Artículo</h3>
     <form id="formArticulo">
     <label for="codigoArticulo">Código
-      <input type="text"
-             id="codigoArticulo"
-             name="codigoArticulo">
+      <input id="codigoArticulo"
+             name="codigoArticulo"
+             required
+             type="text">
     </label>
     <label for="descripcionArticulo">Descripción
-      <input type="text"
-             id="descripcionArticulo"
-             name="descripcionArticulo">
+      <input id="descripcionArticulo"
+             name="descripcionArticulo"
+             required
+             type="text">
     </label>
     <label for="precioArticulo">Precio
-      <input type="number"
-             id="precioArticulo"
-             name="precioArticulo">
+      <input id="precioArticulo"
+             name="precioArticulo"
+             required
+             type="number">
     </label>
   <button id="buttonCancelarArticulo">Cancelar</button><button id="buttonAgregarArticulo2">Agregar</button>
     </form>
