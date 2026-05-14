@@ -7,8 +7,10 @@
      - add values to tables/dropdowns
      - make sure the value of each sale (salenumber) increments by one when added, and decreases/changes
        when a sale is deleted. (sale 1. next sale 2. sale 3. sale 2 deleted, sale 3 becomes sale2?
-       OR do the sales stay the same number?
+       OR do the sales stay the same number? current implementation of adding 1 to each variable
+       doesnt seem to work
 */
+
 /*
 - Make sure to check that articulo codigo is unique
 - each sale corresponds to only one articulo
@@ -38,14 +40,50 @@ function inicio(){
   document.getElementById("buttonAgregarVenta1").addEventListener("click", agregarVenta1);
   document.getElementById("buttonCancelarVenta").addEventListener("click", cancelarVenta);
   document.getElementById("buttonAgregarVenta2").addEventListener("click", agregarVenta2);
-
 }
 
+// Wait for the DOM to fully load before running the code
+// Snippet written  by Ecosia AI
+// This code snippet checks if a certain button was clicked by checking its class.
+// This code is important because it also applies to buttons added AFTER page load.
+document.addEventListener('DOMContentLoaded', () => {
+  // Add a single event listener to the document
+  document.addEventListener('click', (event) => {
+    // Check if the clicked element has the class 'showVentasButton'
+    if (event.target.classList.contains('showVentasButton')) {
+      console.log('Button clicked!', event.target);
+      // alert to debug
+      //sample data. Should also show if there were no sales.
+      const ventaNum = 1;
+      const cantidad = 10;
+      const articulo = "A001";
+      const precio = 355;
+      const comision = 50;
+      alert(`
+      You clicked the Ventas button. Here's the influencer sales data: \n
+        Venta Numero: ${ventaNum}\n
+        Cantidad: ${cantidad}\n
+        Articulo: ${articulo}\n
+        Precio Unitario: $${precio}\n
+        Comision: $${comision}\n
+      `);
+
+      //event.target.parentElement.parentElement.remove();
+    }
+
+    // Check if the clicked element has the class 'removeVentaButton'
+    if (event.target.classList.contains('removeVentaButton')) {
+      console.log('Button clicked!', event.target);
+      // alert to debug
+      alert(`You clicked button with text: ${event.target.textContent}`);
+      event.target.parentElement.parentElement.remove();
+    }
+  });
+});
 
 //Influencer
 function agregarInfluencer1(){
   alert("open Add influencer popup.");
-
 }
 function cancelarInfluencer(){
   document.getElementById('formInfluencer').reset();
@@ -109,7 +147,7 @@ function cancelarVenta(){
   alert("Canceled.");
 }
 function agregarVenta2(){
-  let nroVenta = 1;
+  const nroVenta = 0; //this needs to increment somehow
   const articulo = document.getElementById("numeroVentaDropdown").value;
   const influencer = document.getElementById("nombreInfluencerDropdown").value;
   const cantidad = parseInt(document.getElementById("cantidadVenta").value);
@@ -120,7 +158,6 @@ function agregarVenta2(){
       agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medio);
       alert("Addded venta with code " + articulo + " and influencer " + influencer + " and cantidad " + cantidad + " and medio " + medio);
       document.getElementById('formVentas').reset();
-      nroVenta++; //start w first venta, then add one.
     }catch (exception){
       alert(exception);
     }
@@ -134,12 +171,21 @@ function agregarFilaEnTablaInfluencers(nombre, email, comision, total, etiquetas
   let fila = tablaPantalla.insertRow();
   let datos = [nombre, email, comision+"%", "$ "+total, etiquetas, ""]; //join $ to the total dollar amt
 
-  for(let i=0;i<datos.length;i++){
+  for(let i=0;i<datos.length-1;i++){
     let celda = fila.insertCell();
     celda.innerHTML= datos[i];
   }
+
+  //function to add a button to a table cell, created with Grok AI
+  let celda = fila.insertCell();
+  let btn = document.createElement('button');
+  btn.textContent = 'Ventas';
+  btn.className = 'showVentasButton';
+  //onclick ventaButton javascript needs to be added to js file
+  celda.appendChild(btn);
   //add a final cell after with Ventas button
 }
+
 
 function agregarFilaEnTablaArticulos(codigo, descripcion, precio){
   let tablaPantalla = document.getElementById("tableArticulos");
@@ -158,11 +204,20 @@ function agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medi
   let fila = tablaPantalla.insertRow();
   let datos = [nroVenta, articulo, influencer, cantidad, medio, ""];
 
-  for(let i=0;i<datos.length;i++){
+  for(let i=0;i<datos.length-1;i++){
     let celda = fila.insertCell();
     celda.innerHTML= datos[i];
   }
   //add a final cell after with the delete button
+  //function to add a button to a table cell, created with Grok AI
+  let celda = fila.insertCell();
+  let btn = document.createElement('button');
+  btn.textContent = '❌';
+  btn.className = 'removeVentaButton';
+  //onclick removeVentaButton javascript needs to be added to js file
+  celda.appendChild(btn);
+  //add a final cell after with Ventas button
+
 }
 /* //this was removed and moved to html, no need to run on load anymore.
 window.onload = function() { //found on stack overflow, through google AI: https://stackoverflow.com/questions/72869394/append-a-whole-footer-into-an-html-page-thanks-to-js

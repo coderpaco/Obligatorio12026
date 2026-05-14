@@ -13,7 +13,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sistema de Gestion</title>
+  <title>Sistema de Gestión</title>
   <link rel="stylesheet" href="css/style.css">
 
   <link rel="icon" href="img/favicon.ico" sizes="any">
@@ -24,7 +24,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
 
 <body>
   <!-- Site content -->
-  <h1>Sistema de Gestión (Dostourian - Ap 2)</h1>
+  <h1>Sistema de Gestión (Davit Dostourian)</h1>
 
   <!--  Influencer Section-->
   <section>
@@ -37,7 +37,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
   <article>
     <h3>Datos del Influencer a agregar</h3>
     <h3>Influencer</h3>
-    <form id="formInfluencer">
+    <form id="formInfluencer" onsubmit="return false">
       <label for="nombreInfluencer" >Nombre
         <input id="nombreInfluencer"
                name="nombreInfluencer"
@@ -56,7 +56,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
                required
                type="number">
       </label>
-      <button type="button" id="buttonCancelarInfluencer">Cancelar</button><button type="button" id="buttonAgregarInfluencer2">Agregar</button>
+      <button type="button" id="buttonCancelarInfluencer">Cancelar</button><button type="submit" id="buttonAgregarInfluencer2">Agregar</button>
     </form>
   </article>
   <!--  Influencer table-->
@@ -81,7 +81,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
       <td>20%</td>
       <td>$ 600</td>
       <td>🔥 🟢</td>
-      <td><button>Ventas</button></td>
+      <td><button class="showVentasButton">Ventas</button></td>
     </tr>
     <tr>
       <!--  test person 2-->
@@ -90,7 +90,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
       <td>10%</td>
       <td>$ 30</td>
       <td></td>
-      <td><button>Ventas</button></td>
+      <td><button class="showVentasButton">Ventas</button></td>
     </tr>
     <tr>
       <!--  test person 3-->
@@ -99,7 +99,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
       <td>95%</td>
       <td>$ 0</td>
       <td>🧊</td>
-      <td><button>Ventas</button></td>
+      <td><button class="showVentasButton">Ventas</button></td>
     </tr>
     </tbody>
   </table>
@@ -120,7 +120,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
   <article>
   <h3>Datos del artículo a agregar</h3>
     <h3>Artículo</h3>
-    <form id="formArticulo">
+    <form id="formArticulo" onsubmit="return false">
       <label for="codigoArticulo">Código
         <input id="codigoArticulo"
                name="codigoArticulo"
@@ -139,7 +139,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
                required
                type="number">
       </label>
-      <button type="button" id="buttonCancelarArticulo">Cancelar</button><button type="button" id="buttonAgregarArticulo2">Agregar</button>
+      <button type="button" id="buttonCancelarArticulo">Cancelar</button><button type="submit" id="buttonAgregarArticulo2">Agregar</button>
     </form>
   </article>
   <!--  table for articles-->
@@ -190,7 +190,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
     <!--  Add venta form-->
     <article>
       <h3>Datos de la venta a agregar</h3>
-      <form id="formVentas">
+      <form id="formVentas" onsubmit="return false">
         <h3>Venta</h3>
         <label for="numeroVentaDropdown">Nro 3 Artículo
           <select name="numeroVentaDropdown" id="numeroVentaDropdown" >
@@ -221,7 +221,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
             <option value="6-Otras">6-Otras</option>
           </select>
         </label>
-        <button type="button" id="buttonCancelarVenta">Cancelar</button><button type="button" id="buttonAgregarVenta2">Agregar</button>
+        <button type="button" id="buttonCancelarVenta">Cancelar</button><button type="submit" id="buttonAgregarVenta2">Agregar</button>
       </form>
     </article>
     <!--Table of sales(ventas) ordered by venta number  -->
@@ -250,7 +250,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
             <td>Ana Perez</td>
             <td>3</td>
             <td>1-Instagram</td>
-            <td><button onclick="this.parentElement.parentElement.remove()">❌</button></td>
+            <td><button class="removeVentaButton">❌</button></td>
           </tr>
           <tr>
             <td>2</td>
@@ -258,7 +258,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
             <td>Juan Gomez</td>
             <td>1</td>
             <td>2-Youtube</td>
-            <td><button onclick="this.parentElement.parentElement.remove()">❌</button></td>
+            <td><button class="removeVentaButton">❌</button></td>
           </tr>
         </tbody>
       </table>
@@ -266,13 +266,13 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
 <!--Bubble graph-->
     <article>
       <h3>Gráfico de burbujas</h3>
+
     </article>
   </section>
 <!-- Footer-->
   <footer>
-    <p>Davit Dostourian Erbe, 281664. Autor 2, Num estudiante. |
-      <a href=https://ort.edu.uy target="_blank" rel="noopener noreferrer">Estudiante 1</a>
-      <a href=https://ort.edu.uy target="_blank" rel="noopener noreferrer">Estudiante 2</a>
+    <p>Davit Dostourian Erbe, 281664. |
+      <a href=https://ort.edu.uy target="_blank" rel="noopener noreferrer">ORT Uruguay</a>
     </p>
   </footer>
 </body>

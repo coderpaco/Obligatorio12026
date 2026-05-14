@@ -101,7 +101,19 @@ label{
 input{
   margin-left: 30px;
 }
+/*
+input:invalid,
+select:invalid,
+textarea:invalid {
+  border-color: #dc2545; !important;
+  box-shadow: 0 0 0 1px rgba(220,53, 59, 02) !important;
+}
 
+input:invalid:focus{
+  outline:none;
+}
+
+ */
 hr {
   display: block;
   height: 3px;
