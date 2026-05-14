@@ -4,7 +4,6 @@
    ==========================================================================
     TODO:
      - is using form.reset() the best way to reset form? or set values to ""
-     - add values to tables/dropdowns
      - make sure the value of each sale (salenumber) increments by one when added, and decreases/changes
        when a sale is deleted. (sale 1. next sale 2. sale 3. sale 2 deleted, sale 3 becomes sale2?
        OR do the sales stay the same number? current implementation of adding 1 to each variable
