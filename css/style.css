@@ -7,10 +7,8 @@
    ==========================================================================
    Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
    ==========================================================================
-    TODO: - check with teacher to ensure that current page is okay and not too large
+    TODO: - check with teacher to ensure that current page is okay and elements/ text are not too large
 */
-
-
 
 html {
   font-family: "Arial", sans-serif;
@@ -20,48 +18,49 @@ html {
   line-height: 1.4;
 }
 
-h2{
+h2 {
   margin-left: 80px;
 }
-h3{
-  margin-left:5px;
+h3 {
+  margin-left: 5px;
 }
 
 h1,
-h3{
-  color:black;
+h3 {
+  color: black;
 }
 
-section{
-  background-color: #FFFFFF;
+section {
+  background-color: #ffffff;
   border-radius: 5px; /* All corners are rounded by 15px */
-  padding-top:5px;
-  margin-right:50px;
+  padding-top: 5px;
+  margin-right: 50px;
 }
 
-article{
+article {
   background-color: #f0f0f0;
   border-radius: 5px; /* All corners are rounded by 15px */
   padding: 20px; /* Applies to all sides */
   margin-left: 80px;
-  margin-right:200px;
+  margin-right: 200px;
   margin-bottom: 30px;
 }
 
-button{
-  color:white;
+button {
+  color: white;
   background-color: #0ea4b6;
   border-radius: 5px;
-  border-width:0;
+  border-width: 0;
   /*margin-bottom:5px;*/
-  margin:3px;
+  margin: 3px;
 
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
   padding-right: 15px;
 }
-button:active{ /*show that the button is clicked*/
+button:active {
+  /*show that the button is clicked*/
   background-color: #0a6671;
 }
 
@@ -74,25 +73,25 @@ button:active{ /*show that the button is clicked*/
 #buttonAgregarArticulo2,
 #buttonAgregarVenta1,
 #buttonCancelarVenta,
-#buttonAgregarVenta2{
-                    width: 150px;
-                    height: 40px;
+#buttonAgregarVenta2 {
+  width: 150px;
+  height: 40px;
 }
 
-
-
-table, th, td {
+table,
+th,
+td {
   border: 2px solid black;
   border-collapse: collapse;
-  padding: 5px
+  padding: 5px;
 }
 
-label{
+label {
   align-items: center;
   width: 100px;
   padding-left: 5px;
 }
-input{
+input {
   margin-left: 30px;
 }
 /*

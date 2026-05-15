@@ -8,6 +8,14 @@
        when a sale is deleted. (sale 1. next sale 2. sale 3. sale 2 deleted, sale 3 becomes sale2?
        OR do the sales stay the same number? current implementation of adding 1 to each variable
        doesnt seem to work
+     - Add logic for alerts when ventas button is clicked. It should get the sales for that influencer, and
+      show them in the alert.
+     - Influencer, Articulo, and venta datos categories should have a hidden attribute, until the agregar button in the
+     section above is clicked. The article should then be shown in a popup bubble window.
+     - When a new influencer, venta, or articulo is added, they need to be kept somewhere saved and updated to the
+     tables, and dropdowns once the agregar button is clicked. PERSISTANCE ACROSS ALL TABLES AND DROPDOWNS!
+     Maybe the use of an updateElements() function that takes the values of the arrays storing the table and dropdown data
+     array for influencers, articulos, ventas?
 */
 
 /*
@@ -23,34 +31,52 @@
 
  */
 
-window.addEventListener('load', inicio);
-function inicio(){
+window.addEventListener("load", inicio);
+function inicio() {
   //Influencer
-  document.getElementById("buttonAgregarInfluencer1").addEventListener("click", agregarInfluencer1);
-  document.getElementById("buttonCancelarInfluencer").addEventListener("click", cancelarInfluencer);
-  document.getElementById("buttonAgregarInfluencer2").addEventListener("click", agregarInfluencer2);
+  document
+    .getElementById("buttonAgregarInfluencer1")
+    .addEventListener("click", agregarInfluencer1);
+  document
+    .getElementById("buttonCancelarInfluencer")
+    .addEventListener("click", cancelarInfluencer);
+  document
+    .getElementById("buttonAgregarInfluencer2")
+    .addEventListener("click", agregarInfluencer2);
 
   //Articulos
-  document.getElementById("buttonAgregarArticulo1").addEventListener("click", agregarArticulo1);
-  document.getElementById("buttonCancelarArticulo").addEventListener("click", cancelarArticulo);
-  document.getElementById("buttonAgregarArticulo2").addEventListener("click", agregarArticulo2);
+  document
+    .getElementById("buttonAgregarArticulo1")
+    .addEventListener("click", agregarArticulo1);
+  document
+    .getElementById("buttonCancelarArticulo")
+    .addEventListener("click", cancelarArticulo);
+  document
+    .getElementById("buttonAgregarArticulo2")
+    .addEventListener("click", agregarArticulo2);
 
   //Ventas
-  document.getElementById("buttonAgregarVenta1").addEventListener("click", agregarVenta1);
-  document.getElementById("buttonCancelarVenta").addEventListener("click", cancelarVenta);
-  document.getElementById("buttonAgregarVenta2").addEventListener("click", agregarVenta2);
+  document
+    .getElementById("buttonAgregarVenta1")
+    .addEventListener("click", agregarVenta1);
+  document
+    .getElementById("buttonCancelarVenta")
+    .addEventListener("click", cancelarVenta);
+  document
+    .getElementById("buttonAgregarVenta2")
+    .addEventListener("click", agregarVenta2);
 }
 
 // Wait for the DOM to fully load before running the code
 // Snippet written  by Ecosia AI
 // This code snippet checks if a certain button was clicked by checking its class.
 // This code is important because it also applies to buttons added AFTER page load.
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Add a single event listener to the document
-  document.addEventListener('click', (event) => {
+  document.addEventListener("click", (event) => {
     // Check if the clicked element has the class 'showVentasButton'
-    if (event.target.classList.contains('showVentasButton')) {
-      console.log('Button clicked!', event.target);
+    if (event.target.classList.contains("showVentasButton")) {
+      console.log("Button clicked!", event.target);
       // alert to debug
       //sample data. Should also show if there were no sales.
       const ventaNum = 1;
@@ -71,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Check if the clicked element has the class 'removeVentaButton'
-    if (event.target.classList.contains('removeVentaButton')) {
-      console.log('Button clicked!', event.target);
+    if (event.target.classList.contains("removeVentaButton")) {
+      console.log("Button clicked!", event.target);
       // alert to debug
       alert(`You clicked button with text: ${event.target.textContent}`);
       event.target.parentElement.parentElement.remove();
@@ -81,83 +107,109 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 //Influencer
-function agregarInfluencer1(){
+function agregarInfluencer1() {
   alert("open Add influencer popup.");
 }
-function cancelarInfluencer(){
-  document.getElementById('formInfluencer').reset();
+function cancelarInfluencer() {
+  document.getElementById("formInfluencer").reset();
   //this should probably also close the popup
   alert("Canceled.");
 }
-function agregarInfluencer2(){
+function agregarInfluencer2() {
   const nombre = document.getElementById("nombreInfluencer").value;
   const email = document.getElementById("mailInfluencer").value;
-  const commission = parseInt(document.getElementById("comisionInfluencer").value);
-  if(nombre!=="" && email!=="" && !Number.isNaN(commission)){
+  const commission = parseInt(
+    document.getElementById("comisionInfluencer").value,
+  );
+  if (nombre !== "" && email !== "" && !Number.isNaN(commission)) {
     try {
-      agregarFilaEnTablaInfluencers(nombre, email, commission, 0, "")
-      alert("Addded influencer " + nombre + " with email " + email + " and " + commission + "% commission");
-      document.getElementById('formInfluencer').reset();
-    }catch (exception){
+      agregarFilaEnTablaInfluencers(nombre, email, commission, 0, "");
+      alert(
+        "Addded influencer " +
+          nombre +
+          " with email " +
+          email +
+          " and " +
+          commission +
+          "% commission",
+      );
+      document.getElementById("formInfluencer").reset();
+    } catch (exception) {
       alert(exception);
     }
-  } else{
+  } else {
     alert("invalid name, email, or comission. try again.");
   }
 }
 
 //Articulos
-function agregarArticulo1(){
+function agregarArticulo1() {
   //const texto = document.getElementById("frase").value;
   alert("Open add Articulo popup.");
 }
-function cancelarArticulo(){
-  document.getElementById('formArticulo').reset();
+function cancelarArticulo() {
+  document.getElementById("formArticulo").reset();
   //this should probably also close the popup
 
   alert("Canceled.");
 }
-function agregarArticulo2(){
+function agregarArticulo2() {
   const codigo = document.getElementById("codigoArticulo").value;
   const descripcion = document.getElementById("descripcionArticulo").value;
   const precio = parseInt(document.getElementById("precioArticulo").value);
-  if(codigo!=="" && descripcion!=="" && !Number.isNaN(precio)){
+  if (codigo !== "" && descripcion !== "" && !Number.isNaN(precio)) {
     try {
       agregarFilaEnTablaArticulos(codigo, descripcion, precio);
-      alert("Addded articulo with code " + codigo + " and description " + descripcion + " and precio $" + precio);
-      document.getElementById('formArticulo').reset();
-    }catch (exception){
+      alert(
+        "Addded articulo with code " +
+          codigo +
+          " and description " +
+          descripcion +
+          " and precio $" +
+          precio,
+      );
+      document.getElementById("formArticulo").reset();
+    } catch (exception) {
       alert(exception);
     }
-  } else{
+  } else {
     alert("invalid code, description, or number.");
   }
 }
 
 //Ventas
-function agregarVenta1(){
+function agregarVenta1() {
   //const texto = document.getElementById("frase").value;
   alert("open add Venta popup.");
 }
-function cancelarVenta(){
-  document.getElementById('formVentas').reset();
+function cancelarVenta() {
+  document.getElementById("formVentas").reset();
   //this should probably also close the popup
 
   alert("Canceled.");
 }
-function agregarVenta2(){
+function agregarVenta2() {
   const nroVenta = 0; //this needs to increment somehow
   const articulo = document.getElementById("numeroVentaDropdown").value;
   const influencer = document.getElementById("nombreInfluencerDropdown").value;
   const cantidad = parseInt(document.getElementById("cantidadVenta").value);
   const medio = document.getElementById("medioVentaDropdown").value;
 
-  if(!Number.isNaN(cantidad)){
+  if (!Number.isNaN(cantidad)) {
     try {
       agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medio);
-      alert("Addded venta with code " + articulo + " and influencer " + influencer + " and cantidad " + cantidad + " and medio " + medio);
-      document.getElementById('formVentas').reset();
-    }catch (exception){
+      alert(
+        "Addded venta with code " +
+          articulo +
+          " and influencer " +
+          influencer +
+          " and cantidad " +
+          cantidad +
+          " and medio " +
+          medio,
+      );
+      document.getElementById("formVentas").reset();
+    } catch (exception) {
       alert(exception);
     }
   } else {
@@ -165,58 +217,67 @@ function agregarVenta2(){
   }
 }
 
-function agregarFilaEnTablaInfluencers(nombre, email, comision, total, etiquetas){
+function agregarFilaEnTablaInfluencers(
+  nombre,
+  email,
+  comision,
+  total,
+  etiquetas,
+) {
   let tablaPantalla = document.getElementById("tableInfluencers");
   let fila = tablaPantalla.insertRow();
-  let datos = [nombre, email, comision+"%", "$ "+total, etiquetas, ""]; //join $ to the total dollar amt
+  let datos = [nombre, email, comision + "%", "$ " + total, etiquetas, ""]; //join $ to the total dollar amt
 
-  for(let i=0;i<datos.length-1;i++){
+  for (let i = 0; i < datos.length - 1; i++) {
     let celda = fila.insertCell();
-    celda.innerHTML= datos[i];
+    celda.innerHTML = datos[i];
   }
 
   //function to add a button to a table cell, created with Grok AI
   let celda = fila.insertCell();
-  let btn = document.createElement('button');
-  btn.textContent = 'Ventas';
-  btn.className = 'showVentasButton';
+  let btn = document.createElement("button");
+  btn.textContent = "Ventas";
+  btn.className = "showVentasButton";
   //onclick ventaButton javascript needs to be added to js file
   celda.appendChild(btn);
   //add a final cell after with Ventas button
 }
 
-
-function agregarFilaEnTablaArticulos(codigo, descripcion, precio){
+function agregarFilaEnTablaArticulos(codigo, descripcion, precio) {
   let tablaPantalla = document.getElementById("tableArticulos");
   let fila = tablaPantalla.insertRow();
-  let datos = [codigo, descripcion, "$ "+precio];
+  let datos = [codigo, descripcion, "$ " + precio];
 
-  for(let i=0;i<datos.length;i++){
+  for (let i = 0; i < datos.length; i++) {
     let celda = fila.insertCell();
-    celda.innerHTML= datos[i];
+    celda.innerHTML = datos[i];
   }
-
 }
 
-function agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medio){
+function agregarFilaEnTablaVentas(
+  nroVenta,
+  articulo,
+  influencer,
+  cantidad,
+  medio,
+) {
   let tablaPantalla = document.getElementById("tableVentas");
   let fila = tablaPantalla.insertRow();
   let datos = [nroVenta, articulo, influencer, cantidad, medio, ""];
 
-  for(let i=0;i<datos.length-1;i++){
+  for (let i = 0; i < datos.length - 1; i++) {
     let celda = fila.insertCell();
-    celda.innerHTML= datos[i];
+    celda.innerHTML = datos[i];
   }
   //add a final cell after with the delete button
   //function to add a button to a table cell, created with Grok AI
   let celda = fila.insertCell();
-  let btn = document.createElement('button');
-  btn.textContent = '❌';
-  btn.className = 'removeVentaButton';
+  let btn = document.createElement("button");
+  btn.textContent = "❌";
+  btn.className = "removeVentaButton";
   //onclick removeVentaButton javascript needs to be added to js file
   celda.appendChild(btn);
   //add a final cell after with Ventas button
-
 }
 /* //this was removed and moved to html, no need to run on load anymore.
 window.onload = function() { //found on stack overflow, through google AI: https://stackoverflow.com/questions/72869394/append-a-whole-footer-into-an-html-page-thanks-to-js
