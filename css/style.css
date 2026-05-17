@@ -53,11 +53,8 @@ button {
   border-width: 0;
   /*margin-bottom:5px;*/
   margin: 3px;
-
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
+  /* Shorthand for padding top/bottom with 10px, left/right with 15px.*/
+  padding: 10px 15px;
 }
 button:active {
   /*show that the button is clicked*/
@@ -65,15 +62,15 @@ button:active {
 }
 
 /*change button properties to make them the right size*/
-#buttonAgregarInfluencer1,
-#buttonCancelarInfluencer,
-#buttonAgregarInfluencer2,
-#buttonAgregarArticulo1,
-#buttonCancelarArticulo,
-#buttonAgregarArticulo2,
-#buttonAgregarVenta1,
-#buttonCancelarVenta,
-#buttonAgregarVenta2 {
+#addInfluencerButton1,
+#cancelInfluencerButton,
+#addInfluencerButton2,
+#addItemButton1,
+#cancelItemButton,
+#addItemButton2,
+#addSaleButton,
+#cancelSaleButton,
+#addSaleButton2 {
   width: 150px;
   height: 40px;
 }

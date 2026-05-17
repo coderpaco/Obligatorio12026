@@ -16,88 +16,118 @@
      tables, and dropdowns once the agregar button is clicked. PERSISTANCE ACROSS ALL TABLES AND DROPDOWNS!
      Maybe the use of an updateElements() function that takes the values of the arrays storing the table and dropdown data
      array for influencers, articulos, ventas?
+
+     addInfluencer()
+      ->1. Adds a new influencer to the array (Initialized and added to array with an empty tag value "")
+      ->2. Runs updateData()
+     addArticle()
+      ->1. Adds a new article to the array
+      ->2. Runs updateData()
+     addVenta()
+      ->1. Adds a new article to the array
+      ->2. Runs updateData()
+     updateData()
+      fillTables()
+        addTags() (For the influencers table)
+          -> Fills the empty tag value "" -> "🔥"
+          -> Adds the newly updated influencer array objects to the table
+        masVendido() (For the articles table)
+          -> Checks which article is sold most. Adds a ⭐ emoji next to name (name + "⭐")
+          -> Requires a venta with that object before it can be done. if no ventas, do nothing (no stars)
+        fillDropdowns()
+          -> Adds the value of "Codigo" from each article array object to the dropdown
+          -> Adds the value of "Name" from each influencer array object to the dropdown
+     checkOrder()
+      -> if influencers table is ascending or descending
+      -> if articulos table is ascending or descending
+
 */
 
 /*
-- Make sure to check that articulo codigo is unique
-- each sale corresponds to only one articulo
-- can only be registered if there are articles and influencers (while there arent, hide/disable button and fields)
-- order articles table decreasing/increasing by article codigo
+- Make sure to check that item code is unique
+- each sale corresponds to only one item
+- can only be registered if there are items and influencers (while there aren't, hide/disable button and fields)
+- order items table decreasing/increasing by item code
 
 1. Parse input data
-2. Validate data (use a seperate function to do this probably, function verifyData(name,email)etc
+2. Validate data (use a separate function to do this probably, function verifyData(name,email)etc
 3. If ok: save data, add to tables, reload elements
 4. if not ok, prompt reinput
 
  */
 
-window.addEventListener("load", inicio);
-function inicio() {
+// Define our arrays to store data
+// We need to access this data in the following ways:
+// - Put new influencers, items, and sales in their respective arrays
+// - Access the arrays, and do a for each loop to add each element to their tables and populate dropdowns.
+
+let influencersArray = [];
+let itemsArray = [];
+let salesArray = [];
+
+window.addEventListener("load", start);
+function start() {
   //Influencer
   document
-    .getElementById("buttonAgregarInfluencer1")
-    .addEventListener("click", agregarInfluencer1);
+    .getElementById("addInfluencerButton1")
+    .addEventListener("click", addInfluencer1);
   document
-    .getElementById("buttonCancelarInfluencer")
-    .addEventListener("click", cancelarInfluencer);
+    .getElementById("cancelInfluencerButton")
+    .addEventListener("click", cancelInfluencer);
   document
-    .getElementById("buttonAgregarInfluencer2")
-    .addEventListener("click", agregarInfluencer2);
+    .getElementById("addInfluencerButton2")
+    .addEventListener("click", addInfluencer2);
 
-  //Articulos
+  //Articles
   document
-    .getElementById("buttonAgregarArticulo1")
-    .addEventListener("click", agregarArticulo1);
+    .getElementById("addItemButton1")
+    .addEventListener("click", addArticle1);
   document
-    .getElementById("buttonCancelarArticulo")
-    .addEventListener("click", cancelarArticulo);
+    .getElementById("cancelItemButton")
+    .addEventListener("click", cancelArticle);
   document
-    .getElementById("buttonAgregarArticulo2")
-    .addEventListener("click", agregarArticulo2);
+    .getElementById("addItemButton2")
+    .addEventListener("click", addArticle2);
 
-  //Ventas
+  //Sales (Ventas)
+  document.getElementById("addSaleButton").addEventListener("click", addSale1);
   document
-    .getElementById("buttonAgregarVenta1")
-    .addEventListener("click", agregarVenta1);
-  document
-    .getElementById("buttonCancelarVenta")
-    .addEventListener("click", cancelarVenta);
-  document
-    .getElementById("buttonAgregarVenta2")
-    .addEventListener("click", agregarVenta2);
+    .getElementById("cancelSaleButton")
+    .addEventListener("click", cancelSale);
+  document.getElementById("addSaleButton2").addEventListener("click", addSale2);
 }
 
-// Wait for the DOM to fully load before running the code
+// Wait for the DOM to fully load before running the code (Ventas button click)
 // Snippet written  by Ecosia AI
 // This code snippet checks if a certain button was clicked by checking its class.
 // This code is important because it also applies to buttons added AFTER page load.
 document.addEventListener("DOMContentLoaded", () => {
   // Add a single event listener to the document
   document.addEventListener("click", (event) => {
-    // Check if the clicked element has the class 'showVentasButton'
-    if (event.target.classList.contains("showVentasButton")) {
+    // Check if the clicked element has the class 'showSalesButton'
+    if (event.target.classList.contains("showSalesButton")) {
       console.log("Button clicked!", event.target);
       // alert to debug
       //sample data. Should also show if there were no sales.
-      const ventaNum = 1;
-      const cantidad = 10;
-      const articulo = "A001";
-      const precio = 355;
-      const comision = 50;
+      const saleNumber = 1;
+      const quantity = 10;
+      const articleNumber = "A001";
+      const price = 355;
+      const commission = 50;
       alert(`
       You clicked the Ventas button. Here's the influencer sales data: \n
-        Venta Numero: ${ventaNum}\n
-        Cantidad: ${cantidad}\n
-        Articulo: ${articulo}\n
-        Precio Unitario: $${precio}\n
-        Comision: $${comision}\n
+        Venta Numero: ${saleNumber}\n
+        Cantidad: ${quantity}\n
+        Articulo: ${articleNumber}\n
+        Precio Unitario: $${price}\n
+        Comision: $${commission}\n
       `);
 
       //event.target.parentElement.parentElement.remove();
     }
 
-    // Check if the clicked element has the class 'removeVentaButton'
-    if (event.target.classList.contains("removeVentaButton")) {
+    // Check if the clicked element has the class 'removeSaleButton'
+    if (event.target.classList.contains("removeSaleButton")) {
       console.log("Button clicked!", event.target);
       // alert to debug
       alert(`You clicked button with text: ${event.target.textContent}`);
@@ -107,68 +137,74 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //Influencer
-function agregarInfluencer1() {
+function addInfluencer1() {
   alert("open Add influencer popup.");
 }
-function cancelarInfluencer() {
-  document.getElementById("formInfluencer").reset();
+function cancelInfluencer() {
+  document.getElementById("influencerForm").reset();
   //this should probably also close the popup
   alert("Canceled.");
 }
-function agregarInfluencer2() {
-  const nombre = document.getElementById("nombreInfluencer").value;
-  const email = document.getElementById("mailInfluencer").value;
+function addInfluencer2() {
+  const name = document.getElementById("influencerName").value;
+  const email = document.getElementById("influencerEmail").value;
   const commission = parseInt(
-    document.getElementById("comisionInfluencer").value,
+    document.getElementById("influencerCommission").value,
   );
-  if (nombre !== "" && email !== "" && !Number.isNaN(commission)) {
+  if (name !== "" && email !== "" && !Number.isNaN(commission)) {
     try {
-      agregarFilaEnTablaInfluencers(nombre, email, commission, 0, "");
+      influencersArray.push({
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+      });
+      addRowInfluencerTable(name, email, commission, 0, "");
+      // getTags();
+      // getTotal();
       alert(
-        "Addded influencer " +
-          nombre +
+        "Added influencer " +
+          name +
           " with email " +
           email +
           " and " +
           commission +
           "% commission",
       );
-      document.getElementById("formInfluencer").reset();
+      document.getElementById("influencerForm").reset();
     } catch (exception) {
       alert(exception);
     }
   } else {
-    alert("invalid name, email, or comission. try again.");
+    alert("invalid name, email, or commission. try again.");
   }
 }
 
-//Articulos
-function agregarArticulo1() {
-  //const texto = document.getElementById("frase").value;
-  alert("Open add Articulo popup.");
+//Items
+function addArticle1() {
+  //const text = document.getElementById("phrase").value;
+  alert("Open add item popup.");
 }
-function cancelarArticulo() {
-  document.getElementById("formArticulo").reset();
+function cancelArticle() {
+  document.getElementById("itemForm").reset();
   //this should probably also close the popup
 
   alert("Canceled.");
 }
-function agregarArticulo2() {
-  const codigo = document.getElementById("codigoArticulo").value;
-  const descripcion = document.getElementById("descripcionArticulo").value;
-  const precio = parseInt(document.getElementById("precioArticulo").value);
-  if (codigo !== "" && descripcion !== "" && !Number.isNaN(precio)) {
+function addArticle2() {
+  const itemCode = document.getElementById("itemCode").value;
+  const description = document.getElementById("itemDescription").value;
+  const price = parseInt(document.getElementById("itemPrice").value);
+  if (itemCode !== "" && description !== "" && !Number.isNaN(price)) {
     try {
-      agregarFilaEnTablaArticulos(codigo, descripcion, precio);
+      addRowArticleTable(itemCode, description, price);
       alert(
-        "Addded articulo with code " +
-          codigo +
+        "Added item with code " +
+          itemCode +
           " and description " +
-          descripcion +
-          " and precio $" +
-          precio,
+          description +
+          " and price $" +
+          price,
       );
-      document.getElementById("formArticulo").reset();
+      document.getElementById("itemForm").reset();
     } catch (exception) {
       alert(exception);
     }
@@ -177,38 +213,46 @@ function agregarArticulo2() {
   }
 }
 
-//Ventas
-function agregarVenta1() {
-  //const texto = document.getElementById("frase").value;
-  alert("open add Venta popup.");
+//Sales
+function addSale1() {
+  //const text = document.getElementById("textPhrase").value;
+  alert("open add Sale (venta) popup.");
 }
-function cancelarVenta() {
-  document.getElementById("formVentas").reset();
+function cancelSale() {
+  document.getElementById("saleForm").reset();
   //this should probably also close the popup
 
   alert("Canceled.");
 }
-function agregarVenta2() {
-  const nroVenta = 0; //this needs to increment somehow
-  const articulo = document.getElementById("numeroVentaDropdown").value;
-  const influencer = document.getElementById("nombreInfluencerDropdown").value;
-  const cantidad = parseInt(document.getElementById("cantidadVenta").value);
-  const medio = document.getElementById("medioVentaDropdown").value;
+function addSale2() {
+  const saleNumber = 0; //this needs to increment somehow
+  const itemCode = document.getElementById("saleNumberDropdown").value;
+  const influencerName = document.getElementById(
+    "influencerNameDropdown",
+  ).value;
+  const quantity = parseInt(document.getElementById("saleQuantity").value);
+  const saleMedium = document.getElementById("saleMediumDropdown").value;
 
-  if (!Number.isNaN(cantidad)) {
+  if (!Number.isNaN(quantity)) {
     try {
-      agregarFilaEnTablaVentas(nroVenta, articulo, influencer, cantidad, medio);
-      alert(
-        "Addded venta with code " +
-          articulo +
-          " and influencer " +
-          influencer +
-          " and cantidad " +
-          cantidad +
-          " and medio " +
-          medio,
+      addRowSalesTable(
+        saleNumber,
+        itemCode,
+        influencerName,
+        quantity,
+        saleMedium,
       );
-      document.getElementById("formVentas").reset();
+      alert(
+        "Added sale with item code " +
+          itemCode +
+          " and influencer " +
+          influencerName +
+          " and quantity " +
+          quantity +
+          " and medio " +
+          saleMedium,
+      );
+      document.getElementById("saleForm").reset();
     } catch (exception) {
       alert(exception);
     }
@@ -217,70 +261,64 @@ function agregarVenta2() {
   }
 }
 
-function agregarFilaEnTablaInfluencers(
-  nombre,
-  email,
-  comision,
-  total,
-  etiquetas,
-) {
-  let tablaPantalla = document.getElementById("tableInfluencers");
-  let fila = tablaPantalla.insertRow();
-  let datos = [nombre, email, comision + "%", "$ " + total, etiquetas, ""]; //join $ to the total dollar amt
+function addRowInfluencerTable(name, email, commission, total, influencerTag) {
+  let table = document.getElementById("influencerTable");
+  let fila = table.insertRow();
+  let data = [name, email, commission + "%", "$ " + total, influencerTag, ""]; //join $ to the total dollar amt
 
-  for (let i = 0; i < datos.length - 1; i++) {
-    let celda = fila.insertCell();
-    celda.innerHTML = datos[i];
+  for (let i = 0; i < data.length - 1; i++) {
+    let cell = fila.insertCell();
+    cell.innerHTML = data[i];
   }
 
   //function to add a button to a table cell, created with Grok AI
-  let celda = fila.insertCell();
-  let btn = document.createElement("button");
-  btn.textContent = "Ventas";
-  btn.className = "showVentasButton";
-  //onclick ventaButton javascript needs to be added to js file
-  celda.appendChild(btn);
+  let cell = fila.insertCell();
+  let button = document.createElement("button");
+  button.textContent = "Ventas";
+  button.className = "showSalesButton";
+  //onclick showSalesButton JavaScript needs to be added to js file
+  cell.appendChild(button);
   //add a final cell after with Ventas button
 }
 
-function agregarFilaEnTablaArticulos(codigo, descripcion, precio) {
-  let tablaPantalla = document.getElementById("tableArticulos");
-  let fila = tablaPantalla.insertRow();
-  let datos = [codigo, descripcion, "$ " + precio];
+function addRowArticleTable(articleCode, description, price) {
+  let table = document.getElementById("itemTable");
+  let fila = table.insertRow();
+  let data = [articleCode, description, "$ " + price];
 
-  for (let i = 0; i < datos.length; i++) {
-    let celda = fila.insertCell();
-    celda.innerHTML = datos[i];
+  for (let i = 0; i < data.length; i++) {
+    let cell = fila.insertCell();
+    cell.innerHTML = data[i];
   }
 }
 
-function agregarFilaEnTablaVentas(
-  nroVenta,
-  articulo,
+function addRowSalesTable(
+  saleNumber,
+  articleCode,
   influencer,
-  cantidad,
-  medio,
+  quantity,
+  saleMedium,
 ) {
-  let tablaPantalla = document.getElementById("tableVentas");
-  let fila = tablaPantalla.insertRow();
-  let datos = [nroVenta, articulo, influencer, cantidad, medio, ""];
+  let table = document.getElementById("salesTable");
+  let row = table.insertRow();
+  let data = [saleNumber, articleCode, influencer, quantity, saleMedium, ""];
 
-  for (let i = 0; i < datos.length - 1; i++) {
-    let celda = fila.insertCell();
-    celda.innerHTML = datos[i];
+  for (let i = 0; i < data.length - 1; i++) {
+    let cell = row.insertCell();
+    cell.innerHTML = data[i];
   }
   //add a final cell after with the delete button
   //function to add a button to a table cell, created with Grok AI
-  let celda = fila.insertCell();
-  let btn = document.createElement("button");
-  btn.textContent = "❌";
-  btn.className = "removeVentaButton";
-  //onclick removeVentaButton javascript needs to be added to js file
-  celda.appendChild(btn);
+  let cell = row.insertCell();
+  let button = document.createElement("button");
+  button.textContent = "❌";
+  button.className = "removeSaleButton";
+  //onclick removeSaleButton JavaScript needs to be added to js file
+  cell.appendChild(button);
   //add a final cell after with Ventas button
 }
-/* //this was removed and moved to html, no need to run on load anymore.
-window.onload = function() { //found on stack overflow, through google AI: https://stackoverflow.com/questions/72869394/append-a-whole-footer-into-an-html-page-thanks-to-js
+/* //this was removed and moved to HTML, no need to run on load anymore.
+window.onload = function() { //found on stack overflow, through Google AI: https://stackoverflow.com/questions/72869394/append-a-whole-footer-into-an-html-page-thanks-to-js
   // Create footer element
   const footerElement = document.createElement('footer');
 
@@ -298,22 +336,6 @@ window.onload = function() { //found on stack overflow, through google AI: https
 
 */
 /*
-add to a list. using its id "lista" in this case (prolly not used rn)
-  function mostrarEnPantalla(textoMostrar){
-    document.getElementById("resultado").innerHTML = textoMostrar;
-    agregarElementoEnLista(textoMostrar);
-  }
-function agregarElementoEnLista(texto){
-// creo un elemento de lista
-  let node = document.createElement("LI");
-// creo nodo de texto, dentro lleva el texto que quiero
-  let textnode = document.createTextNode(texto);
-// engancho al nodo de lista el nodo de texto
-  node.appendChild(textnode);
-// engancho el nodo a la lista
-  document.getElementById("lista").appendChild(node);
-}
-
 // adding to a table, using its id tabla in this case
 function mostrarEnPantalla(textoMostrar){
   document.getElementById("resultado").innerHTML = textoMostrar;

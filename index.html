@@ -23,45 +23,45 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
 
 <body>
   <!-- Site content -->
-  <h1>Sistema de Gestión (Davit Dostourian)</h1>
+  <h1>Sistema de Gestión (Davit Dostourian Erbe)</h1>
 
   <!--  Influencer Section-->
   <section>
   <h2>Manejo de Influencers</h2>
   <article class="extra-space">
     <h3>Alta de Influencer</h3>
-    <button id="buttonAgregarInfluencer1">Agregar Influencer</button>
+    <button id="addInfluencerButton1">Agregar Influencer</button>
   </article>
   <!--  Add influencer form-->
   <article>
     <h3>Datos del Influencer a agregar</h3>
     <h3>Influencer</h3>
-    <form id="formInfluencer" onsubmit="return false">
-      <label for="nombreInfluencer" >Nombre
-        <input id="nombreInfluencer"
-               name="nombreInfluencer"
+    <form id="influencerForm" onsubmit="return false">
+      <label for="influencerName" >Nombre
+        <input id="influencerName"
+               name="influencerName"
                required
                type="text">
       </label>
-      <label for="mailInfluencer">Mail
-        <input id="mailInfluencer"
-               name="mailInfluencer"
+      <label for="influencerEmail">Mail
+        <input id="influencerEmail"
+               name="influencerEmail"
                required
                type="text">
       </label>
-      <label for="comisionInfluencer">% Comisión
-        <input id="comisionInfluencer"
-               name="comisionInfluencer"
+      <label for="influencerCommission">% Comisión
+        <input id="influencerCommission"
+               name="influencerCommission"
                required
                type="number">
       </label>
-      <button type="button" id="buttonCancelarInfluencer">Cancelar</button><button type="submit" id="buttonAgregarInfluencer2">Agregar</button>
+      <button type="button" id="cancelInfluencerButton">Cancelar</button><button type="submit" id="addInfluencerButton2">Agregar</button>
     </form>
   </article>
   <!--  Influencer table-->
   <article>
   <h3>Tabla de Influencers</h3>
-  <table id="tableInfluencers">
+  <table id="influencerTable">
     <thead>
     <tr>
       <th><button>Nombre ⇅</button></th>
@@ -80,7 +80,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
       <td>20%</td>
       <td>$ 600</td>
       <td>🔥 🟢</td>
-      <td><button class="showVentasButton">Ventas</button></td>
+      <td><button class="showSalesButton">Ventas</button></td>
     </tr>
     <tr>
       <!--  test person 2-->
@@ -89,7 +89,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
       <td>10%</td>
       <td>$ 30</td>
       <td></td>
-      <td><button class="showVentasButton">Ventas</button></td>
+      <td><button class="showSalesButton">Ventas</button></td>
     </tr>
     <tr>
       <!--  test person 3-->
@@ -98,7 +98,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
       <td>95%</td>
       <td>$ 0</td>
       <td>🧊</td>
-      <td><button class="showVentasButton">Ventas</button></td>
+      <td><button class="showSalesButton">Ventas</button></td>
     </tr>
     </tbody>
   </table>
@@ -113,41 +113,41 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
   <h2>Manejo de Artículos</h2>
   <article>
     <h3>Alta de Artículo</h3>
-    <button id="buttonAgregarArticulo1">Agregar artículo</button>
+    <button id="addItemButton1">Agregar artículo</button>
   </article>
   <!--  Add article form-->
   <article>
   <h3>Datos del artículo a agregar</h3>
     <h3>Artículo</h3>
-    <form id="formArticulo" onsubmit="return false">
-      <label for="codigoArticulo">Código
-        <input id="codigoArticulo"
-               name="codigoArticulo"
+    <form id="itemForm" onsubmit="return false">
+      <label for="itemCode">Código
+        <input id="itemCode"
+               name="itemCode"
                required
                type="text">
       </label>
-      <label for="descripcionArticulo">Descripción
-        <input id="descripcionArticulo"
-               name="descripcionArticulo"
+      <label for="itemDescription">Descripción
+        <input id="itemDescription"
+               name="itemDescription"
                required
                type="text">
       </label>
-      <label for="precioArticulo">Precio
-        <input id="precioArticulo"
-               name="precioArticulo"
+      <label for="itemPrice">Precio
+        <input id="itemPrice"
+               name="itemPrice"
                required
                type="number">
       </label>
-      <button type="button" id="buttonCancelarArticulo">Cancelar</button><button type="submit" id="buttonAgregarArticulo2">Agregar</button>
+      <button type="button" id="cancelItemButton">Cancelar</button><button type="submit" id="addItemButton2">Agregar</button>
     </form>
   </article>
   <!--  table for articles-->
   <article>
   <h3>Tabla de artículos</h3>
-  <table id="tableArticulos">
+  <table id="itemTable">
     <thead>
     <tr>
-      <th><button id="buttonArticulosCodigoOrderSwitch">Código ⇅</button></th>
+      <th><button id="switchItemCodeOrderButton">Código ⇅</button></th>
       <th>Descripción</th>
       <th>Precio</th>
     </tr>
@@ -179,39 +179,40 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
 
   <hr>
 
-<!--  Ventas section -->
+<!--  Sales (Ventas) section -->
   <section>
     <h2>Ventas</h2>
     <article>
       <h3>Alta de ventas</h3>
-      <button id="buttonAgregarVenta1">Agregar venta</button>
+      <button id="addSaleButton">Agregar venta</button>
     </article>
     <!--  Add venta form-->
     <article>
       <h3>Datos de la venta a agregar</h3>
-      <form id="formVentas" onsubmit="return false">
+      <form id="saleForm" onsubmit="return false">
         <h3>Venta</h3>
-        <label for="numeroVentaDropdown">Nro 3 Artículo
-          <select name="numeroVentaDropdown" id="numeroVentaDropdown" >
+        <label for="saleNumberDropdown">Nro 3 Artículo
+          <select name="saleNumberDropdown" id="saleNumberDropdown" >
             <option value="A001" selected >A001</option>
             <option value="A002">A002</option>
             <option value="A003">A003</option>
           </select>
         </label>
-        <label for="nombreInfluencerDropdown">Influencer
-          <select name="nombreInfluencerDropdown" id="nombreInfluencerDropdown" >
+        <label for="influencerNameDropdown">Influencer
+          <select name="influencerNameDropdown" id="influencerNameDropdown" >
             <option value="Ana Perez" selected >Ana Perez</option>
             <option value="Juan Gomez">Juan Gomez</option>
             <option value="Lucia Martinez">Lucia Martinez</option>
           </select>
         </label>
-        <label for="cantidadVenta">Cantidad
-          <input type="number"
-                 id="cantidadVenta"
-                 name="cantidadVenta">
+        <label for="saleQuantity">Cantidad
+          <input id="saleQuantity"
+                 name="saleQuantity"
+                 required
+                 type="number">
         </label>
-        <label for="medioVentaDropdown">Medio
-          <select name="medioVentaDropdown" id="medioVentaDropdown" >
+        <label for="saleMediumDropdown">Medio
+          <select name="saleMediumDropdown" id="saleMediumDropdown" >
             <option value="1-Instagram" selected >1-Instagram</option>
             <option value="2-Youtube">2-Youtube</option>
             <option value="3-X">3-X</option>
@@ -220,26 +221,26 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
             <option value="6-Otras">6-Otras</option>
           </select>
         </label>
-        <button type="button" id="buttonCancelarVenta">Cancelar</button><button type="submit" id="buttonAgregarVenta2">Agregar</button>
+        <button type="button" id="cancelSaleButton">Cancelar</button><button type="submit" id="addSaleButton2">Agregar</button>
       </form>
     </article>
     <!--Table of sales(ventas) ordered by venta number  -->
     <article>
       <h3>Tabla de ventas (ordenada por número de venta)</h3>
-        <table id="tableVentas">
-        <!-- the below is done in app.jsm incrementing by one. this doesnt change the numbers if theres a deleted item though in the table.
+        <table id="salesTable">
+        <!-- the below is done in app.jsm incrementing by one. this doesn't change the numbers if there's a deleted item though in the table.
         Here we need to be able to keep track of the number (nro venta), and increment it by 1 each time we add a new venta
         row here. Additionally, we need to increment the venta number on the button too, so when it's clicked it only removes
         that one venta by its ventaID. (ventaRemoveButton1, ventaRemoveButton...n, deleteXButton)
         -->
         <thead>
           <tr>
-            <th>Nro Venta</th>
-            <th>Código de Artículo</th>
-            <th>Nombre de Influencer</th>
-            <th>Cantidad</th>
-            <th>Medio</th>
-            <th>Acción</th>
+            <th>Nro Venta</th> <!-- Sale Number-->
+            <th>Código de Artículo</th> <!-- Item Number-->
+            <th>Nombre de Influencer</th> <!-- Influencer name-->
+            <th>Cantidad</th> <!-- Quantity sold-->
+            <th>Medio</th> <!-- Sale medium-->
+            <th>Acción</th> <!-- Delete sale button-->
           </tr>
         </thead>
         <tbody>
@@ -249,7 +250,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
             <td>Ana Perez</td>
             <td>3</td>
             <td>1-Instagram</td>
-            <td><button class="removeVentaButton">❌</button></td>
+            <td><button class="removeSaleButton">❌</button></td>
           </tr>
           <tr>
             <td>2</td>
@@ -257,7 +258,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
             <td>Juan Gomez</td>
             <td>1</td>
             <td>2-Youtube</td>
-            <td><button class="removeVentaButton">❌</button></td>
+            <td><button class="removeSaleButton">❌</button></td>
           </tr>
         </tbody>
       </table>
