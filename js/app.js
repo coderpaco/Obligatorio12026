@@ -70,31 +70,31 @@ function start() {
   //Influencer
   document
     .getElementById("addInfluencerButton1")
-    .addEventListener("click", addInfluencer1);
+    .addEventListener("click", openInfluencerPopup);
   document
     .getElementById("cancelInfluencerButton")
     .addEventListener("click", cancelInfluencer);
   document
     .getElementById("addInfluencerButton2")
-    .addEventListener("click", addInfluencer2);
+    .addEventListener("click", addInfluencer);
 
   //Articles
   document
     .getElementById("addItemButton1")
-    .addEventListener("click", addArticle1);
+    .addEventListener("click", openItemPopup);
   document
     .getElementById("cancelItemButton")
-    .addEventListener("click", cancelArticle);
+    .addEventListener("click", cancelItem);
   document
     .getElementById("addItemButton2")
-    .addEventListener("click", addArticle2);
+    .addEventListener("click", addItem);
 
   //Sales (Ventas)
-  document.getElementById("addSaleButton").addEventListener("click", addSale1);
+  document.getElementById("addSaleButton").addEventListener("click", openSalePopup);
   document
     .getElementById("cancelSaleButton")
     .addEventListener("click", cancelSale);
-  document.getElementById("addSaleButton2").addEventListener("click", addSale2);
+  document.getElementById("addSaleButton2").addEventListener("click", addSale);
 }
 
 // Wait for the DOM to fully load before running the code (Ventas button click)
@@ -137,15 +137,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //Influencer
-function addInfluencer1() {
+function openInfluencerPopup() {
   alert("open Add influencer popup.");
 }
 function cancelInfluencer() {
+  //closePopup()
   document.getElementById("influencerForm").reset();
-  //this should probably also close the popup
   alert("Canceled.");
 }
-function addInfluencer2() {
+function addInfluencer() {
   const name = document.getElementById("influencerName").value;
   const email = document.getElementById("influencerEmail").value;
   const commission = parseInt(
@@ -179,23 +179,22 @@ function addInfluencer2() {
 }
 
 //Items
-function addArticle1() {
+function openItemPopup() {
   //const text = document.getElementById("phrase").value;
   alert("Open add item popup.");
 }
-function cancelArticle() {
+function cancelItem() {
+  //closeItemPopup()
   document.getElementById("itemForm").reset();
-  //this should probably also close the popup
-
   alert("Canceled.");
 }
-function addArticle2() {
+function addItem() {
   const itemCode = document.getElementById("itemCode").value;
   const description = document.getElementById("itemDescription").value;
   const price = parseInt(document.getElementById("itemPrice").value);
   if (itemCode !== "" && description !== "" && !Number.isNaN(price)) {
     try {
-      addRowArticleTable(itemCode, description, price);
+      addRowItemsTable(itemCode, description, price);
       alert(
         "Added item with code " +
           itemCode +
@@ -214,17 +213,15 @@ function addArticle2() {
 }
 
 //Sales
-function addSale1() {
-  //const text = document.getElementById("textPhrase").value;
+function openSalePopup() {
   alert("open add Sale (venta) popup.");
 }
 function cancelSale() {
+  //closeSalePopup();
   document.getElementById("saleForm").reset();
-  //this should probably also close the popup
-
   alert("Canceled.");
 }
-function addSale2() {
+function addSale() {
   const saleNumber = 0; //this needs to increment somehow
   const itemCode = document.getElementById("saleNumberDropdown").value;
   const influencerName = document.getElementById(
@@ -281,7 +278,7 @@ function addRowInfluencerTable(name, email, commission, total, influencerTag) {
   //add a final cell after with Ventas button
 }
 
-function addRowArticleTable(articleCode, description, price) {
+function addRowItemsTable(articleCode, description, price) {
   let table = document.getElementById("itemTable");
   let fila = table.insertRow();
   let data = [articleCode, description, "$ " + price];
@@ -317,36 +314,3 @@ function addRowSalesTable(
   cell.appendChild(button);
   //add a final cell after with Ventas button
 }
-/* //this was removed and moved to HTML, no need to run on load anymore.
-window.onload = function() { //found on stack overflow, through Google AI: https://stackoverflow.com/questions/72869394/append-a-whole-footer-into-an-html-page-thanks-to-js
-  // Create footer element
-  const footerElement = document.createElement('footer');
-
-  // Use innerHTML to quickly add a link
-  footerElement.innerHTML = `
-        <p>Davit Dostourian Erbe, 281664. Autor 2, Num estudiante. |
-           <a href=https://ort.edu.uy target="_blank" rel="noopener noreferrer">Estudiante 1</a>
-           <a href=https://ort.edu.uy target="_blank" rel="noopener noreferrer">Estudiante 2</a>
-        </p>
-    `;
-
-  // Add to the end of the document body
-  document.body.appendChild(footerElement);
-};
-
-*/
-/*
-// adding to a table, using its id tabla in this case
-function mostrarEnPantalla(textoMostrar){
-  document.getElementById("resultado").innerHTML = textoMostrar;
-  agregarElementoEnLista(textoMostrar);
-  agregarFilaEnTabla(textoMostrar);
-}
-function agregarFilaEnTabla(texto){
-  let tablaPantalla = document.getElementById("tabla");
-  let fila = tablaPantalla.insertRow();
-  let celda = fila.insertCell();
-  celda.innerHTML= texto;
-}
-
-*/
