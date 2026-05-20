@@ -1,53 +1,40 @@
 /*
    ==========================================================================
-   Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programacion 1
+   Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
    ==========================================================================
     TODO:
-     - is using form.reset() the best way to reset form? or set values to ""
-     - make sure the value of each sale (salenumber) increments by one when added, and decreases/changes
-       when a sale is deleted. (sale 1. next sale 2. sale 3. sale 2 deleted, sale 3 becomes sale2?
-       OR do the sales stay the same number? current implementation of adding 1 to each variable
-       doesnt seem to work
      - Add logic for alerts when ventas button is clicked. It should get the sales for that influencer, and
       show them in the alert.
-     - Influencer, Articulo, and venta datos categories should have a hidden attribute, until the agregar button in the
-     section above is clicked. The article should then be shown in a popup bubble window.
-     - When a new influencer, venta, or articulo is added, they need to be kept somewhere saved and updated to the
-     tables, and dropdowns once the agregar button is clicked. PERSISTANCE ACROSS ALL TABLES AND DROPDOWNS!
-     Maybe the use of an updateElements() function that takes the values of the arrays storing the table and dropdown data
-     array for influencers, articulos, ventas?
+     - Influencer, Articulo, and venta datos categories should have a hidden attribute, or just not be selectable
+     until the agregar button in the section above is clicked. The article should then be shown in a popup bubble window.
+     - Make sure to check that item code is unique
+     - each sale corresponds to only one item
+     - can only be registered if there are items and influencers (while there aren't, hide/disable button and fields)
+     - order items table decreasing/increasing by item code
 
-     addInfluencer()
+     addInfluencer() ✔️
       ->1. Adds a new influencer to the array (Initialized and added to array with an empty tag value "")
       ->2. Runs updateData()
-     addArticle()
+     addArticle() ✔️
       ->1. Adds a new article to the array
       ->2. Runs updateData()
-     addVenta()
+     addVenta() ✔️
       ->1. Adds a new article to the array
       ->2. Runs updateData()
-     updateData()
+     updateData() ✔️
       fillTables()
-        addTags() (For the influencers table)
+        addTags() (For the influencers table) ❌
           -> Fills the empty tag value "" -> "🔥"
           -> Adds the newly updated influencer array objects to the table
-        masVendido() (For the articles table)
+        masVendido() (For the articles table) ❌
           -> Checks which article is sold most. Adds a ⭐ emoji next to name (name + "⭐")
           -> Requires a venta with that object before it can be done. if no ventas, do nothing (no stars)
-        fillDropdowns()
+        fillDropdowns() ✔️
           -> Adds the value of "Codigo" from each article array object to the dropdown
           -> Adds the value of "Name" from each influencer array object to the dropdown
-     checkOrder()
+     checkOrder()❌
       -> if influencers table is ascending or descending
       -> if articulos table is ascending or descending
-
-*/
-
-/*
-- Make sure to check that item code is unique
-- each sale corresponds to only one item
-- can only be registered if there are items and influencers (while there aren't, hide/disable button and fields)
-- order items table decreasing/increasing by item code
 
 1. Parse input data
 2. Validate data (use a separate function to do this probably, function verifyData(name,email)etc
@@ -64,6 +51,8 @@
 let influencersArray = [];
 let itemsArray = [];
 let salesArray = [];
+let globalSaleNumber = 1; // this is used in ventas (sales) to track our sale number, gets +1'd for each sale.
+// it wasn't incrementing correctly as a local variable for whatever reason...
 
 window.addEventListener("load", start);
 function start() {
@@ -85,19 +74,19 @@ function start() {
   document
     .getElementById("cancelItemButton")
     .addEventListener("click", cancelItem);
-  document
-    .getElementById("addItemButton2")
-    .addEventListener("click", addItem);
+  document.getElementById("addItemButton2").addEventListener("click", addItem);
 
   //Sales (Ventas)
-  document.getElementById("addSaleButton").addEventListener("click", openSalePopup);
+  document
+    .getElementById("addSaleButton")
+    .addEventListener("click", openSalePopup);
   document
     .getElementById("cancelSaleButton")
     .addEventListener("click", cancelSale);
   document.getElementById("addSaleButton2").addEventListener("click", addSale);
 }
 
-// Wait for the DOM to fully load before running the code (Ventas button click)
+// Wait for the DOM to fully load before running the code (Ventas button click in table)
 // Snippet written  by Ecosia AI
 // This code snippet checks if a certain button was clicked by checking its class.
 // This code is important because it also applies to buttons added AFTER page load.
@@ -107,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Check if the clicked element has the class 'showSalesButton'
     if (event.target.classList.contains("showSalesButton")) {
       console.log("Button clicked!", event.target);
-      // alert to debug
+      // use sales array, search for influencer name, show that data ordered in increasing order (creciente)
       //sample data. Should also show if there were no sales.
       const saleNumber = 1;
       const quantity = 10;
@@ -122,20 +111,159 @@ document.addEventListener("DOMContentLoaded", () => {
         Precio Unitario: $${price}\n
         Comision: $${commission}\n
       `);
-
-      //event.target.parentElement.parentElement.remove();
     }
 
     // Check if the clicked element has the class 'removeSaleButton'
+    // Google AI assisted
     if (event.target.classList.contains("removeSaleButton")) {
-      console.log("Button clicked!", event.target);
-      // alert to debug
-      alert(`You clicked button with text: ${event.target.textContent}`);
-      event.target.parentElement.parentElement.remove();
+      //console.log("Button clicked!", event.target);
+      const row = event.target.parentElement.parentElement;
+      const saleToDelete = row.cells[0].textContent.trim(); //gets saleNumber
+      console.log(saleToDelete); //debug
+      const arrayIndex = salesArray.findIndex(
+        (sale) => String(sale.saleNumber).trim() === saleToDelete,
+      ); //if found...
+      if (arrayIndex !== -1) {
+        //remove from array IF it's found
+        salesArray.splice(arrayIndex, 1);
+        console.log("Deleted successfully. Remaining array:", salesArray);
+      } else {
+        console.warn(
+          `Could not find sale number ${saleToDelete} in the array.`,
+        );
+      }
+      updateData(); //reload data
     }
   });
 });
 
+function updateData() {
+  addTags(); //for influencers table tags, and the star in items table for most sold item
+  updateTables(); //update all tables. check if they have data first.
+  fillDropdowns(); //update both dropdowns. check if they have data first.
+}
+
+function addTags() {
+  if (salesArray.length > 0) {
+    console.log("There's a sale, we have tags");
+    //if there's a sale, add the tags to the respective influencers, this runs before updateTables();
+    //if there's a sale in sale array, add the star to article with highest sales quantity
+  } else {
+    console.log("No sales, no tags yet.");
+  }
+}
+
+function updateTables() {
+  //Clear tables
+  // Target all tables with a specific class and clear their internal HTML
+  document.querySelectorAll(".tableBody").forEach((tbody) => {
+    tbody.innerHTML = "";
+  });
+
+  //POPULATE INFLUENCER TABLE
+  for (let i = 0; i < influencersArray.length; i++) {
+    //for each influencer in the array,
+    //let table = document.getElementById("influencerTable");
+    let tbody = document.querySelector("#influencerTable .tableBody");
+
+    let row = tbody.insertRow();
+    let data = [
+      influencersArray[i].name,
+      influencersArray[i].email,
+      influencersArray[i].commission + "%",
+      "$ " + influencersArray[i].totalSold,
+      influencersArray[i].influencerTags,
+      "",
+    ];
+
+    for (let j = 0; j < data.length - 1; j++) {
+      let cell = row.insertCell();
+      cell.innerHTML = data[j];
+    }
+
+    //function to add a button to a table cell, created with Grok AI
+    let cell = row.insertCell();
+    let button = document.createElement("button");
+    button.textContent = "Ventas";
+    button.className = "showSalesButton";
+    cell.appendChild(button);
+  }
+
+  //POPULATE ITEMS TABLE
+  for (let i = 0; i < itemsArray.length; i++) {
+    //for each influencer in the array,
+    //let table = document.getElementById("influencerTable");
+    let tbody = document.querySelector("#itemTable .tableBody");
+
+    let row = tbody.insertRow();
+    let data = [
+      itemsArray[i].itemCode,
+      itemsArray[i].description,
+      "$ " + itemsArray[i].price,
+    ];
+
+    for (let j = 0; j < data.length; j++) {
+      let cell = row.insertCell();
+      cell.innerHTML = data[j];
+    }
+  }
+
+  //POPULATE VENTAS TABLE
+  for (let k = 0; k < salesArray.length; k++) {
+    //for each influencer in the array,
+    //let table = document.getElementById("influencerTable");
+    let tbody = document.querySelector("#salesTable .tableBody");
+
+    let row = tbody.insertRow();
+    let data = [
+      salesArray[k].saleNumber,
+      salesArray[k].itemCode,
+      salesArray[k].influencerName,
+      salesArray[k].quantity,
+      salesArray[k].saleMedium,
+      "",
+    ];
+
+    for (let m = 0; m < data.length - 1; m++) {
+      let cell = row.insertCell();
+      cell.innerHTML = data[m];
+    }
+
+    //add a final cell after with the delete button
+    //function to add a button to a table cell, created with Grok AI
+    let cell = row.insertCell();
+    let button = document.createElement("button");
+    button.textContent = "❌";
+    button.className = "removeSaleButton";
+    cell.appendChild(button);
+  }
+}
+
+function fillDropdowns() {
+  if (influencersArray.length > 0) {
+    //if there's an influencer...
+    const dropdownInfluencer = document.getElementById(
+      "influencerNameDropdown",
+    ); //get dropdown
+    dropdownInfluencer.innerHTML = ""; //first, clear dropdown
+
+    influencersArray.forEach((inf) => {
+      //second, add all influencers
+      const newOption = new Option(inf.name, inf.name);
+      dropdownInfluencer.add(newOption);
+    });
+  }
+  if (itemsArray.length > 0) {
+    //if there's an item...
+    const dropdownItems = document.getElementById("saleNumberDropdown"); //get dropdown
+    dropdownItems.innerHTML = ""; //first, clear dropdown
+    itemsArray.forEach((item) => {
+      //second, add all items
+      const newOption = new Option(item.itemCode, item.itemCode);
+      dropdownItems.add(newOption);
+    });
+  }
+}
 //Influencer
 function openInfluencerPopup() {
   alert("open Add influencer popup.");
@@ -156,10 +284,11 @@ function addInfluencer() {
       influencersArray.push({
         name: name.trim(),
         email: email.trim().toLowerCase(),
+        commission: Number(commission),
+        totalSold: Number(0), //Our influencer starts off with 0 sales.
+        influencerTags: "",
       });
-      addRowInfluencerTable(name, email, commission, 0, "");
-      // getTags();
-      // getTotal();
+      updateData(); //this'll work later
       alert(
         "Added influencer " +
           name +
@@ -194,7 +323,13 @@ function addItem() {
   const price = parseInt(document.getElementById("itemPrice").value);
   if (itemCode !== "" && description !== "" && !Number.isNaN(price)) {
     try {
-      addRowItemsTable(itemCode, description, price);
+      itemsArray.push({
+        itemCode: itemCode.trim(),
+        description: description.trim(),
+        price: Number(price),
+      });
+      //addRowItemsTable(itemCode, description, price);
+      updateData();
       alert(
         "Added item with code " +
           itemCode +
@@ -203,6 +338,7 @@ function addItem() {
           " and price $" +
           price,
       );
+
       document.getElementById("itemForm").reset();
     } catch (exception) {
       alert(exception);
@@ -222,23 +358,23 @@ function cancelSale() {
   alert("Canceled.");
 }
 function addSale() {
-  const saleNumber = 0; //this needs to increment somehow
+  const nextSaleNumber = globalSaleNumber;
   const itemCode = document.getElementById("saleNumberDropdown").value;
   const influencerName = document.getElementById(
     "influencerNameDropdown",
   ).value;
   const quantity = parseInt(document.getElementById("saleQuantity").value);
   const saleMedium = document.getElementById("saleMediumDropdown").value;
-
   if (!Number.isNaN(quantity)) {
     try {
-      addRowSalesTable(
-        saleNumber,
-        itemCode,
-        influencerName,
-        quantity,
-        saleMedium,
-      );
+      salesArray.push({
+        saleNumber: nextSaleNumber,
+        itemCode: itemCode,
+        influencerName: influencerName,
+        quantity: Number(quantity),
+        saleMedium: saleMedium,
+      });
+      updateData();
       alert(
         "Added sale with item code " +
           itemCode +
@@ -249,7 +385,9 @@ function addSale() {
           " and medio " +
           saleMedium,
       );
-      document.getElementById("saleForm").reset();
+      //document.getElementById("saleForm").reset();
+      globalSaleNumber++;
+      document.getElementById("saleQuantity").value = "";
     } catch (exception) {
       alert(exception);
     }
@@ -258,18 +396,20 @@ function addSale() {
   }
 }
 
+/* this code below is all redundant now, after the addition of updateData()
+// keeping it for now but it's all commented out and won't be used (probably)
 function addRowInfluencerTable(name, email, commission, total, influencerTag) {
   let table = document.getElementById("influencerTable");
-  let fila = table.insertRow();
+  let row = table.insertRow();
   let data = [name, email, commission + "%", "$ " + total, influencerTag, ""]; //join $ to the total dollar amt
 
   for (let i = 0; i < data.length - 1; i++) {
-    let cell = fila.insertCell();
+    let cell = row.insertCell();
     cell.innerHTML = data[i];
   }
 
   //function to add a button to a table cell, created with Grok AI
-  let cell = fila.insertCell();
+  let cell = row.insertCell();
   let button = document.createElement("button");
   button.textContent = "Ventas";
   button.className = "showSalesButton";
@@ -310,7 +450,6 @@ function addRowSalesTable(
   let button = document.createElement("button");
   button.textContent = "❌";
   button.className = "removeSaleButton";
-  //onclick removeSaleButton JavaScript needs to be added to js file
   cell.appendChild(button);
-  //add a final cell after with Ventas button
 }
+*/
