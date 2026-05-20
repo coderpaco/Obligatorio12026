@@ -11,6 +11,7 @@
      - each sale corresponds to only one item
      - can only be registered if there are items and influencers (while there aren't, hide/disable button and fields)
      - order items table decreasing/increasing by item code
+     - coding for the field popups
 
      addInfluencer() ✔️
       ->1. Adds a new influencer to the array (Initialized and added to array with an empty tag value "")
