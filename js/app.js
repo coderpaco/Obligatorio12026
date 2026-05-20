@@ -7,9 +7,7 @@
       show them in the alert.
      - Influencer, Articulo, and venta datos categories should have a hidden attribute, or just not be selectable
      until the agregar button in the section above is clicked. The article should then be shown in a popup bubble window.
-     - Make sure to check that item code is unique
      - each sale corresponds to only one item
-     - can only be registered if there are items and influencers (while there aren't, hide/disable button and fields)
      - order items table decreasing/increasing by item code
      - coding for the field popups
 
@@ -142,6 +140,7 @@ function updateData() {
   addTags(); //for influencers table tags, and the star in items table for most sold item
   updateTables(); //update all tables. check if they have data first.
   fillDropdowns(); //update both dropdowns. check if they have data first.
+  toggleSalesForm();
 }
 
 function addTags() {
@@ -269,10 +268,25 @@ function fillDropdowns() {
   }
 }
 
+function toggleSalesForm() {
+  // Check if we have both influencers AND items available, then enable the sales section
+  const canSell = influencersArray.length > 0 && itemsArray.length > 0;
+
+  // Grab all interactive fields inside your sale form
+  document.getElementById("saleNumberDropdown").disabled = !canSell;
+  document.getElementById("influencerNameDropdown").disabled = !canSell;
+  document.getElementById("saleQuantity").disabled = !canSell;
+  document.getElementById("saleMediumDropdown").disabled = !canSell;
+  document.getElementById("cancelSaleButton").disabled = !canSell;
+  document.getElementById("addSaleButton2").disabled = !canSell;
+}
+
 function checkValid(code, data){
   switch (code) {
     case 1: //email validation
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //email regex check, thanks to Google AI
+      const registeredEmails = influencersArray.map(inf => inf.email);
+      const emailExists = registeredEmails.indexOf(data.trim().toLowerCase()) !== -1;
       if (!data) {
         return {
           isValid: false, error: "An email is required."
@@ -283,6 +297,10 @@ function checkValid(code, data){
           isValid: false, error: "Invalid email format."
         };
       }
+      if(emailExists)
+        return {
+          isValid: false, error: "User already registered."
+        };
       break;
 
     case 2: // regular text fields
@@ -297,7 +315,7 @@ function checkValid(code, data){
         };
       }
       break;
-    case 3: //check our comission
+    case 3: //check our commission
       const comValue = Number.parseFloat(data);
       if (Number.isNaN(comValue)){
         return {
@@ -322,6 +340,24 @@ function checkValid(code, data){
           isValid: false, error:"Your number must be between 0-1,000,000"
         };
       }
+      break;
+    case 5: // item codes since we need these to be unique, extra validation
+      const registeredCodes = itemsArray.map(inf => inf.itemCode);
+      const codeExists = registeredCodes.indexOf(data.trim()) !== -1;
+      if (!data || data.length === 0 ){
+        return {
+          isValid: false, error: "Fields cannot be left blank."
+        };
+      }
+      if (data.length < 2 || data.length > 20 ){
+        return {
+          isValid: false, error: "Invalid name length."
+        };
+      }
+      if(codeExists)
+        return {
+          isValid: false, error: "Code already in system."
+        };
       break;
     default:
       return {
@@ -404,7 +440,7 @@ function addItem() {
   const price = Number.parseFloat(document.getElementById("itemPrice").value);
 
   //validity checks
-  const checkItemCode = checkValid(2, itemCode);
+  const checkItemCode = checkValid(5, itemCode);
   const checkDescription = checkValid(2, description);
   const checkPrice = checkValid(4, price);
   if (!checkItemCode.isValid) {

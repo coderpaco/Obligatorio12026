@@ -194,14 +194,14 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
       <form id="saleForm" onsubmit="return false">
         <h3>Venta</h3>
         <label for="saleNumberDropdown">Nro Artículo
-          <select name="saleNumberDropdown" id="saleNumberDropdown" >
+          <select name="saleNumberDropdown" id="saleNumberDropdown" disabled>
             <option value="A001" selected >A001</option>
             <option value="A002">A002</option>
             <option value="A003">A003</option>
           </select>
         </label>
         <label for="influencerNameDropdown">Influencer
-          <select name="influencerNameDropdown" id="influencerNameDropdown" >
+          <select name="influencerNameDropdown" id="influencerNameDropdown" disabled>
             <option value="Ana Perez" selected >Ana Perez</option>
             <option value="Juan Gomez">Juan Gomez</option>
             <option value="Lucia Martinez">Lucia Martinez</option>
@@ -211,10 +211,10 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
           <input id="saleQuantity"
                  name="saleQuantity"
                  required
-                 type="number">
+                 type="number" disabled>
         </label>
         <label for="saleMediumDropdown">Medio
-          <select name="saleMediumDropdown" id="saleMediumDropdown" >
+          <select name="saleMediumDropdown" id="saleMediumDropdown" disabled>
             <option value="1-Instagram" selected >1-Instagram</option>
             <option value="2-Youtube">2-Youtube</option>
             <option value="3-X">3-X</option>
@@ -223,7 +223,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
             <option value="6-Otras">6-Otras</option>
           </select>
         </label>
-        <button type="button" id="cancelSaleButton">Cancelar</button><button type="submit" id="addSaleButton2">Agregar</button>
+        <button type="button" id="cancelSaleButton" disabled>Cancelar</button><button type="submit" id="addSaleButton2" disabled>Agregar</button>
       </form>
     </article>
     <!--Table of sales(ventas) ordered by venta number  -->
