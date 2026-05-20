@@ -178,7 +178,8 @@ function updateTables() {
 
     for (let j = 0; j < data.length - 1; j++) {
       let cell = row.insertCell();
-      cell.innerHTML = data[j];
+      cell.textContent = data[j]; //.textContent instead of .innerHTML treats the given values as text, and not html
+      // this prevents xss vulnerabilities in the table which are pretty funny
     }
 
     //function to add a button to a table cell, created with Grok AI
@@ -204,7 +205,8 @@ function updateTables() {
 
     for (let j = 0; j < data.length; j++) {
       let cell = row.insertCell();
-      cell.innerHTML = data[j];
+      cell.textContent = data[j]; //.textContent instead of .innerHTML treats the given values as text, and not html
+      // this prevents xss vulnerabilities in the table which are pretty funny
     }
   }
 
@@ -226,7 +228,8 @@ function updateTables() {
 
     for (let m = 0; m < data.length - 1; m++) {
       let cell = row.insertCell();
-      cell.innerHTML = data[m];
+      cell.textContent = data[m]; //.textContent instead of .innerHTML treats the given values as text, and not html
+      // this prevents xss vulnerabilities in the table which are pretty funny
     }
 
     //add a final cell after with the delete button
@@ -264,6 +267,69 @@ function fillDropdowns() {
     });
   }
 }
+
+function checkValid(code, data){
+  switch (code) {
+    case 1: //email validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //email regex check, thanks to Google AI
+      if (!data) {
+        return {
+          isValid: false, error: "An email is required."
+        };
+      }
+      if (!emailPattern.test(data.toLowerCase())){
+        return {
+          isValid: false, error: "Invalid email format."
+        };
+      }
+      break;
+
+    case 2: // regular text fields
+      if (!data || data.length === 0 ){
+        return {
+          isValid: false, error: "Fields cannot be left blank."
+        };
+      }
+      if (data.length < 2 || data.length > 20 ){
+        return {
+          isValid: false, error: "Invalid name length."
+        };
+      }
+      break;
+    case 3: //check our comission
+      const comValue = Number.parseFloat(data);
+      if (Number.isNaN(comValue)){
+        return {
+          isValid: false, error:"NaN error. Insert a number."
+        };
+      }
+      if ( comValue<0 || comValue > 100){
+        return {
+          isValid: false, error:"Your number must be between 0-100"
+        };
+      }
+      break;
+    case 4: //check larger nums
+      const numValue = Number.parseFloat(data);
+      if (Number.isNaN(numValue)){
+        return {
+          isValid: false, error:"NaN error. Insert a number."
+        };
+      }
+      if ( numValue<0 || numValue > 1000000){ //cant have negative price either
+        return {
+          isValid: false, error:"Your number must be between 0-1,000,000"
+        };
+      }
+      break;
+    default:
+      return {
+      isValid: false, error: "Invalid check code."}
+  }
+  return {
+    isValid: true, error:""
+  };
+}
 //Influencer
 function openInfluencerPopup() {
   alert("open Add influencer popup.");
@@ -276,10 +342,27 @@ function cancelInfluencer() {
 function addInfluencer() {
   const name = document.getElementById("influencerName").value;
   const email = document.getElementById("influencerEmail").value;
-  const commission = parseInt(
+  const commission = Number.parseFloat(
     document.getElementById("influencerCommission").value,
   );
-  if (name !== "" && email !== "" && !Number.isNaN(commission)) {
+
+  //validity checks
+  const nameCheck = checkValid(2, name);
+  const emailCheck = checkValid(1, email);
+  const commissionCheck = checkValid(3, commission);
+  if (!nameCheck.isValid) {
+    alert("Error in Name: " + nameCheck.error);
+    return;
+  }
+  if (!emailCheck.isValid) {
+    alert("Error in Email: " + emailCheck.error);
+    return;
+  }
+
+  if (!commissionCheck.isValid) {
+    alert("Error in Commission: " + commissionCheck.error);
+    return;
+  }
     try {
       influencersArray.push({
         name: name.trim(),
@@ -302,9 +385,6 @@ function addInfluencer() {
     } catch (exception) {
       alert(exception);
     }
-  } else {
-    alert("invalid name, email, or commission. try again.");
-  }
 }
 
 //Items
@@ -320,8 +400,25 @@ function cancelItem() {
 function addItem() {
   const itemCode = document.getElementById("itemCode").value;
   const description = document.getElementById("itemDescription").value;
-  const price = parseInt(document.getElementById("itemPrice").value);
-  if (itemCode !== "" && description !== "" && !Number.isNaN(price)) {
+  const price = Number.parseFloat(document.getElementById("itemPrice").value);
+
+  //validity checks
+  const checkItemCode = checkValid(2, itemCode);
+  const checkDescription = checkValid(2, description);
+  const checkPrice = checkValid(4, price);
+  if (!checkItemCode.isValid) {
+    alert("Error in Item Code: " + checkItemCode.error);
+    return;
+  }
+  if (!checkDescription.isValid) {
+    alert("Error in Description: " + checkDescription.error);
+    return;
+  }
+  if (!checkPrice.isValid) {
+    alert("Error in Price: " + checkPrice.error);
+    return;
+  }
+
     try {
       itemsArray.push({
         itemCode: itemCode.trim(),
@@ -343,9 +440,6 @@ function addItem() {
     } catch (exception) {
       alert(exception);
     }
-  } else {
-    alert("invalid code, description, or number.");
-  }
 }
 
 //Sales
@@ -363,9 +457,16 @@ function addSale() {
   const influencerName = document.getElementById(
     "influencerNameDropdown",
   ).value;
-  const quantity = parseInt(document.getElementById("saleQuantity").value);
+  const quantity = Number.parseInt(document.getElementById("saleQuantity").value);
   const saleMedium = document.getElementById("saleMediumDropdown").value;
-  if (!Number.isNaN(quantity)) {
+
+  //validity checks
+  const checkQuantity = checkValid(4, quantity);
+  if (!checkQuantity.isValid){
+    alert("Error in Quantity: " + checkQuantity.error);
+    return;
+  }
+
     try {
       salesArray.push({
         saleNumber: nextSaleNumber,
@@ -391,9 +492,6 @@ function addSale() {
     } catch (exception) {
       alert(exception);
     }
-  } else {
-    alert("not a number, check form data and try again");
-  }
 }
 
 /* this code below is all redundant now, after the addition of updateData()
