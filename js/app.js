@@ -94,22 +94,27 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("click", (event) => {
     // Check if the clicked element has the class 'showSalesButton'
     if (event.target.classList.contains("showSalesButton")) {
-      console.log("Button clicked!", event.target);
-      // use sales array, search for influencer name, show that data ordered in increasing order (creciente)
-      //sample data. Should also show if there were no sales.
-      const saleNumber = 1;
-      const quantity = 10;
-      const articleNumber = "A001";
-      const price = 355;
-      const commission = 50;
-      alert(`
-      You clicked the Ventas button. Here's the influencer sales data: \n
-        Venta Numero: ${saleNumber}\n
-        Cantidad: ${quantity}\n
-        Articulo: ${articleNumber}\n
-        Precio Unitario: $${price}\n
-        Comision: $${commission}\n
-      `);
+      console.log("Button clicked!", event.target); //debug
+      if (salesArray.length === 0) {
+        alert("No hay datos.");
+      } else {
+        // use sales array, search for influencer name, show that data ordered in increasing order (creciente)
+
+        let arrayToShow = [];
+        arrayToShow.push("Ventas:\n");
+        salesArray.forEach((sale) => {
+          const saleNumber = sale.saleNumber;
+          const itemCode = sale.itemCode;
+          const priceEach = "priceEach"; //calc price of each from the item
+          const totalPrice = "totalPrice"; //calc the total price, multiply price by quantity
+          const quantity = sale.quantity;
+          const commission = "commission"; // calc commission later
+          arrayToShow.push(`
+            \n Nro: ${saleNumber} ⮕ ${quantity} ⮕ ${itemCode} ⮕ $${priceEach}c/u Total $${totalPrice} ⮕ Comision: $${commission}
+          `);
+        });
+        alert(arrayToShow);
+      }
     }
 
     // Check if the clicked element has the class 'removeSaleButton'
@@ -281,90 +286,107 @@ function toggleSalesForm() {
   document.getElementById("addSaleButton2").disabled = !canSell;
 }
 
-function checkValid(code, data){
+function checkValid(code, data) {
   switch (code) {
     case 1: //email validation
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //email regex check, thanks to Google AI
-      const registeredEmails = influencersArray.map(inf => inf.email);
-      const emailExists = registeredEmails.indexOf(data.trim().toLowerCase()) !== -1;
+      const registeredEmails = influencersArray.map((inf) => inf.email);
+      const emailExists =
+        registeredEmails.indexOf(data.trim().toLowerCase()) !== -1;
       if (!data) {
         return {
-          isValid: false, error: "An email is required."
+          isValid: false,
+          error: "An email is required.",
         };
       }
-      if (!emailPattern.test(data.toLowerCase())){
+      if (!emailPattern.test(data.toLowerCase())) {
         return {
-          isValid: false, error: "Invalid email format."
+          isValid: false,
+          error: "Invalid email format.",
         };
       }
-      if(emailExists)
+      if (emailExists)
         return {
-          isValid: false, error: "User already registered."
+          isValid: false,
+          error: "User already registered.",
         };
       break;
 
     case 2: // regular text fields
-      if (!data || data.length === 0 ){
+      if (!data || data.length === 0) {
         return {
-          isValid: false, error: "Fields cannot be left blank."
+          isValid: false,
+          error: "Fields cannot be left blank.",
         };
       }
-      if (data.length < 2 || data.length > 20 ){
+      if (data.length < 2 || data.length > 20) {
         return {
-          isValid: false, error: "Invalid name length."
+          isValid: false,
+          error: "Invalid name length.",
         };
       }
       break;
     case 3: //check our commission
       const comValue = Number.parseFloat(data);
-      if (Number.isNaN(comValue)){
+      if (Number.isNaN(comValue)) {
         return {
-          isValid: false, error:"NaN error. Insert a number."
+          isValid: false,
+          error: "NaN error. Insert a number.",
         };
       }
-      if ( comValue<0 || comValue > 100){
+      if (comValue < 0 || comValue > 100) {
         return {
-          isValid: false, error:"Your number must be between 0-100"
+          isValid: false,
+          error: "Your number must be between 0-100",
         };
       }
       break;
     case 4: //check larger nums
       const numValue = Number.parseFloat(data);
-      if (Number.isNaN(numValue)){
+      if (Number.isNaN(numValue)) {
         return {
-          isValid: false, error:"NaN error. Insert a number."
+          isValid: false,
+          error: "NaN error. Insert a number.",
         };
       }
-      if ( numValue<0 || numValue > 1000000){ //cant have negative price either
+      if (numValue < 0 || numValue > 1000000) {
+        //cant have negative price either
         return {
-          isValid: false, error:"Your number must be between 0-1,000,000"
+          isValid: false,
+          error: "Your number must be between 0-1,000,000",
         };
       }
       break;
     case 5: // item codes since we need these to be unique, extra validation
-      const registeredCodes = itemsArray.map(inf => inf.itemCode);
+      const registeredCodes = itemsArray.map((inf) => inf.itemCode);
       const codeExists = registeredCodes.indexOf(data.trim()) !== -1;
-      if (!data || data.length === 0 ){
+      if (!data || data.length === 0) {
         return {
-          isValid: false, error: "Fields cannot be left blank."
+          isValid: false,
+          error: "Fields cannot be left blank.",
         };
       }
-      if (data.length < 2 || data.length > 20 ){
+      if (data.length < 2 || data.length > 20) {
         return {
-          isValid: false, error: "Invalid name length."
+          isValid: false,
+          error: "Invalid name length.",
         };
       }
-      if(codeExists)
+      if (codeExists)
         return {
-          isValid: false, error: "Code already in system."
+          isValid: false,
+          error: "Code already in system.",
         };
       break;
     default:
       return {
-      isValid: false, error: "Invalid check code."}
+        isValid: false,
+        error: "Invalid check code.",
+      };
   }
   return {
-    isValid: true, error:""
+    isValid: true,
+    error: "",
   };
 }
 //Influencer
@@ -400,28 +422,28 @@ function addInfluencer() {
     alert("Error in Commission: " + commissionCheck.error);
     return;
   }
-    try {
-      influencersArray.push({
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        commission: Number(commission),
-        totalSold: Number(0), //Our influencer starts off with 0 sales.
-        influencerTags: "",
-      });
-      updateData(); //this'll work later
-      alert(
-        "Added influencer " +
-          name +
-          " with email " +
-          email +
-          " and " +
-          commission +
-          "% commission",
-      );
-      document.getElementById("influencerForm").reset();
-    } catch (exception) {
-      alert(exception);
-    }
+  try {
+    influencersArray.push({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      commission: Number(commission),
+      totalSold: Number(0), //Our influencer starts off with 0 sales.
+      influencerTags: "",
+    });
+    updateData(); //this'll work later
+    alert(
+      "Added influencer " +
+        name +
+        " with email " +
+        email +
+        " and " +
+        commission +
+        "% commission",
+    );
+    document.getElementById("influencerForm").reset();
+  } catch (exception) {
+    alert(exception);
+  }
 }
 
 //Items
@@ -456,27 +478,27 @@ function addItem() {
     return;
   }
 
-    try {
-      itemsArray.push({
-        itemCode: itemCode.trim(),
-        description: description.trim(),
-        price: Number(price),
-      });
-      //addRowItemsTable(itemCode, description, price);
-      updateData();
-      alert(
-        "Added item with code " +
-          itemCode +
-          " and description " +
-          description +
-          " and price $" +
-          price,
-      );
+  try {
+    itemsArray.push({
+      itemCode: itemCode.trim(),
+      description: description.trim(),
+      price: Number(price),
+    });
+    //addRowItemsTable(itemCode, description, price);
+    updateData();
+    alert(
+      "Added item with code " +
+        itemCode +
+        " and description " +
+        description +
+        " and price $" +
+        price,
+    );
 
-      document.getElementById("itemForm").reset();
-    } catch (exception) {
-      alert(exception);
-    }
+    document.getElementById("itemForm").reset();
+  } catch (exception) {
+    alert(exception);
+  }
 }
 
 //Sales
@@ -494,41 +516,43 @@ function addSale() {
   const influencerName = document.getElementById(
     "influencerNameDropdown",
   ).value;
-  const quantity = Number.parseInt(document.getElementById("saleQuantity").value);
+  const quantity = Number.parseInt(
+    document.getElementById("saleQuantity").value,
+  );
   const saleMedium = document.getElementById("saleMediumDropdown").value;
 
   //validity checks
   const checkQuantity = checkValid(4, quantity);
-  if (!checkQuantity.isValid){
+  if (!checkQuantity.isValid) {
     alert("Error in Quantity: " + checkQuantity.error);
     return;
   }
 
-    try {
-      salesArray.push({
-        saleNumber: nextSaleNumber,
-        itemCode: itemCode,
-        influencerName: influencerName,
-        quantity: Number(quantity),
-        saleMedium: saleMedium,
-      });
-      updateData();
-      alert(
-        "Added sale with item code " +
-          itemCode +
-          " and influencer " +
-          influencerName +
-          " and quantity " +
-          quantity +
-          " and medio " +
-          saleMedium,
-      );
-      //document.getElementById("saleForm").reset();
-      globalSaleNumber++;
-      document.getElementById("saleQuantity").value = "";
-    } catch (exception) {
-      alert(exception);
-    }
+  try {
+    salesArray.push({
+      saleNumber: nextSaleNumber,
+      itemCode: itemCode,
+      influencerName: influencerName,
+      quantity: Number(quantity),
+      saleMedium: saleMedium,
+    });
+    updateData();
+    alert(
+      "Added sale with item code " +
+        itemCode +
+        " and influencer " +
+        influencerName +
+        " and quantity " +
+        quantity +
+        " and medio " +
+        saleMedium,
+    );
+    //document.getElementById("saleForm").reset();
+    globalSaleNumber++;
+    document.getElementById("saleQuantity").value = "";
+  } catch (exception) {
+    alert(exception);
+  }
 }
 
 /* this code below is all redundant now, after the addition of updateData()
