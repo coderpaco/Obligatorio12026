@@ -42,11 +42,6 @@
 
  */
 
-// Define our arrays to store data
-// We need to access this data in the following ways:
-// - Put new influencers, items, and sales in their respective arrays
-// - Access the arrays, and do a for each loop to add each element to their tables and populate dropdowns.
-
 let influencersArray = [];
 let itemsArray = [];
 let salesArray = [];
