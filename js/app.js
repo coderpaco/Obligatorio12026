@@ -98,12 +98,36 @@ document.addEventListener("DOMContentLoaded", () => {
         let arrayToShow = [];
         arrayToShow.push("Ventas:\n");
         salesArray.forEach((sale) => {
+          //With this sale, we must find the item corresponding to it
+
           const saleNumber = sale.saleNumber;
           const itemCode = sale.itemCode;
-          const priceEach = "priceEach"; //calc price of each from the item
-          const totalPrice = "totalPrice"; //calc the total price, multiply price by quantity
+          let priceEach = 0; //calc price of each from the item
+          let totalPrice = 0; //calc the total price, multiply price by quantity
           const quantity = sale.quantity;
-          const commission = "commission"; // calc commission later
+          let commission = 0; // calc commission later
+
+          itemsArray.forEach((item) => {
+            if(sale.itemCode === item.itemCode){
+              priceEach = item.price;
+              console.log("we found the item price!");
+            }
+          })
+
+          influencersArray.forEach((influencer) => {
+            console.log(sale.influencerName);
+            console.log(influencer.influencerName);
+            if(sale.influencerName === influencer.name){
+              commission = influencer.commission; //gives us the percent
+              console.log(influencer.commission);
+              console.log(commission);
+              totalPrice = (priceEach*quantity); //calcs total price from price each
+              console.log(totalPrice);
+              commission = (totalPrice*(commission/100)); //recalculates the commission
+              console.log(commission); //overwrites with the peso amt
+            }
+          })
+
           arrayToShow.push(`
             \n Nro: ${saleNumber} ⮕ ${quantity} ⮕ ${itemCode} ⮕ $${priceEach}c/u Total $${totalPrice} ⮕ Comision: $${commission}
           `);
