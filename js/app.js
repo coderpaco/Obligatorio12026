@@ -3,13 +3,15 @@
    Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
    ==========================================================================
     TODO:
-     - Add logic for alerts when ventas button is clicked. It should get the sales for that influencer, and
-      show them in the alert.
+     - Fix logic for ventas button to not show the "," from printing the array in the alert
      - Influencer, Articulo, and venta datos categories should have a hidden attribute, or just not be selectable
      until the agregar button in the section above is clicked. The article should then be shown in a popup bubble window.
-     - each sale corresponds to only one item
+     - each sale should correspond to only one item
      - order items table decreasing/increasing by item code
      - coding for the field popups
+     - the sale number increments, but if there's an issue in updateData (in addTags for example) it'll still add to the
+     array, but not update the number.
+        (Example: If there's an issue in addTags(), addTags throws it's error and i guess just gets fully skipped.)
 
      addInfluencer() ✔️
       ->1. Adds a new influencer to the array (Initialized and added to array with an empty tag value "")
@@ -161,8 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function updateData() {
-  addTags(); //for influencers table tags, and the star in items table for most sold item
   updateTables(); //update all tables. check if they have data first.
+  addTags(); //for influencers table tags, and the star in items table for most sold item
   fillDropdowns(); //update both dropdowns. check if they have data first.
   toggleSalesForm();
 }
@@ -170,6 +172,32 @@ function updateData() {
 function addTags() {
   if (salesArray.length > 0) {
     console.log("There's a sale, we have tags");
+
+    //Track most sold item tag
+    let mostSoldQuantity = 0;
+    let mostSoldItem = "";
+    salesArray.forEach(sale => { //check each sale
+      if (sale.quantity > mostSoldQuantity){ //if its sold more...
+        console.log("most sold item found " + sale.influencerName + " with " + sale.quantity + " sales.");
+        mostSoldQuantity = sale.quantity;
+        mostSoldItem = sale.influencerName //update most sold
+      }
+      //now check for the most sold in array, and add a star to it
+      /* this  doesn't work figure it out later
+      let rows = document.querySelector("#itemTable tr");
+      rows.forEach(row => { //TypeError: rows.forEach is not a function
+        const cells = row.querySelectorAll("td"); // include th if header present
+        const secondCell = cells[0]; // second column
+        //if (!cell) return;
+        if (secondCell.innerText.trim() === mostSoldItem) {
+          secondCell.innerText = secondCell.innerText + " ⭐";
+          console.log("star added");
+        }
+      });
+      */
+      //Track influencer table tags and give them the 🔥🧊🟢
+
+    })
     //if there's a sale, add the tags to the respective influencers, this runs before updateTables();
     //if there's a sale in sale array, add the star to article with highest sales quantity
   } else {
