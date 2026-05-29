@@ -110,25 +110,25 @@ document.addEventListener("DOMContentLoaded", () => {
           let commission = 0; // calc commission later
 
           itemsArray.forEach((item) => {
-            if(sale.itemCode === item.itemCode){
+            if (sale.itemCode === item.itemCode) {
               priceEach = item.price;
               console.log("we found the item price!");
             }
-          })
+          });
 
           influencersArray.forEach((influencer) => {
             console.log(sale.influencerName);
             console.log(influencer.influencerName);
-            if(sale.influencerName === influencer.name){
+            if (sale.influencerName === influencer.name) {
               commission = influencer.commission; //gives us the percent
               console.log(influencer.commission);
               console.log(commission);
-              totalPrice = (priceEach*quantity); //calcs total price from price each
+              totalPrice = priceEach * quantity; //calcs total price from price each
               console.log(totalPrice);
-              commission = (totalPrice*(commission/100)); //recalculates the commission
+              commission = totalPrice * (commission / 100); //recalculates the commission
               console.log(commission); //overwrites with the peso amt
             }
-          })
+          });
 
           arrayToShow.push(`
             \n Nro: ${saleNumber} ⮕ ${quantity} ⮕ ${itemCode} ⮕ $${priceEach}c/u Total $${totalPrice} ⮕ Comision: $${commission}
@@ -176,11 +176,19 @@ function addTags() {
     //Track most sold item tag
     let mostSoldQuantity = 0;
     let mostSoldItem = "";
-    salesArray.forEach(sale => { //check each sale
-      if (sale.quantity > mostSoldQuantity){ //if its sold more...
-        console.log("most sold item found " + sale.influencerName + " with " + sale.quantity + " sales.");
+    salesArray.forEach((sale) => {
+      //check each sale
+      if (sale.quantity > mostSoldQuantity) {
+        //if its sold more...
+        console.log(
+          "most sold item found " +
+            sale.influencerName +
+            " with " +
+            sale.quantity +
+            " sales.",
+        );
         mostSoldQuantity = sale.quantity;
-        mostSoldItem = sale.influencerName //update most sold
+        mostSoldItem = sale.influencerName; //update most sold
       }
       //now check for the most sold in array, and add a star to it
       /* this  doesn't work figure it out later
@@ -196,8 +204,7 @@ function addTags() {
       });
       */
       //Track influencer table tags and give them the 🔥🧊🟢
-
-    })
+    });
     //if there's a sale, add the tags to the respective influencers, this runs before updateTables();
     //if there's a sale in sale array, add the star to article with highest sales quantity
   } else {
@@ -336,6 +343,8 @@ function toggleSalesForm() {
 function checkValid(code, data) {
   switch (code) {
     case 1: //email validation
+      //[^\s@] Doesn't contain a char in the set. In this case, checks that it doesn't start or end with @.
+      // and matches "***@***.***" format for an email validation
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //email regex check, thanks to Google AI
       const registeredEmails = influencersArray.map((inf) => inf.email);
       const emailExists =
