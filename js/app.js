@@ -48,10 +48,16 @@ let influencersArray = [];
 let itemsArray = [];
 let salesArray = [];
 let globalSaleNumber = 1; // this is used in ventas (sales) to track our sale number, gets +1'd for each sale.
+let itemsAscendingOrder = true; //true for ascending, false for descending
 // it wasn't incrementing correctly as a local variable for whatever reason...
 
 window.addEventListener("load", start);
 function start() {
+  //Switch Item code order button
+  document
+    .getElementById("switchItemCodeOrderButton")
+    .addEventListener("click", switchItemCodeOrder);
+
   //Influencer
   document
     .getElementById("addInfluencerButton1")
@@ -174,6 +180,8 @@ function addTags() {
     console.log("There's a sale, we have tags");
 
     //Track most sold item tag
+    //this needs to not only track the highest quantity in each sale, but also add up quantity in sales for
+    //same item.
     let mostSoldQuantity = 0;
     let mostSoldItem = "";
     salesArray.forEach((sale) => {
@@ -190,20 +198,20 @@ function addTags() {
         mostSoldQuantity = sale.quantity;
         mostSoldItem = sale.influencerName; //update most sold
       }
-      //now check for the most sold in array, and add a star to it
-      /* this  doesn't work figure it out later
-      let rows = document.querySelector("#itemTable tr");
+    /*
+      let rows = document.querySelector("#itemTable").rows;
       rows.forEach(row => { //TypeError: rows.forEach is not a function
-        const cells = row.querySelectorAll("td"); // include th if header present
-        const secondCell = cells[0]; // second column
+        const cells = row.querySelectorAll("td");
+        const firstCell = cells[0]; // first column
         //if (!cell) return;
-        if (secondCell.innerText.trim() === mostSoldItem) {
-          secondCell.innerText = secondCell.innerText + " ⭐";
+        if (firstCell.innerText.trim() === mostSoldItem) {
+          firstCell.innerText = firstCell.innerText + " ⭐";
           console.log("star added");
         }
       });
-      */
       //Track influencer table tags and give them the 🔥🧊🟢
+
+     */
     });
     //if there's a sale, add the tags to the respective influencers, this runs before updateTables();
     //if there's a sale in sale array, add the star to article with highest sales quantity
@@ -338,6 +346,30 @@ function toggleSalesForm() {
   document.getElementById("saleMediumDropdown").disabled = !canSell;
   document.getElementById("cancelSaleButton").disabled = !canSell;
   document.getElementById("addSaleButton2").disabled = !canSell;
+}
+
+function switchItemCodeOrder(){
+  //switches order of the original array. however, when you switch order (example to reverse order) then add a new
+  // element to array, it adds to the end of that reversed array. (A001,A002, reversed, A002, A001, added new element
+  // becomes A002, A001, A003. not A001, A002, A003 or A003 A002 A001.
+  //------------
+  // maybe create second reversed array, and switch between them. or if is array reversed, unreverse when item added, then
+  // reverse back to display.
+  if (itemsAscendingOrder === true){ //if 1, true, items in ascending, set to descending
+    console.log("switched order, was ascending now setting descending");
+    console.log(itemsAscendingOrder);
+    itemsArray.reverse();
+    itemsAscendingOrder = false;
+    updateTables();
+    console.log(itemsAscendingOrder);
+  } else { //if 0, false, descending order, set to ascending order
+    console.log("switched order, was descending now setting ascending");
+    console.log(itemsAscendingOrder);
+    itemsArray.reverse();
+    itemsAscendingOrder = true;
+    updateTables();
+    console.log(itemsAscendingOrder);
+  }
 }
 
 function checkValid(code, data) {
