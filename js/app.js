@@ -33,7 +33,7 @@
         fillDropdowns() ✔️
           -> Adds the value of "Codigo" from each article array object to the dropdown
           -> Adds the value of "Name" from each influencer array object to the dropdown
-     checkOrder()❌
+     checkOrder()️️✔️
       -> if influencers table is ascending or descending
       -> if articulos table is ascending or descending
 
@@ -50,6 +50,7 @@ let salesArray = [];
 let globalSaleNumber = 1; // this is used in ventas (sales) to track our sale number, gets +1'd for each sale.
 let itemsAscendingOrder = true; //true for ascending, false for descending
 // it wasn't incrementing correctly as a local variable for whatever reason...
+let influencersAscendingOrder = false; //defaults as false, they aren;t ordered
 
 window.addEventListener("load", start);
 function start() {
@@ -58,6 +59,10 @@ function start() {
     .getElementById("switchItemCodeOrderButton")
     .addEventListener("click", switchItemCodeOrder);
 
+  //Switch influencer name order button
+  document
+    .getElementById("switchInfluencerOrderButton")
+    .addEventListener("click", switchInfluencerOrder);
   //Influencer
   document
     .getElementById("addInfluencerButton1")
@@ -349,26 +354,43 @@ function toggleSalesForm() {
 }
 
 function switchItemCodeOrder(){
-  //switches order of the original array. however, when you switch order (example to reverse order) then add a new
-  // element to array, it adds to the end of that reversed array. (A001,A002, reversed, A002, A001, added new element
-  // becomes A002, A001, A003. not A001, A002, A003 or A003 A002 A001.
-  //------------
-  // maybe create second reversed array, and switch between them. or if is array reversed, unreverse when item added, then
-  // reverse back to display.
+  //instead of using only .sort or .reverse, here we use localeCompare which sorts the array in alphabetical order.
+  //doing it this way makes it easy to sort the array after adding a new element to the array.
+  // the button has to be clicked again to resort the array, should the array be resorted after a new element is added?
+  // example. A002 A001 A003 -> automatically sorts to A003 A002 A001 when the item is added? add sort to updateData maybe?
   if (itemsAscendingOrder === true){ //if 1, true, items in ascending, set to descending
     console.log("switched order, was ascending now setting descending");
     console.log(itemsAscendingOrder);
-    itemsArray.reverse();
+    itemsArray.sort((a, b) => a.itemCode.localeCompare(b.itemCode)); //descending
     itemsAscendingOrder = false;
     updateTables();
     console.log(itemsAscendingOrder);
-  } else { //if 0, false, descending order, set to ascending order
+  } else { //if false, descending order, set to ascending order
     console.log("switched order, was descending now setting ascending");
     console.log(itemsAscendingOrder);
-    itemsArray.reverse();
+    itemsArray.sort((a, b) => b.itemCode.localeCompare(a.itemCode)); //ascending
     itemsAscendingOrder = true;
     updateTables();
     console.log(itemsAscendingOrder);
+  }
+}
+
+function switchInfluencerOrder(){
+  //In this function, localeCompare is used to compare strings for ordering in alphabetical order
+  if (influencersAscendingOrder === true){ //if 1, true, items in ascending, set to descending
+    console.log("switched order, was ascending now setting descending");
+    console.log(influencersAscendingOrder);
+    influencersArray.sort((a, b) => b.name.localeCompare(a.name)); // descending
+    influencersAscendingOrder = false;
+    updateTables();
+    console.log(influencersAscendingOrder);
+  } else { //if false, descending order, set to ascending order
+    console.log("switched order, was descending now setting ascending");
+    console.log(influencersAscendingOrder);
+    influencersArray.sort((a,b) => a.name.localeCompare(b.name)); //ascending alphabetical order
+    influencersAscendingOrder = true;
+    updateTables();
+    console.log(influencersAscendingOrder);
   }
 }
 
