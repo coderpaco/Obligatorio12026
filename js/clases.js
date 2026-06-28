@@ -12,10 +12,6 @@ class Influencer {
     this.totalSold = 0;
     this.influencerTags = "";
   }
-
-  getSummary() {
-    return `${this.name} (${this.email})`;
-  }
 }
 
 class Item {
@@ -23,10 +19,6 @@ class Item {
     this.itemCode = itemCode.trim();
     this.description = description.trim();
     this.price = Number(price);
-  }
-
-  getLabel() {
-    return `${this.itemCode} - ${this.description}`;
   }
 }
 
@@ -37,10 +29,6 @@ class Sale {
     this.influencerName = influencerName;
     this.quantity = Number(quantity);
     this.saleMedium = saleMedium;
-  }
-
-  getDescription() {
-    return `${this.saleNumber}: ${this.itemCode} x${this.quantity}`;
   }
 }
 

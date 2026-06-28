@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = event.target.closest("tr");
       const influencerName = row?.cells[0]?.textContent.trim();
       if (!influencerName) {
-        alert("No influencer name found for this sale button.");
+        alert("No hay nombre de influencer para este boton.");
         return;
       }
 
@@ -63,19 +63,23 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       if (influencerSales.length === 0) {
-        alert(`No sales found for influencer ${influencerName}.`);
+        alert(`No existe ventas para ${influencerName}.`);
         return;
       }
 
       const details = influencerSales
         .map((sale) => {
-          const item = itemsArray.find((itemRow) => itemRow.itemCode === sale.itemCode);
+          const item = itemsArray.find(
+            (itemRow) => itemRow.itemCode === sale.itemCode,
+          );
           const influencer = influencersArray.find(
             (inf) => inf.name === influencerName,
           );
           const priceEach = item ? Number(item.price) : 0;
           const totalPrice = priceEach * sale.quantity;
-          const commissionPercent = influencer ? Number(influencer.commission) : 0;
+          const commissionPercent = influencer
+            ? Number(influencer.commission)
+            : 0;
           const commissionAmount = (totalPrice * commissionPercent) / 100;
           const itemCode = item ? item.itemCode : sale.itemCode;
 
@@ -96,7 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (arrayIndex !== -1) {
         salesArray.splice(arrayIndex, 1);
       } else {
-        console.warn(`Could not find sale number ${saleToDelete} in the array.`);
+        console.warn(
+          `Venta numero ${saleToDelete} no encontrado en el array.`,
+        );
       }
       updateData();
     }
@@ -163,7 +169,9 @@ function updateBubbles() {
   const totals = mediums.map((medium) => {
     const total = salesArray.reduce((sum, sale) => {
       if (sale.saleMedium !== medium.value) return sum;
-      const item = itemsArray.find((itemRow) => itemRow.itemCode === sale.itemCode);
+      const item = itemsArray.find(
+        (itemRow) => itemRow.itemCode === sale.itemCode,
+      );
       const priceEach = item ? Number(item.price) : 0;
       return sum + priceEach * Number(sale.quantity);
     }, 0);
@@ -208,18 +216,26 @@ function addTags() {
   }, {});
 
   salesArray.forEach((sale) => {
-    const item = itemsArray.find((itemRow) => itemRow.itemCode === sale.itemCode);
+    const item = itemsArray.find(
+      (itemRow) => itemRow.itemCode === sale.itemCode,
+    );
     const priceEach = item ? Number(item.price) : 0;
     const saleAmount = priceEach * Number(sale.quantity);
-    const influencer = influencersArray.find((inf) => inf.name === sale.influencerName);
+    const influencer = influencersArray.find(
+      (inf) => inf.name === sale.influencerName,
+    );
     const summary = influencerSales[sale.influencerName];
 
     if (summary) {
       summary.totalRevenue += saleAmount;
       summary.salesCount += 1;
-      summary.highestSaleAmount = Math.max(summary.highestSaleAmount, saleAmount);
+      summary.highestSaleAmount = Math.max(
+        summary.highestSaleAmount,
+        saleAmount,
+      );
       if (influencer) {
-        summary.totalCommission += (saleAmount * Number(influencer.commission)) / 100;
+        summary.totalCommission +=
+          (saleAmount * Number(influencer.commission)) / 100;
       }
     }
   });
@@ -229,7 +245,9 @@ function addTags() {
   Object.entries(influencerSales).forEach(([name, summary]) => {
     if (summary.totalCommission > highestCommissionAmount) {
       highestCommissionAmount = summary.totalCommission;
-      highestCommissionInfluencer = influencersArray.find((inf) => inf.name === name);
+      highestCommissionInfluencer = influencersArray.find(
+        (inf) => inf.name === name,
+      );
     }
   });
 
@@ -250,7 +268,10 @@ function addTags() {
     };
     const tags = [];
 
-    if (highestCommissionInfluencer && inf.name === highestCommissionInfluencer.name) {
+    if (
+      highestCommissionInfluencer &&
+      inf.name === highestCommissionInfluencer.name
+    ) {
       tags.push("🔥");
     }
     if (summary.salesCount === 0) {
@@ -267,7 +288,9 @@ function addTags() {
 
 function updateTables() {
   const hasData =
-    influencersArray.length > 0 || itemsArray.length > 0 || salesArray.length > 0;
+    influencersArray.length > 0 ||
+    itemsArray.length > 0 ||
+    salesArray.length > 0;
 
   if (!hasData) {
     return;
@@ -325,7 +348,8 @@ function updateTables() {
     const tbody = document.querySelector("#itemTable .tableBody");
     const row = tbody.insertRow();
     const itemCodeWithTag =
-      itemsArray[i].itemCode + (itemsArray[i].itemCode === topItemCode ? " ⭐" : "");
+      itemsArray[i].itemCode +
+      (itemsArray[i].itemCode === topItemCode ? " ⭐" : "");
     const data = [
       itemCodeWithTag,
       itemsArray[i].description,
@@ -398,7 +422,8 @@ function sortInfluencersByName() {
     const order = nameA.localeCompare(nameB);
     return influencerNameSortDirection === "asc" ? order : -order;
   });
-  influencerNameSortDirection = influencerNameSortDirection === "asc" ? "desc" : "asc";
+  influencerNameSortDirection =
+    influencerNameSortDirection === "asc" ? "desc" : "asc";
   updateData();
 }
 
@@ -418,44 +443,47 @@ function checkValid(code, data) {
     case 1: {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!data) {
-        return { isValid: false, error: "An email is required." };
+        return { isValid: false, error: "Un email es requerido." };
       }
       if (!emailPattern.test(data.toLowerCase())) {
-        return { isValid: false, error: "Invalid email format." };
+        return { isValid: false, error: "Formato de email invalido." };
       }
       break;
     }
     case 2: {
       if (!data || data.length === 0) {
-        return { isValid: false, error: "Fields cannot be left blank." };
+        return { isValid: false, error: "Todos los campos son requeridos." };
       }
       if (data.length < 2 || data.length > 20) {
-        return { isValid: false, error: "Invalid name length." };
+        return { isValid: false, error: "Tamano de nombre invalido (>2 y <20 letras" };
       }
       break;
     }
     case 3: {
       const comValue = Number.parseFloat(data);
       if (Number.isNaN(comValue)) {
-        return { isValid: false, error: "NaN error. Insert a number." };
+        return { isValid: false, error: "NaN error. Ingrese un numero." };
       }
       if (comValue < 0 || comValue > 100) {
-        return { isValid: false, error: "Your number must be between 0-100" };
+        return { isValid: false, error: "Numero debe ser entre 0-100" };
       }
       break;
     }
     case 4: {
       const numValue = Number.parseFloat(data);
       if (Number.isNaN(numValue)) {
-        return { isValid: false, error: "NaN error. Insert a number." };
+        return { isValid: false, error: "NaN error. Ingrese un numero." };
       }
       if (numValue < 0 || numValue > 1000000) {
-        return { isValid: false, error: "Your number must be between 0-1,000,000" };
+        return {
+          isValid: false,
+          error: "Su numero debe ser entre 0-1,000,000",
+        };
       }
       break;
     }
     default:
-      return { isValid: false, error: "Invalid check code." };
+      return { isValid: false, error: "Codigo invalido." };
   }
 
   return { isValid: true, error: "" };
@@ -481,21 +509,21 @@ function addInfluencer() {
   const emailCheck = checkValid(1, email);
   const commissionCheck = checkValid(3, commission);
   if (!nameCheck.isValid) {
-    alert("Error in Name: " + nameCheck.error);
+    alert("Error en Nombre: " + nameCheck.error);
     return;
   }
   if (!emailCheck.isValid) {
-    alert("Error in Email: " + emailCheck.error);
+    alert("Error en Email: " + emailCheck.error);
     return;
   }
   const normalizedEmail = email.trim().toLowerCase();
   if (influencersArray.some((inf) => inf.email === normalizedEmail)) {
-    alert("Error: Email already exists. Use a different email.");
+    alert("Error: Email ya existe. Ingrese otro email.");
     return;
   }
 
   if (!commissionCheck.isValid) {
-    alert("Error in Commission: " + commissionCheck.error);
+    alert("Error en Commission: " + commissionCheck.error);
     return;
   }
 
@@ -503,13 +531,13 @@ function addInfluencer() {
     influencersArray.push(new Influencer(name, email, commission));
     updateData();
     alert(
-      "Added influencer " +
+      "Influencer " +
         name +
-        " with email " +
+        " agregado, con email " +
         email +
-        " and " +
+        " y " +
         commission +
-        "% commission",
+        "% comision",
     );
     document.getElementById("influencerForm").reset();
     closePopup("influencerPopup");
@@ -536,20 +564,24 @@ function addItem() {
   const checkDescription = checkValid(2, description);
   const checkPrice = checkValid(4, price);
   if (!checkItemCode.isValid) {
-    alert("Error in Item Code: " + checkItemCode.error);
+    alert("Error en codigo de articulo: " + checkItemCode.error);
     return;
   }
   const normalizedItemCode = itemCode.trim().toLowerCase();
-  if (itemsArray.some((item) => item.itemCode.toLowerCase() === normalizedItemCode)) {
-    alert("Error: Item code already exists. Use a different code.");
+  if (
+    itemsArray.some(
+      (item) => item.itemCode.toLowerCase() === normalizedItemCode,
+    )
+  ) {
+    alert("Error: Codigo de articulo ya existe. Ingrese otro codigo.");
     return;
   }
   if (!checkDescription.isValid) {
-    alert("Error in Description: " + checkDescription.error);
+    alert("Error en Descripcion: " + checkDescription.error);
     return;
   }
   if (!checkPrice.isValid) {
-    alert("Error in Price: " + checkPrice.error);
+    alert("Error en Pricio: " + checkPrice.error);
     return;
   }
 
@@ -557,11 +589,11 @@ function addItem() {
     itemsArray.push(new Item(itemCode, description, price));
     updateData();
     alert(
-      "Added item with code " +
+      "Articulo con codigo " +
         itemCode +
-        " and description " +
+        " y descripcion " +
         description +
-        " and price $" +
+        " y precio $" +
         price,
     );
     document.getElementById("itemForm").reset();
@@ -573,7 +605,9 @@ function addItem() {
 
 function openSalePopup() {
   if (influencersArray.length === 0 || itemsArray.length === 0) {
-    alert("Agrega al menos un influencer y un artículo antes de registrar una venta.");
+    alert(
+      "Agrega al menos un influencer y un artículo antes de registrar una venta.",
+    );
     return;
   }
   showPopup("salePopup");
@@ -587,7 +621,9 @@ function cancelSale() {
 function addSale() {
   const nextSaleNumber = globalSaleNumber;
   const itemCode = document.getElementById("saleNumberDropdown").value;
-  const influencerName = document.getElementById("influencerNameDropdown").value;
+  const influencerName = document.getElementById(
+    "influencerNameDropdown",
+  ).value;
   const quantity = Number.parseInt(
     document.getElementById("saleQuantity").value,
   );
@@ -595,7 +631,7 @@ function addSale() {
 
   const checkQuantity = checkValid(4, quantity);
   if (!checkQuantity.isValid) {
-    alert("Error in Quantity: " + checkQuantity.error);
+    alert("Error en Cantidad: " + checkQuantity.error);
     return;
   }
 
@@ -605,13 +641,13 @@ function addSale() {
     );
     updateData();
     alert(
-      "Added sale with item code " +
+      "Venta agregado con codigo de articulo " +
         itemCode +
-        " and influencer " +
+        " y influencer " +
         influencerName +
-        " and quantity " +
+        " y cantidad " +
         quantity +
-        " and medio " +
+        " y medio " +
         saleMedium,
     );
     globalSaleNumber++;
