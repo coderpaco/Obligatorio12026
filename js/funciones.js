@@ -54,17 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (event.target.classList.contains("showSalesButton")) { //if button is showsalesbutton
       const row = event.target.closest("tr"); //finds closest row to the button (basically the buttons row)
       const influencerName = row.cells[0].textContent.trim(); //get influencer name from first cell of row
-      if (!influencerName) { //debug if for some reason theres no name there
-        alert("Debug: No influencer name found for this sale button.");
-        return;
-      }
 
       const influencerSales = salesArray.filter( //filter salesArray for all sales w that name
         (sale) => sale.influencerName === influencerName,
       );
 
       if (influencerSales.length === 0) { //if none...
-        alert(`No sales found for influencer ${influencerName}.`);
+        alert(`No hay ventas encontrado para ${influencerName}.`);
         return;
       }
 
@@ -95,12 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
           " ⇥ Comisión: $" +
           commissionAmount.toFixed(2);
 
-        if (i < influencerSales.length - 1) {
+        if (i < influencerSales.length - 1) { //if less than arraylength-1 we get a new line
           details += "\n";
         }
       }
 
-      alert(`Ventas de ${influencerName}:\n\n${details}`); //the final alert that joins the influencers name and their sales
+      alert(`Ventas de ${influencerName}:\n\n${details}`); //join the influencer name and their sales
       return;
     }
 
@@ -113,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (arrayIndex !== -1) {
         salesArray.splice(arrayIndex, 1); //remove sale from array IF it exists
       } else {
-        console.warn(`Could not find sale number ${saleToDelete} in the array.`); //nope no sale
+        console.warn(`No se pudo encontrar el número de venta ${saleToDelete} en el array.`); //nope no sale
       }
       updateData(); //update data again
     }
@@ -169,14 +165,14 @@ function updateBubbles() {  // update graph based off sales
   const bubbleGraph = document.getElementById("bubbleGraph");
   if (!bubbleGraph) return;
 
-  const mediums = [
-    { value: "1-Instagram", label: "1 - Instagram", color: "#ff4d4d" },
-    { value: "2-Youtube", label: "2 - YouTube", color: "#ffae42" },
-    { value: "3-X", label: "3 - X", color: "#229954" },
-    { value: "4-TikTok", label: "4 - TikTok", color: "#8e44ad" },
+  const mediums = [ //color pallete for the apps taken from what i think best fits them (googlesearched their color palletes)
+    { value: "1-Instagram", label: "1 - Instagram", color: "#8134af" },
+    { value: "2-Youtube", label: "2 - YouTube", color: "#ff0000" },
+    { value: "3-X", label: "3 - X", color: "#919829" },
+    { value: "4-TikTok", label: "4 - TikTok", color: "#14ba35" },
     { value: "5-Facebook", label: "5 - Facebook", color: "#2e86de" },
     { value: "6-Otras", label: "6 - Otras", color: "#7f8c8d" },
-  ];
+  ];    
 
   const totals = [];
 
@@ -210,14 +206,14 @@ function updateBubbles() {  // update graph based off sales
     }
     
     //new object with medium info AND its total
-    const mediumWithTotal = {
+    const salesMediumWithTotal = {
       value: medium.value,
       label: medium.label,
       color: medium.color,
       total: total
     };
     
-    totals.push(mediumWithTotal);// track this to later graph with bubbles
+    totals.push(salesMediumWithTotal);// track this to later graph with bubbles
   }
 
   //check our totals array for the highest amt and set that
@@ -227,9 +223,9 @@ function updateBubbles() {  // update graph based off sales
       maxTotal = totals[i].total;
     }
   }
-
-  const minRadius = 12; //set our min and max radius for bubbles
-  const maxRadius = 120;
+    
+  const maxRadius = 100;
+  const minRadius = Math.round(maxRadius * 0.10); // 10% of maxRadius
 
   bubbleGraph.innerHTML = ""; //clear any current bubble data
   
@@ -237,15 +233,15 @@ function updateBubbles() {  // update graph based off sales
   for (let i = 0; i < totals.length; i++) {
     const medium = totals[i];
     
-    // calc radius size within minmax radius
+    // calc radius size within min-max radius
     let ratio = 0;
     if (maxTotal > 0) {
       ratio = medium.total / maxTotal;
     }
     
-    let radius = ratio * maxRadius;
-    if (radius < minRadius) {
-      radius = minRadius;
+    let radius = minRadius + ratio * (maxRadius - minRadius);
+    if (radius > maxRadius) {
+      radius = maxRadius;
     }
     
     //create the bubble in html
@@ -257,7 +253,9 @@ function updateBubbles() {  // update graph based off sales
       displayTotal = "$" + medium.total.toFixed(0); //toFixed 0 makes it a whole number (0 numbers after decimal point)
     }
     
-    bubble.innerHTML = "<div class='bubble-dot' style='width:" + (radius * 2) + "px; height:" + (radius * 2) + "px; background:" + medium.color + ";'>" + displayTotal + "</div><div class='bubble-label'>" + medium.label + "</div><div class='bubble-value'>Total: $" + medium.total.toFixed(0) + "</div>";
+    //build the bubble html with the previously defined data. this is done here 
+    //instead of html/css because the bubble size is based on the data that gets calculated first
+    bubble.innerHTML = "<div class='bubble-dot' style='width:" + (radius * 2) + "px; height:" + (radius * 2) + "px; background:" + medium.color + ";'>" + displayTotal + "</div><div class='bubble-label'>" + medium.label + "</div>";
     
     bubbleGraph.appendChild(bubble);
   }
@@ -440,6 +438,7 @@ function fillDropdowns() {
         dropdownInfluencer.add(newOption);
       });
     } else {
+        //we shouldnt even see this bc the popup is hidden, but just in case for debugging
       dropdownInfluencer.add(new Option("Sin influencers", ""));
     }
   }
@@ -453,6 +452,7 @@ function fillDropdowns() {
         dropdownItems.add(newOption);
       });
     } else {
+        //we also shouldnt  see this bc the popup is hidden, but add something for debugging
       dropdownItems.add(new Option("Sin artículos", ""));
     }
   }
@@ -485,44 +485,44 @@ function checkValid(code, data) { //check data validity with a switch case
     case 1: {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //regex email validation
       if (!data) {
-        return { isValid: false, error: "An email is required." };
+        return { isValid: false, error: "Un email es requerido." };
       }
       if (!emailPattern.test(data.toLowerCase())) {
-        return { isValid: false, error: "Invalid email format." };
+        return { isValid: false, error: "Formato de email inválido." };
       }
       break;
     }
     case 2: {
       if (!data || data.length === 0) {
-        return { isValid: false, error: "Fields cannot be left blank." };
+        return { isValid: false, error: "Los campos no pueden estar vacíos." };
       }
       if (data.length < 2 || data.length > 20) {
-        return { isValid: false, error: "Invalid name length." };
+        return { isValid: false, error: "Nombre invalido. (2-20 caracteres)" };
       }
       break;
     }
     case 3: {
       const comValue = Number.parseFloat(data);
       if (Number.isNaN(comValue)) {
-        return { isValid: false, error: "NaN error. Insert a number." };
+        return { isValid: false, error: "NaN. Ingrese un número válido." };
       }
       if (comValue < 0 || comValue > 100) {
-        return { isValid: false, error: "Your number must be between 0-100" };
+        return { isValid: false, error: "Su número debe estar entre 0-100" };
       }
       break;
     }
     case 4: {
       const numValue = Number.parseFloat(data);
       if (Number.isNaN(numValue)) {
-        return { isValid: false, error: "NaN error. Insert a number." };
+        return { isValid: false, error: "NaN. Ingrese un número válido." };
       }
       if (numValue < 0 || numValue > 1000000) {
-        return { isValid: false, error: "Your number must be between 0-1,000,000" };
+        return { isValid: false, error: "Su número debe estar entre 0-1,000,000" };
       }
       break;
     }
     default:
-      return { isValid: false, error: "Invalid check code." };
+      return { isValid: false, error: "Invalid check code." }; //debug
   }
 
   return { isValid: true, error: "" };
@@ -548,21 +548,21 @@ function addInfluencer() {
   const emailCheck = checkValid(1, email);
   const commissionCheck = checkValid(3, commission);
   if (!nameCheck.isValid) {
-    alert("Error in Name: " + nameCheck.error);
+    alert("Error en Nombre: " + nameCheck.error);
     return;
   }
   if (!emailCheck.isValid) {
-    alert("Error in Email: " + emailCheck.error);
+    alert("Error en Email: " + emailCheck.error);
     return;
   }
   const lowercaseEmail = email.trim().toLowerCase(); //ensure it is unique
   if (influencersArray.some((inf) => inf.email === lowercaseEmail)) { //find if the email exists anywhere at least once
-    alert("Error: Email already exists. Use a different email.");
+    alert("Error: Email ya existe. Ingrese otro email.");
     return;
   }
 
   if (!commissionCheck.isValid) {
-    alert("Error in Commission: " + commissionCheck.error);
+    alert("Error en Comisión: " + commissionCheck.error);
     return;
   }
 
@@ -570,13 +570,13 @@ function addInfluencer() {
     influencersArray.push(new Influencer(name, email, commission));
     updateData();
     alert(
-      "Added influencer " +
+      "Influencer agregado con nombre " +
         name +
-        " with email " +
+        " y email " +
         email +
-        " and " +
+        " y comisión " +
         commission +
-        "% commission",
+        "%",
     );
     document.getElementById("influencerForm").reset();
     closePopup("influencerPopup");
@@ -603,20 +603,20 @@ function addItem() {
   const checkDescription = checkValid(2, description);
   const checkPrice = checkValid(4, price);
   if (!checkItemCode.isValid) {
-    alert("Error in Item Code: " + checkItemCode.error);
+    alert("Error en Código de Articulo: " + checkItemCode.error);
     return;
   }
   const lowercaseItemCode = itemCode.trim().toLowerCase(); //same check as influencer, ensure unique within item array
   if (itemsArray.some((item) => item.itemCode.toLowerCase() === lowercaseItemCode)) {
-    alert("Error: Item code already exists. Use a different code.");
+    alert("Error: Código de artículo ya existe. Ingrese otro codigo.");
     return;
   }
   if (!checkDescription.isValid) {
-    alert("Error in Description: " + checkDescription.error);
+    alert("Error en Descripcion: " + checkDescription.error);
     return;
   }
   if (!checkPrice.isValid) {
-    alert("Error in Price: " + checkPrice.error);
+    alert("Error en Precio: " + checkPrice.error);
     return;
   }
 
@@ -624,11 +624,11 @@ function addItem() {
     itemsArray.push(new Item(itemCode, description, price));
     updateData();
     alert(
-      "Added item with code " +
+      "Articulo agregado con código " +
         itemCode +
-        " and description " +
+        " y descripción " +
         description +
-        " and price $" +
+        " y precio $" +
         price,
     );
     document.getElementById("itemForm").reset();
@@ -664,7 +664,7 @@ function addSale() {
 
   const checkQuantity = checkValid(4, quantity);
   if (!checkQuantity.isValid) {
-    alert("Error in Quantity: " + checkQuantity.error);
+    alert("Error en Cantidad: " + checkQuantity.error);
     return;
   }
 
@@ -674,13 +674,13 @@ function addSale() {
     );
     updateData();
     alert(
-      "Added sale with item code " +
+      "Venta agregada con código de artículo " +
         itemCode +
-        " and influencer " +
+        " y influencer " +
         influencerName +
-        " and quantity " +
+        " y cantidad " +
         quantity +
-        " and medio " +
+        " y medio " +
         saleMedium,
     );
     globalSaleNumber++;

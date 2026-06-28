@@ -157,53 +157,50 @@ fieldset {
    Bubbles & Popups
    ========================================================================== */
 
-.hidden {
-  display: none !important;
+.hidden { /*keep popups hidden until should be shown on buttonclick*/
+  display: none !important; /*important overrides all other css rules*/
 }
 
 .popup {
-  position: fixed;
+  position: fixed; /*keep screen pos in middle*/
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); /*center*/
   width: min(96%, 1200px);
   max-height: 90vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 1000;
+  z-index: 1000; /*appear on top*/
   background-color: #ffffff;
   border: 2px solid #000000;
-  box-shadow: 0 20px 60px rgb(0, 0, 0);
   padding: 18px 24px;
   margin: 0;
 }
 
-#salePopup {
-  width: min(96%, 1300px);
+#salePopup { 
+  width: min(96%, 1300px); /*sale has an extra input, make it a little bigger*/
 }
 
 #salePopup .popup form {
-  gap: 6px 10px;
+  gap: 6px 10px; /*stop things from touching each other*/
 }
 
 #salePopup .popup input,
 #salePopup .popup select {
-  flex: 0 0 140px;
+  flex: 0 0 140px;  /*fixed width in form*/
 }
 
 .popup h3 {
-  margin-top: 0;
+  margin-top: 0; /*remove header margins*/
 }
 
 .popup form {
-  display: flex;
-  flex-wrap: nowrap;
+  display: flex; /*show in a single row IMPORTANT*/
+  flex-wrap: nowrap; /*show in a single row, dont overflow into another line IMPORTANT*/
   align-items: center;
   gap: 8px 10px;
 }
 
 .popup label {
-  display: flex;
+  display: flex; /*show in a single row IMPORTANT*/
   align-items: center;
   gap: 8px;
   width: auto;
@@ -213,32 +210,14 @@ fieldset {
 
 .popup input,
 .popup select {
-  flex: 0 0 150px;
-  min-width: 70px;
+  flex: 0 0 150px; /*fixed width and ensure inputs arent ever too small*/
+  min-width: 70px; 
   padding: 6px 6px;
 }
 
 .popup button {
-  min-width: 120px;
+  min-width: 120px; /*ensure min button width*/
   padding: 8px 12px;
-}
-
-.popup .popup-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  align-items: center;
-  margin-left: auto;
-  flex: 0 0 auto;
-  order: 99;
-}
-
-.popup::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgb(255, 254, 254);
-  z-index: -1;
 }
 
 .bubble-graph {
@@ -262,9 +241,8 @@ fieldset {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  color: white;
-  font-weight: 700;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  color: rgb(0, 0, 0);
+  font-weight: 100;
 }
 
 .bubble-label {
@@ -273,7 +251,3 @@ fieldset {
   max-width: 120px;
 }
 
-.bubble-value {
-  font-size: 0.8rem;
-  color: #333;
-}
