@@ -2,9 +2,6 @@
 ==========================================================================
 Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
 ==========================================================================
-TODO: part 2: add to bubbles section. bubbles need to scale based on the values they are representing
-      (flex? idk how to do this.)
-      - put fields in their popups
 -->
 
 <!doctype html>
@@ -22,7 +19,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
 
 <body>
   <!-- Site content -->
-  <h1>Sistema de Gestión (Davit Dostourian Erbe)</h1>
+  <h1>Sistema de Gestión - Erbe - Castillo)</h1>
 
   <!--  Influencer Section-->
   <section>
@@ -32,7 +29,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
     <button id="addInfluencerButton1">Agregar Influencer</button>
   </article>
   <!--  Add influencer form-->
-  <article>
+  <article id="influencerPopup" class="popup hidden">
     <h3>Datos del Influencer a agregar</h3>
     <h3>Influencer</h3>
     <form id="influencerForm" onsubmit="return false">
@@ -57,7 +54,10 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
                step=".1"
                type="number">
       </label>
-      <button type="button" id="cancelInfluencerButton">Cancelar</button><button type="submit" id="addInfluencerButton2">Agregar</button>
+      <div class="popup-actions">
+        <button type="button" id="cancelInfluencerButton">Cancelar</button>
+        <button type="submit" id="addInfluencerButton2">Agregar</button>
+      </div>
     </form>
   </article>
   <!--  Influencer table-->
@@ -66,7 +66,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
   <table class="table" id="influencerTable">
     <thead>
     <tr>
-      <th><button id="switchInfluencerOrderButton">Nombre ⇅</button></th>
+      <th><button id="switchInfluencerNameOrderButton">Nombre ⇅</button></th>
       <th>Email</th>
       <th>% Comisión</th>
       <th>Total a cobrar</th>
@@ -118,7 +118,7 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
     <button id="addItemButton1">Agregar artículo</button>
   </article>
   <!--  Add article form-->
-  <article>
+  <article id="itemPopup" class="popup hidden">
   <h3>Datos del artículo a agregar</h3>
     <h3>Artículo</h3>
     <form id="itemForm" onsubmit="return false">
@@ -140,7 +140,10 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
                required
                type="number">
       </label>
-      <button type="button" id="cancelItemButton">Cancelar</button><button type="submit" id="addItemButton2">Agregar</button>
+      <div class="popup-actions">
+        <button type="button" id="cancelItemButton">Cancelar</button>
+        <button type="submit" id="addItemButton2">Agregar</button>
+      </div>
     </form>
   </article>
   <!--  table for articles-->
@@ -189,19 +192,19 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
       <button id="addSaleButton">Agregar venta</button>
     </article>
     <!--  Add venta form-->
-    <article>
+    <article id="salePopup" class="popup hidden">
       <h3>Datos de la venta a agregar</h3>
+      <h3>Venta</h3>
       <form id="saleForm" onsubmit="return false">
-        <h3>Venta</h3>
         <label for="saleNumberDropdown">Nro Artículo
-          <select name="saleNumberDropdown" id="saleNumberDropdown" disabled>
+          <select name="saleNumberDropdown" id="saleNumberDropdown" >
             <option value="A001" selected >A001</option>
             <option value="A002">A002</option>
             <option value="A003">A003</option>
           </select>
         </label>
         <label for="influencerNameDropdown">Influencer
-          <select name="influencerNameDropdown" id="influencerNameDropdown" disabled>
+          <select name="influencerNameDropdown" id="influencerNameDropdown" >
             <option value="Ana Perez" selected >Ana Perez</option>
             <option value="Juan Gomez">Juan Gomez</option>
             <option value="Lucia Martinez">Lucia Martinez</option>
@@ -211,10 +214,10 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
           <input id="saleQuantity"
                  name="saleQuantity"
                  required
-                 type="number" disabled>
+                 type="number">
         </label>
         <label for="saleMediumDropdown">Medio
-          <select name="saleMediumDropdown" id="saleMediumDropdown" disabled>
+          <select name="saleMediumDropdown" id="saleMediumDropdown" >
             <option value="1-Instagram" selected >1-Instagram</option>
             <option value="2-Youtube">2-Youtube</option>
             <option value="3-X">3-X</option>
@@ -223,7 +226,10 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
             <option value="6-Otras">6-Otras</option>
           </select>
         </label>
-        <button type="button" id="cancelSaleButton" disabled>Cancelar</button><button type="submit" id="addSaleButton2" disabled>Agregar</button>
+        <div class="popup-actions">
+          <button type="button" id="cancelSaleButton">Cancelar</button>
+          <button type="submit" id="addSaleButton2">Agregar</button>
+        </div>
       </form>
     </article>
     <!--Table of sales(ventas) ordered by venta number  -->
@@ -261,18 +267,20 @@ TODO: part 2: add to bubbles section. bubbles need to scale based on the values 
       </table>
     </article>
 <!--Bubble graph-->
-    <article>
+    <article id="bubbleSection">
       <h3>Gráfico de burbujas</h3>
-
+      <div id="bubbleGraph" class="bubble-graph"></div>
     </article>
   </section>
 <!-- Footer-->
   <footer>
     <p>Davit Dostourian Erbe, 281664. |
+      <a href=https://ort.edu.uy target="_blank" rel="noopener noreferrer">ORT Uruguay</a> Julio Del Castillo, 326107. |
       <a href=https://ort.edu.uy target="_blank" rel="noopener noreferrer">ORT Uruguay</a>
     </p>
   </footer>
-  <script src="js/app.js"></script>
+  <script src="js/clases.js"></script>
+  <script src="js/funciones.js"></script>
 </body>
 
 </html>
