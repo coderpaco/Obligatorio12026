@@ -49,7 +49,7 @@ function start() {
 
 // Add click handlers for buttons inserted after page load.
 document.addEventListener("DOMContentLoaded", () => {
-  document.addEventListener("click", (event) => {
+  document.addEventListener("click", (event) => { //check clicks on the page and see if the clicked part is a button w label "showSalesButton" or "removeSaleButton"
     if (event.target.classList.contains("showSalesButton")) {
       const row = event.target.closest("tr");
       const influencerName = row?.cells[0]?.textContent.trim();
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const details = influencerSales
-        .map((sale) => {
+        .map((sale) => { // iterate through each sale and create a summary string to later show in ventas
           const item = itemsArray.find((itemRow) => itemRow.itemCode === sale.itemCode);
           const influencer = influencersArray.find(
             (inf) => inf.name === influencerName,
@@ -87,18 +87,18 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (event.target.classList.contains("removeSaleButton")) {
+    if (event.target.classList.contains("removeSaleButton")) { // check if the clicked button is removeSaleButton
       const row = event.target.parentElement.parentElement;
       const saleToDelete = row.cells[0].textContent.trim();
-      const arrayIndex = salesArray.findIndex(
+      const arrayIndex = salesArray.findIndex( // find  sale in  salesArray by sale number
         (sale) => String(sale.saleNumber).trim() === saleToDelete,
       );
       if (arrayIndex !== -1) {
-        salesArray.splice(arrayIndex, 1);
+        salesArray.splice(arrayIndex, 1); //remove sale from array
       } else {
-        console.warn(`Could not find sale number ${saleToDelete} in the array.`);
+        console.warn(`Could not find sale number ${saleToDelete} in the array.`); //nope no sale
       }
-      updateData();
+      updateData(); //update data again
     }
   });
 });
@@ -112,13 +112,15 @@ function updateData() {
 }
 
 function showPopup(popupId) {
-  const element = document.getElementById(popupId);
-  if (element) {
+  const element = document.getElementById(popupId); 
+  if (element) { // if element is found (the popup id) remove its hidden property class so it's shown
     element.classList.remove("hidden");
   }
 }
 
-function updateSaleControls() {
+function updateSaleControls() { 
+    // check if we have influencers and items.
+    // if they BOTH exist, we can add a venta/sale. otherwise its blocked
   const hasInfluencers = influencersArray.length > 0;
   const hasItems = itemsArray.length > 0;
   const salesEnabled = hasInfluencers && hasItems;
@@ -134,7 +136,7 @@ function updateSaleControls() {
 
   controls.forEach((id) => {
     const element = document.getElementById(id);
-    if (element) {
+    if (element) { //disable or enable id elements based on salesenabled value
       element.disabled = !salesEnabled;
     }
   });
@@ -142,12 +144,12 @@ function updateSaleControls() {
 
 function closePopup(popupId) {
   const element = document.getElementById(popupId);
-  if (element) {
+  if (element) { //if an element has the popupid class it should be hidden
     element.classList.add("hidden");
   }
 }
 
-function updateBubbles() {
+function updateBubbles() { 
   const bubbleGraph = document.getElementById("bubbleGraph");
   if (!bubbleGraph) return;
 
@@ -193,28 +195,35 @@ function updateBubbles() {
 }
 
 function addTags() {
-  if (influencersArray.length === 0) {
+  if (influencersArray.length === 0) { // if there are no influencers, do nothing
     return;
   }
 
-  const influencerSales = influencersArray.reduce((acc, inf) => {
-    acc[inf.name] = {
+  const influencerSales = {}; // create an array to hold the sales summary for each influencer
+  influencersArray.forEach((inf) => {
+    influencerSales[inf.name] = {
       totalRevenue: 0,
       totalCommission: 0,
       highestSaleAmount: 0,
       salesCount: 0,
     };
-    return acc;
-  }, {});
+  });
 
-  salesArray.forEach((sale) => {
-    const item = itemsArray.find((itemRow) => itemRow.itemCode === sale.itemCode);
+  const influencerMap = Object.fromEntries( //create an influencer map 
+    influencersArray.map((inf) => [inf.name, inf]),
+  );
+  const itemMap = Object.fromEntries( // create an item map
+    itemsArray.map((item) => [item.itemCode, item]),
+  );
+
+  salesArray.forEach((sale) => { // iterate through each sale and update the influencer summary
+    const item = itemMap[sale.itemCode];
     const priceEach = item ? Number(item.price) : 0;
     const saleAmount = priceEach * Number(sale.quantity);
-    const influencer = influencersArray.find((inf) => inf.name === sale.influencerName);
+    const influencer = influencerMap[sale.influencerName];
     const summary = influencerSales[sale.influencerName];
 
-    if (summary) {
+    if (summary) { // if the influencer exists, update their summary
       summary.totalRevenue += saleAmount;
       summary.salesCount += 1;
       summary.highestSaleAmount = Math.max(summary.highestSaleAmount, saleAmount);
@@ -226,7 +235,7 @@ function addTags() {
 
   let highestCommissionInfluencer = null;
   let highestCommissionAmount = 0;
-  Object.entries(influencerSales).forEach(([name, summary]) => {
+  Object.entries(influencerSales).forEach(([name, summary]) => { // find the influencer with the highest total commission
     if (summary.totalCommission > highestCommissionAmount) {
       highestCommissionAmount = summary.totalCommission;
       highestCommissionInfluencer = influencersArray.find((inf) => inf.name === name);
@@ -235,14 +244,14 @@ function addTags() {
 
   let bestSaleOwner = null;
   let highestSingleSale = 0;
-  Object.entries(influencerSales).forEach(([name, summary]) => {
+  Object.entries(influencerSales).forEach(([name, summary]) => { // find the influencer with the highest single sale amount
     if (summary.highestSaleAmount > highestSingleSale) {
       highestSingleSale = summary.highestSaleAmount;
       bestSaleOwner = name;
     }
   });
 
-  influencersArray.forEach((inf) => {
+  influencersArray.forEach((inf) => { // iterate through each influencer and assign tags based on their sales summary
     const summary = influencerSales[inf.name] || {
       totalRevenue: 0,
       highestSaleAmount: 0,
