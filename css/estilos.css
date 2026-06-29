@@ -64,13 +64,13 @@ button:active {
 
 /*change button properties to make them the right size*/
 #botonAgregarInfluencer1,
-#cancelarInfluencerButton,
+#botonCancelarInfluencer,
 #botonAgregarInfluencer2,
-#botonAgregarItem1,
-#cancelarItemButton,
-#botonAgregarItem2,
-#botonAgregarVenta1,
-#cancelarVentaButton,
+#botonAgregarArticulo1,
+#botonCancelarArticulo,
+#botonAgregarArticulo2,
+#botonAgregarVenta,
+#botonCancelarVenta,
 #botonAgregarVenta2 {
   width: 150px;
   height: 40px;

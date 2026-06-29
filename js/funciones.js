@@ -143,7 +143,7 @@ function recargarBotonesVentas() {  // check if we have influencers and items.
     "selecionarNumeroVentaLista",
     "selecionarInfluencerLista",
     "cantidadVentas",
-    "selectionarMedioLista",
+    "seleccionarMedioLista",
   ];
 
   for (let indiceControl = 0; indiceControl < controles.length; indiceControl++) {
@@ -662,7 +662,7 @@ function agregarVenta() {
   let cantidad = Number.parseInt(
     document.getElementById("cantidadVentas").value,
   );
-  let medioVenta = document.getElementById("selectionarMedioLista").value;
+  let medioVenta = document.getElementById("seleccionarMedioLista").value;
 
   let verificacionCantidad = chequearValido(4, cantidad);
   if (!verificacionCantidad.isValid) {
