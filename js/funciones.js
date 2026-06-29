@@ -155,7 +155,7 @@ function recargarBotonesVentas() {  // check if we have influencers and items.
   }
 }
 
-function cerarPopup(identificadorPopup) { //cancel button
+function cerrarPopup(identificadorPopup) { //cancel button
   let elemento = document.getElementById(identificadorPopup);
   if (elemento) { //if an element has the popupid class it should be hidden
     elemento.classList.add("hidden");
@@ -543,7 +543,7 @@ function abrirAgregarInfluencer() {
 }
 
 function cancelarInfluencer() {
-  cerarPopup("influencerPopup");
+  cerrarPopup("influencerPopup");
   document.getElementById("formularioInfluencers").reset();
 }
 
@@ -596,7 +596,7 @@ function abrirPopupArticulo() {
 }
 
 function cancelarArticulo() {
-  cerarPopup("itemPopup");
+  cerrarPopup("itemPopup");
   document.getElementById("formularioArticulos").reset();
 }
 
@@ -637,7 +637,7 @@ function agregarArticulo() {
       precio,
   );
   document.getElementById("formularioArticulos").reset();
-  cerarPopup("itemPopup");
+  cerrarPopup("itemPopup");
 }
 
 function abrirPopupVentas() {
@@ -651,7 +651,7 @@ function abrirPopupVentas() {
 }
 
 function cancelarVenta() {
-  cerarPopup("ventasPopup");
+  cerrarPopup("ventasPopup");
   document.getElementById("formVentas").reset();
 }
 
@@ -686,5 +686,5 @@ function agregarVenta() {
   );
   numeroVentaGlobal++;
   document.getElementById("cantidadVentas").value = "";
-  cerarPopup("ventasPopup");
+  cerrarPopup("ventasPopup");
 }
