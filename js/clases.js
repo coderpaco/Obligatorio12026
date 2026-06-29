@@ -5,34 +5,34 @@
 */
 
 class Influencer {
-  constructor(name, email, commission) {
-    this.name = name.trim();
-    this.email = email.trim().toLowerCase();
-    this.commission = Number(commission);
-    this.totalSold = 0;
-    this.influencerTags = "";
+  constructor(nombre, correo, comision) {
+    this.nombre = nombre.trim();
+    this.correo = correo.trim().toLowerCase();
+    this.comision = Number(comision);
+    this.totalVendido = 0;
+    this.etiquetasInfluencer = "";
   }
 }
 
-class Item {
-  constructor(itemCode, description, price) {
-    this.itemCode = itemCode.trim();
-    this.description = description.trim();
-    this.price = Number(price);
+class Articulo {
+  constructor(codigoItem, descripcion, precio) {
+    this.codigoItem = codigoItem.trim();
+    this.descripcion = descripcion.trim();
+    this.precio = Number(precio);
   }
 }
 
-class Sale {
-  constructor(saleNumber, itemCode, influencerName, quantity, saleMedium) {
-    this.saleNumber = saleNumber;
-    this.itemCode = itemCode;
-    this.influencerName = influencerName;
-    this.quantity = Number(quantity);
-    this.saleMedium = saleMedium;
+class Venta {
+  constructor(numeroVenta, codigoItem, nombreInfluencer, cantidad, medioVenta) {
+    this.numeroVenta = numeroVenta;
+    this.codigoItem = codigoItem;
+    this.nombreInfluencer = nombreInfluencer;
+    this.cantidad = Number(cantidad);
+    this.medioVenta = medioVenta;
   }
 }
 
-const influencersArray = [];
-const itemsArray = [];
-const salesArray = [];
-let globalSaleNumber = 1;
+let arregloInfluencers = [];
+let arregloItems = [];
+let arregloVentas = [];
+let numeroVentaGlobal = 1;

@@ -11,7 +11,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sistema de Gestión</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/estilos.css">
 
   <link rel="icon" href="img/favicon.ico" sizes="any">
   <link rel="icon" href="img/icon.svg" type="image/svg+xml">
@@ -26,28 +26,28 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
   <h2>Manejo de Influencers</h2>
   <article class="extra-space">
     <h3>Alta de Influencer</h3>
-    <button id="addInfluencerButton1">Agregar Influencer</button>
+    <button id="botonAgregarInfluencer1">Agregar Influencer</button>
   </article>
   <!--  Add influencer form-->
   <article id="influencerPopup" class="popup hidden">
     <h3>Datos del Influencer a agregar</h3>
     <h3>Influencer</h3>
-    <form id="influencerForm" onsubmit="return false">
-      <label for="influencerName" >Nombre
-        <input id="influencerName"
-               name="influencerName"
+    <form id="formularioInfluencers" onsubmit="return false">
+      <label for="nombreInfluencer" >Nombre
+        <input id="nombreInfluencer"
+               name="nombreInfluencer"
                required
                type="text">
       </label>
-      <label for="influencerEmail">Mail
-        <input id="influencerEmail"
-               name="influencerEmail"
+      <label for="emailInfluencer">Mail
+        <input id="emailInfluencer"
+               name="emailInfluencer"
                required
                type="text">
       </label>
-      <label for="influencerCommission">% Comisión
-        <input id="influencerCommission"
-               name="influencerCommission"
+      <label for="comisionInfluencer">% Comisión
+        <input id="comisionInfluencer"
+               name="comisionInfluencer"
                required
                min="0"
                max="100"
@@ -55,18 +55,18 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
                type="number">
       </label>
       <div class="popup-actions">
-        <button type="button" id="cancelInfluencerButton">Cancelar</button>
-        <button type="submit" id="addInfluencerButton2">Agregar</button>
+        <button type="button" id="botonCancelarInfluencer">Cancelar</button>
+        <button type="submit" id="botonAgregarInfluencer2">Agregar</button>
       </div>
     </form>
   </article>
   <!--  Influencer table-->
   <article>
   <h3>Tabla de Influencers</h3>
-  <table class="table" id="influencerTable">
+  <table class="table" id="tablaInfluencers">
     <thead>
     <tr>
-      <th><button id="switchInfluencerNameOrderButton">Nombre ⇅</button></th>
+      <th><button id="influencerCambiarOrdenBoton">Nombre ⇅</button></th>
       <th>Email</th>
       <th>% Comisión</th>
       <th>Total a cobrar</th>
@@ -82,7 +82,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
       <td>20%</td>
       <td>$ 600</td>
       <td>🔥 🟢</td>
-      <td><button class="showSalesButton">Ventas</button></td>
+      <td><button class="botonMostrarVentas">Ventas</button></td>
     </tr>
     <tr>
       <!--  test person 2-->
@@ -91,7 +91,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
       <td>10%</td>
       <td>$ 30</td>
       <td></td>
-      <td><button class="showSalesButton">Ventas</button></td>
+      <td><button class="botonMostrarVentas">Ventas</button></td>
     </tr>
     <tr>
       <!--  test person 3-->
@@ -100,7 +100,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
       <td>95%</td>
       <td>$ 0</td>
       <td>🧊</td>
-      <td><button class="showSalesButton">Ventas</button></td>
+      <td><button class="botonMostrarVentas">Ventas</button></td>
     </tr>
     </tbody>
   </table>
@@ -115,34 +115,34 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
   <h2>Manejo de Artículos</h2>
   <article>
     <h3>Alta de Artículo</h3>
-    <button id="addItemButton1">Agregar artículo</button>
+    <button id="botonAgregarArticulo1">Agregar artículo</button>
   </article>
   <!--  Add article form-->
   <article id="itemPopup" class="popup hidden">
   <h3>Datos del artículo a agregar</h3>
     <h3>Artículo</h3>
-    <form id="itemForm" onsubmit="return false">
-      <label for="itemCode">Código
-        <input id="itemCode"
-               name="itemCode"
+    <form id="formularioArticulos" onsubmit="return false">
+      <label for="codigoArticulo">Código
+        <input id="codigoArticulo"
+               name="codigoArticulo"
                required
                type="text">
       </label>
-      <label for="itemDescription">Descripción
-        <input id="itemDescription"
-               name="itemDescription"
+      <label for="descripcionArticulo">Descripción
+        <input id="descripcionArticulo"
+               name="descripcionArticulo"
                required
                type="text">
       </label>
-      <label for="itemPrice">Precio
-        <input id="itemPrice"
-               name="itemPrice"
+      <label for="precioArticulo">Precio
+        <input id="precioArticulo"
+               name="precioArticulo"
                required
                type="number">
       </label>
       <div class="popup-actions">
-        <button type="button" id="cancelItemButton">Cancelar</button>
-        <button type="submit" id="addItemButton2">Agregar</button>
+        <button type="button" id="botonCancelarArticulo">Cancelar</button>
+        <button type="submit" id="botonAgregarArticulo2">Agregar</button>
       </div>
     </form>
   </article>
@@ -152,7 +152,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
   <table id="itemTable">
     <thead>
     <tr>
-      <th><button id="switchItemCodeOrderButton">Código ⇅</button></th>
+      <th><button id="cambiarOrdenArticulosBoton">Código ⇅</button></th>
       <th>Descripción</th>
       <th>Precio</th>
     </tr>
@@ -189,35 +189,35 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
     <h2>Ventas</h2>
     <article>
       <h3>Alta de ventas</h3>
-      <button id="addSaleButton">Agregar venta</button>
+      <button id="botonAgregarVenta">Agregar venta</button>
     </article>
     <!--  Add venta form-->
-    <article id="salePopup" class="popup hidden">
+    <article id="ventasPopup" class="popup hidden">
       <h3>Datos de la venta a agregar</h3>
       <h3>Venta</h3>
-      <form id="saleForm" onsubmit="return false">
-        <label for="saleNumberDropdown">Nro Artículo
-          <select name="saleNumberDropdown" id="saleNumberDropdown" >
+      <form id="formVentas" onsubmit="return false">
+        <label for="selecionarNumeroVentaLista">Nro Artículo
+          <select name="selecionarNumeroVentaLista" id="selecionarNumeroVentaLista" >
             <option value="A001" selected >A001</option>
             <option value="A002">A002</option>
             <option value="A003">A003</option>
           </select>
         </label>
-        <label for="influencerNameDropdown">Influencer
-          <select name="influencerNameDropdown" id="influencerNameDropdown" >
+        <label for="selecionarInfluencerLista">Influencer
+          <select name="selecionarInfluencerLista" id="selecionarInfluencerLista" >
             <option value="Ana Perez" selected >Ana Perez</option>
             <option value="Juan Gomez">Juan Gomez</option>
             <option value="Lucia Martinez">Lucia Martinez</option>
           </select>
         </label>
-        <label for="saleQuantity">Cantidad
-          <input id="saleQuantity"
-                 name="saleQuantity"
+        <label for="cantidadVentas">Cantidad
+          <input id="cantidadVentas"
+                 name="cantidadVentas"
                  required
                  type="number">
         </label>
-        <label for="saleMediumDropdown">Medio
-          <select name="saleMediumDropdown" id="saleMediumDropdown" >
+        <label for="selectionarMedioLista">Medio
+          <select name="selectionarMedioLista" id="selectionarMedioLista" >
             <option value="1-Instagram" selected >1-Instagram</option>
             <option value="2-Youtube">2-Youtube</option>
             <option value="3-X">3-X</option>
@@ -227,15 +227,15 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
           </select>
         </label>
         <div class="popup-actions">
-          <button type="button" id="cancelSaleButton">Cancelar</button>
-          <button type="submit" id="addSaleButton2">Agregar</button>
+          <button type="button" id="botonCancelarVenta">Cancelar</button>
+          <button type="submit" id="botonAgregarVenta2">Agregar</button>
         </div>
       </form>
     </article>
     <!--Table of sales(ventas) ordered by venta number  -->
     <article>
       <h3>Tabla de ventas (ordenada por número de venta)</h3>
-        <table id="salesTable">
+        <table id="tablaVentas">
         <thead>
           <tr>
             <th>Nro Venta</th> <!-- Sale Number-->
@@ -253,7 +253,7 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
             <td>Ana Perez</td>
             <td>3</td>
             <td>1-Instagram</td>
-            <td><button class="removeSaleButton">❌</button></td>
+            <td><button class="botonBorrarVenta">❌</button></td>
           </tr>
           <tr>
             <td>2</td>
@@ -261,15 +261,15 @@ Author ID: Davit Dostourian Erbe // 281665 // ORT Uruguay, Programación 1
             <td>Juan Gomez</td>
             <td>1</td>
             <td>2-Youtube</td>
-            <td><button class="removeSaleButton">❌</button></td>
+            <td><button class="botonBorrarVenta">❌</button></td>
           </tr>
         </tbody>
       </table>
     </article>
 <!--Bubble graph-->
-    <article id="bubbleSection">
+    <article id="sectionBurbujas">
       <h3>Gráfico de burbujas</h3>
-      <div id="bubbleGraph" class="bubble-graph"></div>
+      <div id="grafoBurbujas" class="grafo-burbujas"></div>
     </article>
   </section>
 <!-- Footer-->

@@ -63,15 +63,15 @@ button:active {
 }
 
 /*change button properties to make them the right size*/
-#addInfluencerButton1,
-#cancelInfluencerButton,
-#addInfluencerButton2,
-#addItemButton1,
-#cancelItemButton,
-#addItemButton2,
-#addSaleButton,
-#cancelSaleButton,
-#addSaleButton2 {
+#botonAgregarInfluencer1,
+#cancelarInfluencerButton,
+#botonAgregarInfluencer2,
+#botonAgregarItem1,
+#cancelarItemButton,
+#botonAgregarItem2,
+#botonAgregarVenta1,
+#cancelarVentaButton,
+#botonAgregarVenta2 {
   width: 150px;
   height: 40px;
 }
@@ -175,16 +175,16 @@ fieldset {
   margin: 0;
 }
 
-#salePopup { 
+#ventasPopup { 
   width: min(96%, 1300px); /*sale has an extra input, make it a little bigger*/
 }
 
-#salePopup .popup form {
+#ventasPopup .popup form {
   gap: 6px 10px; /*stop things from touching each other*/
 }
 
-#salePopup .popup input,
-#salePopup .popup select {
+#ventasPopup .popup input,
+#ventasPopup .popup select {
   flex: 0 0 140px;  /*fixed width in form*/
 }
 
@@ -220,7 +220,7 @@ fieldset {
   padding: 8px 12px;
 }
 
-.bubble-graph {
+.grafo-burbujas {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -229,7 +229,7 @@ fieldset {
   margin-top: 10px;
 }
 
-.bubble-item {
+.burbuja-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -237,7 +237,7 @@ fieldset {
   min-width: 80px;
 }
 
-.bubble-dot {
+.burbuja-dot {
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -245,7 +245,7 @@ fieldset {
   font-weight: 100;
 }
 
-.bubble-label {
+.burbuja-label {
   font-size: 0.9rem;
   text-align: center;
   max-width: 120px;

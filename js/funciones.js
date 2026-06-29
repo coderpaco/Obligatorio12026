@@ -4,168 +4,169 @@
 ==========================================================================
 */
 
-window.addEventListener("load", start);
+window.addEventListener("load", inicio);
 
 //define our starting sort values
-let influencerNameSortDirection = "asc";
-let itemCodeSortDirection = "asc";
+let direccionOrdenNombreInfluencer = "asc";
+let direccionOrdenCodigoItem = "asc";
 
-function start() {
+function inicio() {
   // Influencer
   document
-    .getElementById("addInfluencerButton1")
-    .addEventListener("click", openInfluencerPopup);
+    .getElementById("botonAgregarInfluencer1")
+    .addEventListener("click", abrirAgregarInfluencer);
   document
-    .getElementById("cancelInfluencerButton")
-    .addEventListener("click", cancelInfluencer);
+    .getElementById("botonCancelarInfluencer")
+    .addEventListener("click", cancelarInfluencer);
   document
-    .getElementById("addInfluencerButton2")
-    .addEventListener("click", addInfluencer);
+    .getElementById("botonAgregarInfluencer2")
+    .addEventListener("click", agregarInfluencer);
   document
-    .getElementById("switchInfluencerNameOrderButton")
-    .addEventListener("click", sortInfluencersByName);
+    .getElementById("influencerCambiarOrdenBoton")
+    .addEventListener("click", ordenarInfluencersPorNombre);
 
   // Articles
   document
-    .getElementById("addItemButton1")
-    .addEventListener("click", openItemPopup);
+    .getElementById("botonAgregarArticulo1")
+    .addEventListener("click", abrirPopupArticulo);
   document
-    .getElementById("cancelItemButton")
-    .addEventListener("click", cancelItem);
-  document.getElementById("addItemButton2").addEventListener("click", addItem);
+    .getElementById("botonCancelarArticulo")
+    .addEventListener("click", cancelarArticulo);
+  document.getElementById("botonAgregarArticulo2").addEventListener("click", agregarArticulo);
   document
-    .getElementById("switchItemCodeOrderButton")
-    .addEventListener("click", sortItemsByCode);
+    .getElementById("cambiarOrdenArticulosBoton")
+    .addEventListener("click", ordenarArticulosPorCodigo);
 
   // Sales (Ventas)
   document
-    .getElementById("addSaleButton")
-    .addEventListener("click", openSalePopup);
+    .getElementById("botonAgregarVenta")
+    .addEventListener("click", abrirPopupVentas);
   document
-    .getElementById("cancelSaleButton")
-    .addEventListener("click", cancelSale);
-  document.getElementById("addSaleButton2").addEventListener("click", addSale);
-  updateData();
+    .getElementById("botonCancelarVenta")
+    .addEventListener("click", cancelarVenta);
+  document.getElementById("botonAgregarVenta2").addEventListener("click", agregarVenta);
+  recargarDatos();
 }
 
 // Add click handlers for buttons inserted after page load. ventas and removesale buttons)
 document.addEventListener("DOMContentLoaded", () => {
-  document.addEventListener("click", (event) => { //check clicks on the page and see if the clicked part is a button w label "showSalesButton" or "removeSaleButton"
-    if (event.target.classList.contains("showSalesButton")) { //if button is showsalesbutton
-      const row = event.target.closest("tr"); //finds closest row to the button (basically the buttons row)
-      const influencerName = row.cells[0].textContent.trim(); //get influencer name from first cell of row
+  document.addEventListener("click", (evento) => { //check clicks on the page and see if the clicked part is a button w label "showSalesButton" or "removeSaleButton"
+    if (evento.target.classList.contains("botonMostrarVentas")) { //if button is showsalesbutton
+      let fila = evento.target.closest("tr"); //finds closest row to the button (basically the buttons row)
+      let nombreInfluencer = fila.cells[0].textContent.trim(); //get influencer name from first cell of row
 
-      const influencerSales = salesArray.filter( //filter salesArray for all sales w that name
-        (sale) => sale.influencerName === influencerName,
+      let ventasInfluencer = arregloVentas.filter( //filter arregloVentas for all sales w that name
+        (venta) => venta.nombreInfluencer === nombreInfluencer,
       );
 
-      if (influencerSales.length === 0) { //if none...
-        alert(`No hay ventas encontrado para ${influencerName}.`);
+      if (ventasInfluencer.length === 0) { //if none...
+        alert(`No hay ventas encontrado para ${nombreInfluencer}.`);
         return;
       }
 
-      let details = "";
-      for (let i = 0; i < influencerSales.length; i++) {
-        const sale = influencerSales[i];
-        const item = itemsArray.find((itemRow) => itemRow.itemCode === sale.itemCode);
-        const influencer = influencersArray.find(
-          (inf) => inf.name === influencerName,
+      let detalles = "";
+      for (let indice = 0; indice < ventasInfluencer.length; indice++) {
+        let venta = ventasInfluencer[indice];
+        let articulo = arregloItems.find((filaArticulo) => filaArticulo.codigoItem === venta.codigoItem);
+        let influencer = arregloInfluencers.find(
+          (influencerActual) => influencerActual.nombre === nombreInfluencer,
         );
-        const priceEach = Number(item.price);
-        const totalPrice = priceEach * sale.quantity;
-        const commissionPercent = Number(influencer.commission);
-        const commissionAmount = (totalPrice * commissionPercent) / 100;
-        const itemCode = item.itemCode;
+        let precioUnitario = Number(articulo.precio);
+        let precioTotal = precioUnitario * venta.cantidad;
+        let porcentajeComision = Number(influencer.comision);
+        let montoComision = (precioTotal * porcentajeComision) / 100;
+        let codigoItem = articulo.codigoItem;
 
-        details +=
+        detalles +=
           "Venta " +
-          sale.saleNumber +
+          venta.numeroVenta +
           " ⇥ " +
-          sale.quantity +
+          venta.cantidad +
           " ⇥ " +
-          itemCode +
+          codigoItem +
           " ⇥ $" +
-          priceEach.toFixed(2) +
+          precioUnitario.toFixed(2) +
           " c/u Total $" +
-          totalPrice.toFixed(2) +
+          precioTotal.toFixed(2) +
           " ⇥ Comisión: $" +
-          commissionAmount.toFixed(2);
+          montoComision.toFixed(2);
 
-        if (i < influencerSales.length - 1) { //if less than arraylength-1 we get a new line
-          details += "\n";
+        if (indice < ventasInfluencer.length - 1) { //if less than arraylength-1 we get a new line
+          detalles += "\n";
         }
       }
 
-      alert(`Ventas de ${influencerName}:\n\n${details}`); //join the influencer name and their sales
+      alert(`Ventas de ${nombreInfluencer}:\n\n${detalles}`); //join the influencer name and their sales
       return;
     }
 
-    if (event.target.classList.contains("removeSaleButton")) { // check if the clicked button is removeSaleButton
-      const row = event.target.parentElement.parentElement; //identify parent sale
-      const saleToDelete = row.cells[0].textContent.trim(); //get its sale number
-      const arrayIndex = salesArray.findIndex( // find  sale in  salesArray by sale number
-        (sale) => String(sale.saleNumber).trim() === saleToDelete,
+    if (evento.target.classList.contains("botonBorrarVenta")) { // check if the clicked button is removeSaleButton
+      let fila = evento.target.parentElement.parentElement; //identify parent sale
+      let ventaAEliminar = fila.cells[0].textContent.trim(); //get its sale number
+      let indiceArray = arregloVentas.findIndex( // find  sale in  arregloVentas by sale number
+        (venta) => String(venta.numeroVenta).trim() === ventaAEliminar,
       );
-      if (arrayIndex !== -1) {
-        salesArray.splice(arrayIndex, 1); //remove sale from array IF it exists
+      if (indiceArray !== -1) {
+        arregloVentas.splice(indiceArray, 1); //remove sale from array IF it exists
       } else {
-        console.warn(`No se pudo encontrar el número de venta ${saleToDelete} en el array.`); //nope no sale
+        console.warn(`No se pudo encontrar el número de venta ${ventaAEliminar} en el array.`); //nope no sale
       }
-      updateData(); //update data again
+      recargarDatos(); //update data again
     }
   });
 });
 
-function updateData() { //run this every time data is changed to update everything
-  addTags();
-  updateTables();
-  fillDropdowns();
-  updateBubbles();
-  updateSaleControls();
+function recargarDatos() { //run this every time data is changed to update everything
+  agregarEtiquetas();
+  recargarTablas();
+  llenarListas();
+  recargarBurbujas();
+  recargarBotonesVentas();
 }
 
-function showPopup(popupId) {
-  const element = document.getElementById(popupId); 
-  if (element) { // if element is found (the popup id) remove its hidden property class so it's shown
-    element.classList.remove("hidden");
+function mostrarPopup(identificadorPopup) {
+  let elemento = document.getElementById(identificadorPopup); 
+  if (elemento) { // if element is found (the popup id) remove its hidden property class so it's shown
+    elemento.classList.remove("hidden");
   }
 }
 
-function updateSaleControls() {  // check if we have influencers and items.
+function recargarBotonesVentas() {  // check if we have influencers and items.
     // if they BOTH exist, we can add a venta/sale. otherwise, the ventas category can't be interacted with
-  const hasInfluencers = influencersArray.length > 0;
-  const hasItems = itemsArray.length > 0;
-  const salesEnabled = hasInfluencers && hasItems;
-  const controls = [
-    "addSaleButton",
-    "cancelSaleButton",
-    "addSaleButton2",
-    "saleNumberDropdown",
-    "influencerNameDropdown",
-    "saleQuantity",
-    "saleMediumDropdown",
+  let tieneInfluencers = arregloInfluencers.length > 0;
+  let tieneItems = arregloItems.length > 0;
+  let ventasHabilitadas = tieneInfluencers && tieneItems;
+  let controles = [
+    "botonAgregarVenta",
+    "botonCancelarVenta",
+    "botonAgregarVenta2",
+    "selecionarNumeroVentaLista",
+    "selecionarInfluencerLista",
+    "cantidadVentas",
+    "selectionarMedioLista",
   ];
 
-  controls.forEach((id) => {
-    const element = document.getElementById(id);
-    if (element) { //disable or enable id elements based on salesenabled value
-      element.disabled = !salesEnabled;
+  for (let indiceControl = 0; indiceControl < controles.length; indiceControl++) {
+    const identificador = controles[indiceControl];
+    const elemento = document.getElementById(identificador);
+    if (elemento) { //disable or enable id elements based on salesenabled value
+      elemento.disabled = !ventasHabilitadas;
     }
-  });
-}
-
-function closePopup(popupId) { //cancel button
-  const element = document.getElementById(popupId);
-  if (element) { //if an element has the popupid class it should be hidden
-    element.classList.add("hidden");
   }
 }
 
-function updateBubbles() {  // update graph based off sales
-  const bubbleGraph = document.getElementById("bubbleGraph");
-  if (!bubbleGraph) return;
+function cerarPopup(identificadorPopup) { //cancel button
+  let elemento = document.getElementById(identificadorPopup);
+  if (elemento) { //if an element has the popupid class it should be hidden
+    elemento.classList.add("hidden");
+  }
+}
 
-  const mediums = [ //color pallete for the apps taken from what i think best fits them (googlesearched their color palletes)
+function recargarBurbujas() {  // update graph based off sales
+  let grafoBurbuja = document.getElementById("grafoBurbujas");
+  if (!grafoBurbuja) return;
+
+  let medios = [ //color pallete for the apps taken from what i think best fits them (googlesearched their color palletes)
     { value: "1-Instagram", label: "1 - Instagram", color: "#8134af" },
     { value: "2-Youtube", label: "2 - YouTube", color: "#ff0000" },
     { value: "3-X", label: "3 - X", color: "#919829" },
@@ -174,349 +175,358 @@ function updateBubbles() {  // update graph based off sales
     { value: "6-Otras", label: "6 - Otras", color: "#7f8c8d" },
   ];    
 
-  const totals = [];
+  let totales = [];
 
    // we have our totals array, now we gotta create a bubble for each sale medium
    // - create div circle, calc bubble size based on total sales amt, then add bubble
    //make sure bubble has label and $$$ amt
 
-  for (let i = 0; i < mediums.length; i++) {
-    const medium = mediums[i];
+  for (let indice = 0; indice < medios.length; indice++) {
+    let medio = medios[indice];
     let total = 0;
     
     // identify sales medium, and loop thru its sales
-    for (let j = 0; j < salesArray.length; j++) {
-      const sale = salesArray[j];
+    for (let indiceVenta = 0; indiceVenta < arregloVentas.length; indiceVenta++) {
+      let venta = arregloVentas[indiceVenta];
       
       //count relevant sales only
-      if (sale.saleMedium === medium.value) {
+      if (venta.medioVenta === medio.value) {
         // ...find the sale item
-        let item = null;
-        for (let k = 0; k < itemsArray.length; k++) {
-          if (itemsArray[k].itemCode === sale.itemCode) {
-            item = itemsArray[k];
+        let articulo = null;
+        for (let indiceArticulo = 0; indiceArticulo < arregloItems.length; indiceArticulo++) {
+          if (arregloItems[indiceArticulo].codigoItem === venta.codigoItem) {
+            articulo = arregloItems[indiceArticulo];
             break;
           }
         }
         
-        const priceEach = Number(item.price);
-        const saleAmount = priceEach * Number(sale.quantity);
-        total = total + saleAmount;//calculate sale amt
+        let precioUnitario = Number(articulo.precio);
+        let montoVenta = precioUnitario * Number(venta.cantidad);
+        total = total + montoVenta;//calculate sale amt
       }
     }
     
     //new object with medium info AND its total
-    const salesMediumWithTotal = {
-      value: medium.value,
-      label: medium.label,
-      color: medium.color,
+    let medioVentaConTotal = {
+      value: medio.value,
+      label: medio.label,
+      color: medio.color,
       total: total
     };
     
-    totals.push(salesMediumWithTotal);// track this to later graph with bubbles
+    totales.push(medioVentaConTotal);// track this to later graph with bubbles
   }
 
   //check our totals array for the highest amt and set that
-  let maxTotal = 0;
-  for (let i = 0; i < totals.length; i++) {
-    if (totals[i].total > maxTotal) {
-      maxTotal = totals[i].total;
+  let totalMaximo = 0;
+  for (let indice = 0; indice < totales.length; indice++) {
+    if (totales[indice].total > totalMaximo) {
+      totalMaximo = totales[indice].total;
     }
   }
     
-  const maxRadius = 100;
-  const minRadius = Math.round(maxRadius * 0.10); // 10% of maxRadius
+  let radioMaximo = 100;
+  let radioMinimo = Math.round(radioMaximo * 0.10); // 10% of maxRadius
 
-  bubbleGraph.innerHTML = ""; //clear any current bubble data
+  grafoBurbuja.innerHTML = ""; //clear any current bubble data
   
   //create a bubble for each sales medium
-  for (let i = 0; i < totals.length; i++) {
-    const medium = totals[i];
+  for (let indice = 0; indice < totales.length; indice++) {
+    let medio = totales[indice];
     
     // calc radius size within min-max radius
-    let ratio = 0;
-    if (maxTotal > 0) {
-      ratio = medium.total / maxTotal;
+    let proporcion = 0;
+    if (totalMaximo > 0) {
+      proporcion = medio.total / totalMaximo;
     }
     
-    let radius = minRadius + ratio * (maxRadius - minRadius);
-    if (radius > maxRadius) {
-      radius = maxRadius;
+    let radio = radioMinimo + proporcion * (radioMaximo - radioMinimo);   
+    if (radio > radioMaximo) {
+      radio = radioMaximo;
     }
     
     //create the bubble in html
-    const bubble = document.createElement("div"); //create bubble document data
-    bubble.className = "bubble-item"; //style css
+    let burbuja = document.createElement("div"); //create bubble document data
+    burbuja.className = "burbuja-item"; //style css
     
-    let displayTotal = "0";
-    if (medium.total > 0) {
-      displayTotal = "$" + medium.total.toFixed(0); //toFixed 0 makes it a whole number (0 numbers after decimal point)
+    let totalMostrado = "0";
+    if (medio.total > 0) {
+      totalMostrado = "$" + medio.total.toFixed(0); //toFixed 0 makes it a whole number (0 numbers after decimal point)
     }
     
     //build the bubble html with the previously defined data. this is done here 
     //instead of html/css because the bubble size is based on the data that gets calculated first
-    bubble.innerHTML = "<div class='bubble-dot' style='width:" + (radius * 2) + "px; height:" + (radius * 2) + "px; background:" + medium.color + ";'>" + displayTotal + "</div><div class='bubble-label'>" + medium.label + "</div>";
+    burbuja.innerHTML = "<div class='burbuja-dot' style='width:" + (radio * 2) + "px; height:" + (radio * 2) + "px; background:" + medio.color + ";'>" + totalMostrado + "</div><div class='burbuja-label'>" + medio.label + "</div>";
     
-    bubbleGraph.appendChild(bubble);
+    grafoBurbuja.appendChild(burbuja);
   }
 }
 
-function addTags() {
-  if (influencersArray.length === 0) { // if there are no influencers, do nothing
+function agregarEtiquetas() {
+  if (arregloInfluencers.length === 0) { // if there are no influencers, do nothing
     return;
   }
 
   // Reset fields on each influencer object.
-  influencersArray.forEach((inf) => {
-    inf.totalRevenue = 0;
-    inf.totalCommission = 0;
-    inf.highestSaleAmount = 0;
-    inf.salesCount = 0;
-    inf.influencerTags = "";
-  });
+  for (let indiceInfluencer = 0; indiceInfluencer < arregloInfluencers.length; indiceInfluencer++) {
+    let influencer = arregloInfluencers[indiceInfluencer];
+    influencer.ingresosTotales = 0;
+    influencer.comisionTotal = 0;
+    influencer.montoVentaMayor = 0;
+    influencer.cantidadVentas = 0;
+    influencer.etiquetasInfluencer = "";
+  }
 
-  salesArray.forEach((sale) => { // iterate through each sale and update the influencer directly
-    const item = itemsArray.find((itemRow) => itemRow.itemCode === sale.itemCode);
-    const priceEach = Number(item.price);
-    const saleAmount = priceEach * Number(sale.quantity);
-    const influencer = influencersArray.find(
-      (inf) => inf.name === sale.influencerName,
+  for (let indiceVenta = 0; indiceVenta < arregloVentas.length; indiceVenta++) { // iterate through each sale and update the influencer directly
+    let venta = arregloVentas[indiceVenta];
+    let articulo = arregloItems.find((filaArticulo) => filaArticulo.codigoItem === venta.codigoItem);
+    let precioUnitario = Number(articulo.precio);
+    let montoVenta = precioUnitario * Number(venta.cantidad);
+    let influencer = arregloInfluencers.find(
+      (influencerActual) => influencerActual.nombre === venta.nombreInfluencer,
     );
 
     if (influencer) {
-      influencer.totalRevenue += saleAmount;
-      influencer.salesCount += 1;
-      influencer.highestSaleAmount = Math.max(influencer.highestSaleAmount, saleAmount);
-      influencer.totalCommission += (saleAmount * Number(influencer.commission)) / 100;
-    }
-  });
-
-  let highestCommissionInfluencer = null;
-  let highestCommissionAmount = 0;
-  for (let i = 0; i < influencersArray.length; i++) {
-    const inf = influencersArray[i];
-    if (inf.totalCommission > highestCommissionAmount) {
-      highestCommissionAmount = inf.totalCommission;
-      highestCommissionInfluencer = inf;
+      influencer.ingresosTotales += montoVenta;
+      influencer.cantidadVentas += 1;
+      influencer.montoVentaMayor = Math.max(influencer.montoVentaMayor, montoVenta);
+      influencer.comisionTotal += (montoVenta * Number(influencer.comision)) / 100;
     }
   }
 
-  let bestSaleOwner = null;
-  let highestSingleSale = 0;
-  for (let i = 0; i < influencersArray.length; i++) {
-    const inf = influencersArray[i];
-    if (inf.highestSaleAmount > highestSingleSale) {
-      highestSingleSale = inf.highestSaleAmount;
-      bestSaleOwner = inf.name;
+  let influencerMayorComision = null;
+  let montoMayorComision = 0;
+  for (let indice = 0; indice < arregloInfluencers.length; indice++) {
+    let influencer = arregloInfluencers[indice];
+    if (influencer.comisionTotal > montoMayorComision) {
+      montoMayorComision = influencer.comisionTotal;
+      influencerMayorComision = influencer;
     }
   }
 
-  for (let i = 0; i < influencersArray.length; i++) {
-    const inf = influencersArray[i];
-    const tags = [];
+  let propietarioMejorVenta = null;
+  let ventaUnicaMayor = 0;
+  for (let indice = 0; indice < arregloInfluencers.length; indice++) {
+    let influencer = arregloInfluencers[indice];
+    if (influencer.montoVentaMayor > ventaUnicaMayor) {
+      ventaUnicaMayor = influencer.montoVentaMayor;
+      propietarioMejorVenta = influencer.nombre;
+    }
+  }
 
-    if (highestCommissionInfluencer && inf.name === highestCommissionInfluencer.name) {
-      tags.push("🔥");
+  for (let indice = 0; indice < arregloInfluencers.length; indice++) {
+    let influencer = arregloInfluencers[indice];
+    let etiquetas = [];
+
+    if (influencerMayorComision && influencer.nombre === influencerMayorComision.nombre) {
+      etiquetas.push("🔥");
     }
-    if (inf.salesCount === 0) {
-      tags.push("🧊");
+    if (influencer.cantidadVentas === 0) {
+      etiquetas.push("🧊");
     }
-    if (bestSaleOwner === inf.name && inf.salesCount > 0) {
-      tags.push("🟢");
+    if (propietarioMejorVenta === influencer.nombre && influencer.cantidadVentas > 0) {
+      etiquetas.push("🟢");
     }
 
-    inf.totalSold = inf.totalCommission;
-    inf.influencerTags = tags.join(" ");
+    influencer.totalVendido = influencer.comisionTotal;
+    influencer.etiquetasInfluencer = etiquetas.join(" ");
   }
 }
 
-function updateTables() {
-  const hasData =
-    influencersArray.length > 0 || itemsArray.length > 0 || salesArray.length > 0;
+function recargarTablas() {
+  let tieneDatos =
+    arregloInfluencers.length > 0 || arregloItems.length > 0 || arregloVentas.length > 0;
 
-  if (!hasData) {
+  if (!tieneDatos) {
     return;
   }
 
-  document.querySelectorAll(".tableBody").forEach((tbody) => {
-    tbody.innerHTML = "";
-  });
+  const cuerposTabla = document.querySelectorAll(".tableBody");
+  for (let indiceCuerpoTabla = 0; indiceCuerpoTabla < cuerposTabla.length; indiceCuerpoTabla++) {
+    cuerposTabla[indiceCuerpoTabla].innerHTML = "";
+  }
 
-  for (let i = 0; i < influencersArray.length; i++) {
-    const tbody = document.querySelector("#influencerTable .tableBody");
-    const row = tbody.insertRow();
-    const data = [
-      influencersArray[i].name,
-      influencersArray[i].email,
-      influencersArray[i].commission + "%",
-      "$ " + influencersArray[i].totalSold,
-      influencersArray[i].influencerTags,
+  for (let indice = 0; indice < arregloInfluencers.length; indice++) {
+    let cuerpoTabla = document.querySelector("#tablaInfluencers .tableBody");
+    let fila = cuerpoTabla.insertRow();
+    let datos = [
+      arregloInfluencers[indice].nombre,
+      arregloInfluencers[indice].correo,
+      arregloInfluencers[indice].comision + "%",
+      "$ " + arregloInfluencers[indice].totalVendido,
+      arregloInfluencers[indice].etiquetasInfluencer,
       "",
     ];
 
-    for (let j = 0; j < data.length - 1; j++) {
-      const cell = row.insertCell();
-      cell.textContent = data[j];
+    for (let indiceCelda = 0; indiceCelda < datos.length - 1; indiceCelda++) {
+      let celda = fila.insertCell();
+      celda.textContent = datos[indiceCelda];
     }
 
-    const cell = row.insertCell();
-    const button = document.createElement("button");
-    button.textContent = "Ventas";
-    button.className = "showSalesButton";
-    cell.appendChild(button);
+    let celda = fila.insertCell();
+    let boton = document.createElement("button");
+    boton.textContent = "Ventas";
+    boton.className = "botonMostrarVentas";
+    celda.appendChild(boton);
   }
 
-  const itemSalesCount = itemsArray.reduce((acc, item) => {
-    acc[item.itemCode] = 0;
-    return acc;
+  let conteoVentasArticulo = arregloItems.reduce((acumulador, articulo) => {
+    acumulador[articulo.codigoItem] = 0;
+    return acumulador;
   }, {});
 
-  salesArray.forEach((sale) => {
-    if (itemSalesCount[sale.itemCode] !== undefined) {
-      itemSalesCount[sale.itemCode] += Number(sale.quantity);
-    }
-  });
-
-  let topItemCode = null;
-  let topItemSales = 0;
-  Object.entries(itemSalesCount).forEach(([itemCode, quantity]) => {
-    if (quantity > topItemSales) {
-      topItemSales = quantity;
-      topItemCode = itemCode;
-    }
-  });
-
-  for (let i = 0; i < itemsArray.length; i++) {
-    const tbody = document.querySelector("#itemTable .tableBody");
-    const row = tbody.insertRow();
-    const itemCodeWithTag =
-      itemsArray[i].itemCode + (itemsArray[i].itemCode === topItemCode ? " ⭐" : "");
-    const data = [
-      itemCodeWithTag,
-      itemsArray[i].description,
-      "$ " + itemsArray[i].price,
-    ];
-
-    for (let j = 0; j < data.length; j++) {
-      const cell = row.insertCell();
-      cell.textContent = data[j];
+  for (let indiceVenta = 0; indiceVenta < arregloVentas.length; indiceVenta++) {
+    let venta = arregloVentas[indiceVenta];
+    if (conteoVentasArticulo[venta.codigoItem] !== undefined) {
+      conteoVentasArticulo[venta.codigoItem] += Number(venta.cantidad);
     }
   }
 
-  for (let k = 0; k < salesArray.length; k++) {
-    const tbody = document.querySelector("#salesTable .tableBody");
-    const row = tbody.insertRow();
-    const data = [
-      salesArray[k].saleNumber,
-      salesArray[k].itemCode,
-      salesArray[k].influencerName,
-      salesArray[k].quantity,
-      salesArray[k].saleMedium,
+  let codigoArticuloTop = null;
+  let ventasArticuloTop = 0;
+  let entradasConteo = Object.entries(conteoVentasArticulo);
+  for (let indiceEntrada = 0; indiceEntrada < entradasConteo.length; indiceEntrada++) {
+    let codigoItem = entradasConteo[indiceEntrada][0];
+    let cantidad = entradasConteo[indiceEntrada][1];
+    if (cantidad > ventasArticuloTop) {
+      ventasArticuloTop = cantidad;
+      codigoArticuloTop = codigoItem;
+    }
+  }
+
+  for (let indice = 0; indice < arregloItems.length; indice++) {
+    let cuerpoTabla = document.querySelector("#itemTable .tableBody");
+    let fila = cuerpoTabla.insertRow();
+    let codigoItemConEtiqueta =
+      arregloItems[indice].codigoItem + (arregloItems[indice].codigoItem === codigoArticuloTop ? " ⭐" : "");
+    let datos = [
+      codigoItemConEtiqueta,
+      arregloItems[indice].descripcion,
+      "$ " + arregloItems[indice].precio,
+    ];
+
+    for (let indiceCelda = 0; indiceCelda < datos.length; indiceCelda++) {
+      let celda = fila.insertCell();
+      celda.textContent = datos[indiceCelda];
+    }
+  }
+
+  for (let indice = 0; indice < arregloVentas.length; indice++) {
+    let cuerpoTabla = document.querySelector("#tablaVentas .tableBody");
+    let fila = cuerpoTabla.insertRow();
+    let datos = [
+      arregloVentas[indice].numeroVenta,
+      arregloVentas[indice].codigoItem,
+      arregloVentas[indice].nombreInfluencer,
+      arregloVentas[indice].cantidad,
+      arregloVentas[indice].medioVenta,
       "",
     ];
 
-    for (let m = 0; m < data.length - 1; m++) {
-      const cell = row.insertCell();
-      cell.textContent = data[m];
+    for (let indiceCelda = 0; indiceCelda < datos.length - 1; indiceCelda++) {
+      let celda = fila.insertCell();
+      celda.textContent = datos[indiceCelda];
     }
 
-    const cell = row.insertCell();
-    const button = document.createElement("button");
-    button.textContent = "❌";
-    button.className = "removeSaleButton";
-    cell.appendChild(button);
+    let celda = fila.insertCell();
+    let boton = document.createElement("button");
+    boton.textContent = "❌";
+    boton.className = "botonBorrarVenta";
+    celda.appendChild(boton);
   }
 }
 
-function fillDropdowns() {
-  const dropdownInfluencer = document.getElementById("influencerNameDropdown");
-  if (dropdownInfluencer) {
-    dropdownInfluencer.innerHTML = "";
-    if (influencersArray.length > 0) {
-      influencersArray.forEach((inf) => {
-        const newOption = new Option(inf.name, inf.name);
-        dropdownInfluencer.add(newOption);
-      });
+function llenarListas() {
+  let desplegableInfluencer = document.getElementById("selecionarInfluencerLista");
+  if (desplegableInfluencer) {
+    desplegableInfluencer.innerHTML = "";
+    if (arregloInfluencers.length > 0) {
+      for (let indiceInfluencer = 0; indiceInfluencer < arregloInfluencers.length; indiceInfluencer++) {
+        let influencer = arregloInfluencers[indiceInfluencer];
+        let nuevaOpcion = new Option(influencer.nombre, influencer.nombre);
+        desplegableInfluencer.add(nuevaOpcion);
+      }
     } else {
         //we shouldnt even see this bc the popup is hidden, but just in case for debugging
-      dropdownInfluencer.add(new Option("Sin influencers", ""));
+      desplegableInfluencer.add(new Option("Sin influencers", ""));
     }
   }
 
-  const dropdownItems = document.getElementById("saleNumberDropdown");
-  if (dropdownItems) {
-    dropdownItems.innerHTML = "";
-    if (itemsArray.length > 0) {
-      itemsArray.forEach((item) => {
-        const newOption = new Option(item.itemCode, item.itemCode);
-        dropdownItems.add(newOption);
-      });
+  let desplegableItems = document.getElementById("selecionarNumeroVentaLista");
+  if (desplegableItems) {
+    desplegableItems.innerHTML = "";
+    if (arregloItems.length > 0) {
+      for (let indiceItem = 0; indiceItem < arregloItems.length; indiceItem++) {
+        let articulo = arregloItems[indiceItem];
+        let nuevaOpcion = new Option(articulo.codigoItem, articulo.codigoItem);
+        desplegableItems.add(nuevaOpcion);
+      }
     } else {
         //we also shouldnt  see this bc the popup is hidden, but add something for debugging
-      dropdownItems.add(new Option("Sin artículos", ""));
+      desplegableItems.add(new Option("Sin artículos", ""));
     }
   }
 }
 
-function sortInfluencersByName() { //sort function for the influencer for asc and desc order
-  influencersArray.sort((a, b) => {
-    const nameA = a.name.toLowerCase();
-    const nameB = b.name.toLowerCase();
-    const order = nameA.localeCompare(nameB);
-    return influencerNameSortDirection === "asc" ? order : -order; // asc is normal ascending, desc is reversed order
+function ordenarInfluencersPorNombre() { //sort function for the influencer for asc and desc order
+  arregloInfluencers.sort((a, b) => {
+    let nombreA = a.nombre.toLowerCase();
+    let nombreB = b.nombre.toLowerCase();
+    let orden = nombreA.localeCompare(nombreB);
+    return direccionOrdenNombreInfluencer === "asc" ? orden : -orden; // asc is normal ascending, desc is reversed order
   });
-  influencerNameSortDirection = influencerNameSortDirection === "asc" ? "desc" : "asc"; //update sort direction for next click. if asc then desc, if desc then asc
-  updateData();
+  direccionOrdenNombreInfluencer = direccionOrdenNombreInfluencer === "asc" ? "desc" : "asc"; //update sort direction for next click. if asc then desc, if desc then asc
+  recargarDatos();
 }
 
-function sortItemsByCode() { //sort func for item codes for asc and desc
-  itemsArray.sort((a, b) => {
-    const codeA = a.itemCode.toLowerCase();
-    const codeB = b.itemCode.toLowerCase();
-    const order = codeA.localeCompare(codeB);
-    return itemCodeSortDirection === "asc" ? order : -order;
+function ordenarArticulosPorCodigo() { //sort func for item codes for asc and desc
+  arregloItems.sort((a, b) => {
+    let codigoA = a.codigoItem.toLowerCase();
+    let codigoB = b.codigoItem.toLowerCase();
+    let orden = codigoA.localeCompare(codigoB);
+    return direccionOrdenCodigoItem === "asc" ? orden : -orden;
   });
-  itemCodeSortDirection = itemCodeSortDirection === "asc" ? "desc" : "asc"; //same sort update as before
-  updateData();
+  direccionOrdenCodigoItem = direccionOrdenCodigoItem === "asc" ? "desc" : "asc"; //same sort update as before
+  recargarDatos();
 }
 
-function checkValid(code, data) { //check data validity with a switch case
-  switch (code) {
+function chequearValido(codigo, datos) { //check data validity with a switch case
+  switch (codigo) {
     case 1: {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //regex email validation
-      if (!data) {
+      let patronCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //regex email validation
+      if (!datos) {
         return { isValid: false, error: "Un email es requerido." };
       }
-      if (!emailPattern.test(data.toLowerCase())) {
+      if (!patronCorreo.test(datos.toLowerCase())) {
         return { isValid: false, error: "Formato de email inválido." };
       }
       break;
     }
     case 2: {
-      if (!data || data.length === 0) {
+      if (!datos || datos.length === 0) {
         return { isValid: false, error: "Los campos no pueden estar vacíos." };
       }
-      if (data.length < 2 || data.length > 20) {
+      if (datos.length < 2 || datos.length > 20) {
         return { isValid: false, error: "Nombre invalido. (2-20 caracteres)" };
       }
       break;
     }
     case 3: {
-      const comValue = Number.parseFloat(data);
-      if (Number.isNaN(comValue)) {
+      let valorComision = Number.parseFloat(datos);
+      if (Number.isNaN(valorComision)) {
         return { isValid: false, error: "NaN. Ingrese un número válido." };
       }
-      if (comValue < 0 || comValue > 100) {
+      if (valorComision < 0 || valorComision > 100) {
         return { isValid: false, error: "Su número debe estar entre 0-100" };
       }
       break;
     }
     case 4: {
-      const numValue = Number.parseFloat(data);
-      if (Number.isNaN(numValue)) {
+      let valorNumerico = Number.parseFloat(datos);
+      if (Number.isNaN(valorNumerico)) {
         return { isValid: false, error: "NaN. Ingrese un número válido." };
       }
-      if (numValue < 0 || numValue > 1000000) {
+      if (valorNumerico < 0 || valorNumerico > 1000000) {
         return { isValid: false, error: "Su número debe estar entre 0-1,000,000" };
       }
       break;
@@ -528,165 +538,153 @@ function checkValid(code, data) { //check data validity with a switch case
   return { isValid: true, error: "" };
 }
 
-function openInfluencerPopup() {
-  showPopup("influencerPopup");
+function abrirAgregarInfluencer() {
+  mostrarPopup("influencerPopup");
 }
 
-function cancelInfluencer() {
-  closePopup("influencerPopup");
-  document.getElementById("influencerForm").reset();
+function cancelarInfluencer() {
+  cerarPopup("influencerPopup");
+  document.getElementById("formularioInfluencers").reset();
 }
 
-function addInfluencer() {
-  const name = document.getElementById("influencerName").value;
-  const email = document.getElementById("influencerEmail").value;
-  const commission = Number.parseFloat(
-    document.getElementById("influencerCommission").value,
+function agregarInfluencer() {
+  let nombre = document.getElementById("nombreInfluencer").value;
+  let correo = document.getElementById("emailInfluencer").value;
+  let comision = Number.parseFloat(
+    document.getElementById("comisionInfluencer").value,
   );
 //validation
-  const nameCheck = checkValid(2, name);
-  const emailCheck = checkValid(1, email);
-  const commissionCheck = checkValid(3, commission);
-  if (!nameCheck.isValid) {
-    alert("Error en Nombre: " + nameCheck.error);
+  let verificacionNombre = chequearValido(2, nombre);
+  let verificacionCorreo = chequearValido(1, correo);
+  let verificacionComision = chequearValido(3, comision);
+  if (!verificacionNombre.isValid) {
+    alert("Error en Nombre: " + verificacionNombre.error);
     return;
   }
-  if (!emailCheck.isValid) {
-    alert("Error en Email: " + emailCheck.error);
+  if (!verificacionCorreo.isValid) {
+    alert("Error en Email: " + verificacionCorreo.error);
     return;
   }
-  const lowercaseEmail = email.trim().toLowerCase(); //ensure it is unique
-  if (influencersArray.some((inf) => inf.email === lowercaseEmail)) { //find if the email exists anywhere at least once
+  let correoMinusculas = correo.trim().toLowerCase(); //ensure it is unique
+  if (arregloInfluencers.some((influencer) => influencer.correo === correoMinusculas)) { //find if the email exists anywhere at least once
     alert("Error: Email ya existe. Ingrese otro email.");
     return;
   }
 
-  if (!commissionCheck.isValid) {
-    alert("Error en Comisión: " + commissionCheck.error);
+  if (!verificacionComision.isValid) {
+    alert("Error en Comisión: " + verificacionComision.error);
     return;
   }
 
-  try {
-    influencersArray.push(new Influencer(name, email, commission));
-    updateData();
-    alert(
-      "Influencer agregado con nombre " +
-        name +
-        " y email " +
-        email +
-        " y comisión " +
-        commission +
-        "%",
-    );
-    document.getElementById("influencerForm").reset();
-    closePopup("influencerPopup");
-  } catch (exception) {
-    alert(exception);
-  }
+  arregloInfluencers.push(new Influencer(nombre, correo, comision));
+  recargarDatos();
+  alert(
+    "Influencer agregado con nombre " +
+      nombre +
+      " y email " +
+      correo +
+      " y comisión " +
+      comision +
+      "%",
+  );
+  document.getElementById("formularioInfluencers").reset();
+  cerrarPopup("influencerPopup");
 }
 
-function openItemPopup() {
-  showPopup("itemPopup");
+function abrirPopupArticulo() {
+  mostrarPopup("itemPopup");
 }
 
-function cancelItem() {
-  closePopup("itemPopup");
-  document.getElementById("itemForm").reset();
+function cancelarArticulo() {
+  cerarPopup("itemPopup");
+  document.getElementById("formularioArticulos").reset();
 }
 
-function addItem() {
-  const itemCode = document.getElementById("itemCode").value;
-  const description = document.getElementById("itemDescription").value;
-  const price = Number.parseFloat(document.getElementById("itemPrice").value);
+function agregarArticulo() {
+  let codigoItem = document.getElementById("codigoArticulo").value;
+  let descripcion = document.getElementById("descripcionArticulo").value;
+  let precio = Number.parseFloat(document.getElementById("precioArticulo").value);
 
-  const checkItemCode = checkValid(2, itemCode);
-  const checkDescription = checkValid(2, description);
-  const checkPrice = checkValid(4, price);
-  if (!checkItemCode.isValid) {
-    alert("Error en Código de Articulo: " + checkItemCode.error);
+  let verificacionCodigoItem = chequearValido(2, codigoItem);
+  let verificacionDescripcion = chequearValido(2, descripcion);
+  let verificacionPrecio = chequearValido(4, precio);
+  if (!verificacionCodigoItem.isValid) {
+    alert("Error en Código de Articulo: " + verificacionCodigoItem.error);
     return;
   }
-  const lowercaseItemCode = itemCode.trim().toLowerCase(); //same check as influencer, ensure unique within item array
-  if (itemsArray.some((item) => item.itemCode.toLowerCase() === lowercaseItemCode)) {
+  let codigoItemMinusculas = codigoItem.trim().toLowerCase(); //same check as influencer, ensure unique within item array
+  if (arregloItems.some((articulo) => articulo.codigoItem.toLowerCase() === codigoItemMinusculas)) {
     alert("Error: Código de artículo ya existe. Ingrese otro codigo.");
     return;
   }
-  if (!checkDescription.isValid) {
-    alert("Error en Descripcion: " + checkDescription.error);
+  if (!verificacionDescripcion.isValid) {
+    alert("Error en Descripcion: " + verificacionDescripcion.error);
     return;
   }
-  if (!checkPrice.isValid) {
-    alert("Error en Precio: " + checkPrice.error);
+  if (!verificacionPrecio.isValid) {
+    alert("Error en Precio: " + verificacionPrecio.error);
     return;
   }
 
-  try {
-    itemsArray.push(new Item(itemCode, description, price));
-    updateData();
-    alert(
-      "Articulo agregado con código " +
-        itemCode +
-        " y descripción " +
-        description +
-        " y precio $" +
-        price,
-    );
-    document.getElementById("itemForm").reset();
-    closePopup("itemPopup");
-  } catch (exception) {
-    alert(exception);
-  }
+  arregloItems.push(new Articulo(codigoItem, descripcion, precio));
+  recargarDatos();
+  alert(
+    "Articulo agregado con código " +
+      codigoItem +
+      " y descripción " +
+      descripcion +
+      " y precio $" +
+      precio,
+  );
+  document.getElementById("formularioArticulos").reset();
+  cerarPopup("itemPopup");
 }
 
-function openSalePopup() {
+function abrirPopupVentas() {
     /* //unneeded alert
-  if (influencersArray.length === 0 || itemsArray.length === 0) {
+  if (arregloInfluencers.length === 0 || arregloItems.length === 0) {
     alert("Agrega al menos un influencer y un artículo antes de registrar una venta.");
     return;
   }
     */
-  showPopup("salePopup");
+  mostrarPopup("ventasPopup");
 }
 
-function cancelSale() {
-  closePopup("salePopup");
-  document.getElementById("saleForm").reset();
+function cancelarVenta() {
+  cerarPopup("ventasPopup");
+  document.getElementById("formVentas").reset();
 }
 
-function addSale() {
-  const nextSaleNumber = globalSaleNumber;
-  const itemCode = document.getElementById("saleNumberDropdown").value;
-  const influencerName = document.getElementById("influencerNameDropdown").value;
-  const quantity = Number.parseInt(
-    document.getElementById("saleQuantity").value,
+function agregarVenta() {
+  let siguienteNumeroVenta = numeroVentaGlobal;
+  let codigoItem = document.getElementById("selecionarNumeroVentaLista").value;
+  let nombreInfluencer = document.getElementById("selecionarInfluencerLista").value;
+  let cantidad = Number.parseInt(
+    document.getElementById("cantidadVentas").value,
   );
-  const saleMedium = document.getElementById("saleMediumDropdown").value;
+  let medioVenta = document.getElementById("selectionarMedioLista").value;
 
-  const checkQuantity = checkValid(4, quantity);
-  if (!checkQuantity.isValid) {
-    alert("Error en Cantidad: " + checkQuantity.error);
+  let verificacionCantidad = chequearValido(4, cantidad);
+  if (!verificacionCantidad.isValid) {
+    alert("Error en Cantidad: " + verificacionCantidad.error);
     return;
   }
 
-  try {
-    salesArray.push(
-      new Sale(nextSaleNumber, itemCode, influencerName, quantity, saleMedium),
-    );
-    updateData();
-    alert(
-      "Venta agregada con código de artículo " +
-        itemCode +
-        " y influencer " +
-        influencerName +
-        " y cantidad " +
-        quantity +
-        " y medio " +
-        saleMedium,
-    );
-    globalSaleNumber++;
-    document.getElementById("saleQuantity").value = "";
-    closePopup("salePopup");
-  } catch (exception) {
-    alert(exception);
-  }
+  arregloVentas.push(
+    new Venta(siguienteNumeroVenta, codigoItem, nombreInfluencer, cantidad, medioVenta),
+  );
+  recargarDatos();
+  alert(
+    "Venta agregada con código de artículo " +
+      codigoItem +
+      " y influencer " +
+      nombreInfluencer +
+      " y cantidad " +
+      cantidad +
+      " y medio " +
+      medioVenta,
+  );
+  numeroVentaGlobal++;
+  document.getElementById("cantidadVentas").value = "";
+  cerarPopup("ventasPopup");
 }
